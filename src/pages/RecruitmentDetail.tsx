@@ -54,7 +54,7 @@ const RecruitmentDetail: React.FC = () => {
         
         // First, try the topdata API
         try {
-          const topDataResponse = await fetch('https://7cvccltb-3110.inc1.devtunnels.ms/category/topdata');
+          const topDataResponse = await fetch('https://api.dhanlaxmii.com/category/topdata');
           if (topDataResponse.ok) {
             const topData = await topDataResponse.json();
             const topDataItem = topData.topDataList?.find((item: TopDataItem) => 
@@ -77,7 +77,7 @@ const RecruitmentDetail: React.FC = () => {
         // If not found in topdata, try the sub categories API
         if (!foundData) {
           try {
-            const subDataResponse = await fetch('https://7cvccltb-3110.inc1.devtunnels.ms/category/sub');
+            const subDataResponse = await fetch('https://api.dhanlaxmii.com/category/sub');
             if (subDataResponse.ok) {
               const subData = await subDataResponse.json();
               const subDataItem = subData.subCategories?.find((item: SubCategory) => 

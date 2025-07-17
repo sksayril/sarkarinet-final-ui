@@ -4,9 +4,9 @@ async function generateDynamicSitemap() {
   try {
     // Fetch dynamic content from your APIs
     const [topDataResponse, subcategoriesResponse, homeContentResponse] = await Promise.allSettled([
-      fetch('http://localhost:3110/topdata/public/active'),
-      fetch('http://localhost:3110/subcategories/public/active'),
-      fetch('http://localhost:3110/home-content/public/active')
+      fetch('https://api.dhanlaxmii.com/topdata/public/active'),
+      fetch('https://api.dhanlaxmii.com/subcategories/public/active'),
+      fetch('https://api.dhanlaxmii.com/home-content/public/active')
     ]);
 
     const dynamicUrls = [...defaultSitemapUrls];

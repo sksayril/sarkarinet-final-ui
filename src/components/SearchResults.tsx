@@ -53,11 +53,11 @@ const SearchResults: React.FC = () => {
         setLoading(true);
         
         // Fetch recruitment cards
-        const recruitmentResponse = await fetch('https://7cvccltb-3110.inc1.devtunnels.ms/category/topdata');
+        const recruitmentResponse = await fetch('https://api.dhanlaxmii.com/category/topdata');
         const recruitmentData = await recruitmentResponse.json();
         
         // Fetch content sections
-        const contentResponse = await fetch('https://7cvccltb-3110.inc1.devtunnels.ms/category/sub');
+        const contentResponse = await fetch('https://api.dhanlaxmii.com/category/sub');
         const contentData = await contentResponse.json();
         
         setRecruitmentCards(recruitmentData.topDataList || []);
