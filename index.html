@@ -4,10 +4,53 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sarkari Result Website - Exact UI Replica</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Sarkari Result - Latest Government Jobs, Results, Admit Cards</title>
+    <meta name="description" content="Find latest Sarkari job vacancies, exam results, admit cards, and government job updates at SarkariResult.com. Get all information about government jobs, online forms, exams, and results in one place." />
+    <meta name="keywords" content="sarkari result, government jobs, sarkari naukri, government exam results, admit card, online form, sarkari job vacancy" />
+    <meta name="author" content="Sarkari Result" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Sarkari Result - Latest Government Jobs, Results, Admit Cards" />
+    <meta property="og:description" content="Find latest Sarkari job vacancies, exam results, admit cards, and government job updates at SarkariResult.com." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sarkariresult.com" />
+    <meta property="og:image" content="/PhotoRoom-20250716_202655.png" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sarkari Result - Latest Government Jobs, Results, Admit Cards" />
+    <meta name="twitter:description" content="Find latest Sarkari job vacancies, exam results, admit cards, and government job updates at SarkariResult.com." />
+    <meta name="twitter:image" content="/PhotoRoom-20250716_202655.png" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href="https://sarkariresult.com" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Sarkari Result",
+      "url": "https://sarkariresult.com",
+      "description": "Find latest Sarkari job vacancies, exam results, admit cards, and government job updates",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://sarkariresult.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, FileText, MessageCircle } from 'lucide-react';
+import PhotoResizerModal from './PhotoResizerModal';
 
 const ActionButtons: React.FC = () => {
+  const [isPhotoResizerOpen, setIsPhotoResizerOpen] = useState(false);
+
   return (
+    <>
     <div className="w-full min-w-[1200px] px-4 py-6">
       <div className="flex items-center justify-center space-x-6">
-        <button className="bg-gradient-to-r from-purple-700 to-purple-800 text-white px-8 py-4 rounded-full flex items-center space-x-3 hover:from-purple-800 hover:to-purple-900 whitespace-nowrap shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 border-purple-600">
+          <button 
+            onClick={() => setIsPhotoResizerOpen(true)}
+            className="bg-gradient-to-r from-purple-700 to-purple-800 text-white px-8 py-4 rounded-full flex items-center space-x-3 hover:from-purple-800 hover:to-purple-900 whitespace-nowrap shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 border-purple-600"
+          >
           <Image className="w-7 h-7" />
           <span className="text-xl font-bold">Photo Resizer</span>
         </button>
@@ -19,6 +26,12 @@ const ActionButtons: React.FC = () => {
         </button>
       </div>
     </div>
+
+      <PhotoResizerModal 
+        isOpen={isPhotoResizerOpen} 
+        onClose={() => setIsPhotoResizerOpen(false)} 
+      />
+    </>
   );
 };
 

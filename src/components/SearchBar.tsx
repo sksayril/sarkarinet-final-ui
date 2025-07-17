@@ -1,9 +1,35 @@
-import React, { useState } from 'react';
-import { Search, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Sparkles, X, RotateCcw } from 'lucide-react';
 import AIAssistantModal from './AIAssistantModal';
+import { useSearch } from '../contexts/SearchContext';
 
 const SearchBar: React.FC = () => {
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const { searchQuery, setSearchQuery, isSearching, setIsSearching, clearSearch } = useSearch();
+
+  // Update input value when search query changes
+  useEffect(() => {
+    setInputValue(searchQuery);
+  }, [searchQuery]);
+
+  const handleSearch = () => {
+    if (inputValue.trim()) {
+      setSearchQuery(inputValue.trim());
+      setIsSearching(true);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleClearSearch = () => {
+    setInputValue('');
+    clearSearch();
+  };
 
   return (
     <>
@@ -12,10 +38,24 @@ const SearchBar: React.FC = () => {
           <div className="w-1/2 relative">
             <input
               type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
               placeholder="Search for jobs, results, admit cards..."
               className="w-full px-6 py-4 border-2 border-gray-400 rounded-full focus:outline-none focus:ring-4 focus:ring-red-500 focus:border-red-500 text-lg shadow-2xl hover:shadow-3xl transition-all duration-300"
             />
-            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-red-700 shadow-lg hover:shadow-xl transition-all duration-200">
+            {inputValue && (
+              <button 
+                onClick={handleClearSearch}
+                className="absolute right-16 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+            <button 
+              onClick={handleSearch}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-red-700 shadow-lg hover:shadow-xl transition-all duration-200"
+            >
               <Search className="w-6 h-6" />
             </button>
           </div>
@@ -27,6 +67,24 @@ const SearchBar: React.FC = () => {
             <span className="text-lg font-bold">Ask S.R AI Assistant</span>
           </button>
         </div>
+        
+        {/* Search Results Summary */}
+        {isSearching && searchQuery && (
+          <div className="mt-4 text-center">
+            <div className="flex items-center justify-center space-x-4">
+              <p className="text-lg text-gray-700">
+                Showing search results for: <span className="font-bold text-red-600">"{searchQuery}"</span>
+              </p>
+              <button 
+                onClick={handleClearSearch}
+                className="flex items-center space-x-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-full transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Clear Search</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       
       <AIAssistantModal 

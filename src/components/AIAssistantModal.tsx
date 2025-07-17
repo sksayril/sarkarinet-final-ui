@@ -23,6 +23,7 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose }) 
   const [hasWelcomed, setHasWelcomed] = useState(false);
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [lastResponse, setLastResponse] = useState('');
   
   const recognitionRef = useRef<any>(null);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
@@ -46,15 +47,17 @@ Remember: You are here to help users navigate the complex world of government jo
   // Load and setup voices with better female voice detection
   const loadVoices = () => {
     const voices = speechSynthesis.getVoices();
+    console.log('Available voices:', voices.map(v => `${v.name} (${v.lang}) - ${v.default ? 'default' : ''}`));
     setAvailableVoices(voices);
     
     // Find the best female voice
     const bestFemaleVoice = findBestFemaleVoice(voices);
     setSelectedVoice(bestFemaleVoice);
     
-    console.log('Available voices:', voices.map(v => `${v.name} (${v.lang})`));
     if (bestFemaleVoice) {
       console.log('Selected female voice:', bestFemaleVoice.name, bestFemaleVoice.lang);
+    } else {
+      console.log('No female voice found, using default');
     }
   };
 
@@ -70,7 +73,8 @@ Remember: You are here to help users navigate the complex world of government jo
          voice.name.toLowerCase().includes('woman') ||
          voice.name.toLowerCase().includes('girl') ||
          voice.name.toLowerCase().includes('sita') ||
-         voice.name.toLowerCase().includes('priya')),
+         voice.name.toLowerCase().includes('priya') ||
+         voice.name.toLowerCase().includes('neha')),
       
       // English female voices for Hindi text
       (voice: SpeechSynthesisVoice) => 
@@ -80,7 +84,8 @@ Remember: You are here to help users navigate the complex world of government jo
          voice.name.toLowerCase().includes('girl') ||
          voice.name.toLowerCase().includes('samantha') ||
          voice.name.toLowerCase().includes('victoria') ||
-         voice.name.toLowerCase().includes('alexandra')),
+         voice.name.toLowerCase().includes('alexandra') ||
+         voice.name.toLowerCase().includes('zira')),
       
       // Any Hindi voice as fallback
       (voice: SpeechSynthesisVoice) => voice.lang.includes('hi'),
@@ -113,6 +118,7 @@ Remember: You are here to help users navigate the complex world of government jo
 
       recognitionRef.current.onresult = (event: any) => {
         const transcript = event.results[event.results.length - 1][0].transcript;
+        console.log('Speech recognized:', transcript);
         if (transcript.trim() && !isProcessingRef.current) {
           setUserInput(transcript);
           setCurrentStatus('processing');
@@ -124,16 +130,25 @@ Remember: You are here to help users navigate the complex world of government jo
         console.error('Speech recognition error:', event.error);
         if (event.error === 'no-speech') {
           // Continue listening if no speech detected
-          restartListening();
+          setTimeout(() => {
+            if (isOpen && !isProcessingRef.current && !isSpeaking) {
+              restartListening();
+            }
+          }, 1000);
         }
       };
 
       recognitionRef.current.onend = () => {
+        console.log('Speech recognition ended');
         if (isOpen && !isProcessingRef.current && !isSpeaking) {
           // Auto-restart listening when it ends
-          restartListening();
+          setTimeout(() => {
+            restartListening();
+          }, 500);
         }
       };
+    } else {
+      console.error('Speech recognition not supported');
     }
 
     // Load speech synthesis voices
@@ -187,6 +202,7 @@ Remember: You are here to help users navigate the complex world of government jo
       
       // Extract the actual text content from the response
       const textToSpeak = extractTextFromResponse(response);
+      setLastResponse(textToSpeak);
       console.log('AI Response:', textToSpeak);
       
       // Speak the response and then restart listening
@@ -204,11 +220,16 @@ Remember: You are here to help users navigate the complex world of government jo
     } catch (error) {
       console.error('Error calling AI:', error);
       const errorMessage = 'माफ करें, मुझे समस्या आ रही है। कृपया दोबारा कोशिश करें।';
+      setLastResponse(errorMessage);
       speakResponse(errorMessage, () => {
         setCurrentStatus('listening');
         isProcessingRef.current = false;
         setIsLoading(false);
-        restartListening();
+        setTimeout(() => {
+          if (isOpen) {
+            restartListening();
+          }
+        }, 1000);
       });
     }
   };
@@ -255,12 +276,12 @@ Remember: You are here to help users navigate the complex world of government jo
     }
 
     const requestBody = {
-      system_instruction: {
-        parts: [{ text: systemPrompt }]
-      },
       contents: [
         {
-          parts: [{ text: userInput }]
+          parts: [
+            { text: systemPrompt },
+            { text: userInput }
+          ]
         }
       ]
     };
@@ -268,7 +289,7 @@ Remember: You are here to help users navigate the complex world of government jo
     console.log('Sending request to Gemini:', requestBody);
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: {
@@ -304,8 +325,8 @@ Remember: You are here to help users navigate the complex world of government jo
       const utterance = new SpeechSynthesisUtterance(text);
       
       // Set optimal speech parameters
-      utterance.rate = 0.85;
-      utterance.pitch = 1.0;
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1; // Slightly higher pitch for female-like voice
       utterance.volume = 1.0;
       
       // Set language based on content
@@ -357,7 +378,12 @@ Remember: You are here to help users navigate the complex world of government jo
     if (recognitionRef.current && !isSpeaking) {
       setIsListening(true);
       setCurrentStatus('listening');
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+        console.log('Started listening');
+      } catch (error) {
+        console.error('Error starting recognition:', error);
+      }
     }
   };
 
@@ -368,6 +394,7 @@ Remember: You are here to help users navigate the complex world of government jo
           setIsListening(true);
           setCurrentStatus('listening');
           recognitionRef.current.start();
+          console.log('Restarted listening');
         } catch (error) {
           console.error('Error restarting recognition:', error);
         }
@@ -405,6 +432,8 @@ Remember: You are here to help users navigate the complex world of government jo
     setHasWelcomed(false);
     hasSpokenWelcomeRef.current = false;
     setCurrentStatus('initializing');
+    setUserInput('');
+    setLastResponse('');
     onClose();
   };
 
@@ -526,6 +555,14 @@ Remember: You are here to help users navigate the complex world of government jo
               <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                 <p className="text-sm text-gray-600 mb-1">आपने कहा:</p>
                 <p className="text-blue-800 font-medium">{userInput}</p>
+              </div>
+            )}
+
+            {/* Last AI Response */}
+            {lastResponse && (
+              <div className="mb-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                <p className="text-sm text-gray-600 mb-1">AI का जवाब:</p>
+                <p className="text-purple-800 font-medium">{lastResponse}</p>
               </div>
             )}
             

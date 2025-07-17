@@ -7,4 +7,16 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        'entry-client': './src/entry-client.tsx',
+        'entry-server': './src/entry-server.tsx',
+      },
+    },
+  },
+  ssr: {
+    noExternal: ['react-router-dom'],
+  },
 });

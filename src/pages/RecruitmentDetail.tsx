@@ -1,0 +1,185 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { slugify } from '../utils/slugify';
+
+interface TopDataItem {
+  _id: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  tags: string[];
+  contentTitle: string;
+  contentDescription: string;
+  colorCode: string;
+}
+
+interface SubCategory {
+  _id: string;
+  mainCategory: {
+    _id: string;
+    title: string;
+  };
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  tags: string[];
+  contentTitle: string;
+  contentDescription: string;
+}
+
+interface ContentData {
+  _id: string;
+  contentTitle: string;
+  contentDescription: string;
+  metaDescription: string;
+  colorCode?: string;
+  mainCategory?: {
+    title: string;
+  };
+}
+
+const RecruitmentDetail: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [contentData, setContentData] = useState<ContentData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchContentData = async () => {
+      try {
+        setLoading(true);
+        
+        // Try to find data in both APIs
+        let foundData: ContentData | null = null;
+        
+        // First, try the topdata API
+        try {
+          const topDataResponse = await fetch('https://7cvccltb-3110.inc1.devtunnels.ms/category/topdata');
+          if (topDataResponse.ok) {
+            const topData = await topDataResponse.json();
+            const topDataItem = topData.topDataList?.find((item: TopDataItem) => 
+              slugify(item.contentTitle) === slug
+            );
+            if (topDataItem) {
+              foundData = {
+                _id: topDataItem._id,
+                contentTitle: topDataItem.contentTitle,
+                contentDescription: topDataItem.contentDescription,
+                metaDescription: topDataItem.metaDescription,
+                colorCode: topDataItem.colorCode
+              };
+            }
+          }
+        } catch (err) {
+          console.log('Top data API failed, trying sub categories API');
+        }
+        
+        // If not found in topdata, try the sub categories API
+        if (!foundData) {
+          try {
+            const subDataResponse = await fetch('https://7cvccltb-3110.inc1.devtunnels.ms/category/sub');
+            if (subDataResponse.ok) {
+              const subData = await subDataResponse.json();
+              const subDataItem = subData.subCategories?.find((item: SubCategory) => 
+                slugify(item.contentTitle) === slug
+              );
+              if (subDataItem) {
+                foundData = {
+                  _id: subDataItem._id,
+                  contentTitle: subDataItem.contentTitle,
+                  contentDescription: subDataItem.contentDescription,
+                  metaDescription: subDataItem.metaDescription,
+                  mainCategory: subDataItem.mainCategory
+                };
+              }
+            }
+          } catch (err) {
+            console.log('Sub categories API failed');
+          }
+        }
+        
+        if (foundData) {
+          setContentData(foundData);
+        } else {
+          setError('Content not found');
+        }
+      } catch (err) {
+        console.error('Error fetching content data:', err);
+        setError('Failed to load content data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchContentData();
+    }
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-300 rounded mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !contentData) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="text-center text-red-600">
+              <h1 className="text-2xl font-bold mb-4">Error</h1>
+              <p>{error || 'Content not found'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          {/* Header with dynamic color */}
+          <div 
+            className="p-8 text-white"
+            style={{ backgroundColor: contentData.colorCode || '#dc2626' }}
+          >
+            <h1 className="text-3xl font-bold mb-2">{contentData.contentTitle}</h1>
+            <p className="text-lg opacity-90">{contentData.metaDescription}</p>
+            {contentData.mainCategory && (
+              <p className="text-sm opacity-75 mt-2">Category: {contentData.mainCategory.title}</p>
+            )}
+          </div>
+          
+          {/* Content */}
+          <div className="p-8">
+            <div 
+              dangerouslySetInnerHTML={{ __html: contentData.contentDescription }}
+              className="prose prose-lg max-w-none"
+              style={{
+                fontFamily: 'Arial, sans-serif',
+                lineHeight: '1.6',
+                color: '#333'
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RecruitmentDetail; 
