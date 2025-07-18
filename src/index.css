@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile Zoom Out - Simple and effective approach */
+@media screen and (max-width: 768px) {
+  body {
+    transform: scale(0.6);
+    transform-origin: top left;
+    width: 166.67vw; /* Compensate for scale */
+    height: 166.67vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  body {
+    transform: scale(0.8);
+    transform-origin: top left;
+    width: 125vw; /* Compensate for scale */
+    height: 125vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    transform: scale(0.5);
+    transform-origin: top left;
+    width: 200vw; /* Compensate for scale */
+    height: 200vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(100%);
