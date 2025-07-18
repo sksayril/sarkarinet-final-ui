@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terms and Conditions for SaarkariResult.com - Your trusted source for government job information">
+    <meta name="keywords" content="terms and conditions, sarkari result, government jobs, policy">
+    <title>Terms and Conditions | SaarkariResult.com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .welcome-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+
+        .welcome-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .welcome-section p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.9em;
+        }
+
+        .section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .section li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .section li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .important {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .important strong {
+            color: #856404;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .contact-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .contact-email {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s ease;
+        }
+
+        .contact-email:hover {
+            background: rgba(255,255,255,0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .section-number {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8em;
+            }
+
+            .contact-section {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📃 Terms and Conditions</h1>
+            <p>SaarkariResult.com</p>
+        </div>
+
+        <div class="content">
+            <div class="welcome-section">
+                <h1>बिलकुल Aryan! नीचे तुम्हारी वेबसाइट saarkariresult.com के लिए एक प्रोफेशनल और SEO फ्रेंडly Terms and Conditions पेज का टेक्स्ट है:</h1>
+                <h2>Welcome to SaarkariResult.com!</h2>
+                <p>By accessing this website, you agree to be bound by the following <strong>terms and conditions</strong>. If you do not agree with any part of these terms, please do not use our website.</p>
+            </div>
+
+            <div class="section">
+                <h3><span class="section-number">1</span>Use of the Website</h3>
+                <ul>
+                    <li>The content provided on this website is for <span class="highlight">informational purposes only</span>.</li>
+                    <li>You agree not to misuse the site or its content.</li>
+                    <li>You must be at least 13 years of age to use this website.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><span class="section-number">2</span>Intellectual Property</h3>
+                <ul>
+                    <li>All content, logos, graphics, and materials available on <span class="highlight">SaarkariResult.com</span> are the property of the website unless stated otherwise.</li>
+                    <li>You may not copy, reproduce, or distribute any content without prior written permission.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><span class="section-number">3</span>No Government Affiliation</h3>
+                <ul>
+                    <li>We are <span class="highlight">not affiliated with any government body</span> or organization.</li>
+                    <li>We only <span class="highlight">share public job information</span> collected from official websites and employment news sources.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Accuracy of Information</h3>
+                <ul>
+                    <li>We try our best to keep the content updated and correct.</li>
+                    <li>However, <span class="highlight">we do not guarantee the accuracy</span> of any job-related information.</li>
+                    <li>Users must <span class="highlight">verify all information</span> from the official government website before applying.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><span class="section-number">5</span>Third-Party Links</h3>
+                <ul>
+                    <li>Our website may contain links to external websites.</li>
+                    <li>We are <span class="highlight">not responsible</span> for the content, privacy, or accuracy of any third-party websites.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><span class="section-number">6</span>Changes to Terms</h3>
+                <ul>
+                    <li>We reserve the right to change or modify these terms at any time.</li>
+                    <li>Continued use of the website after changes implies your acceptance of the updated terms.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><span class="section-number">7</span>Limitation of Liability</h3>
+                <ul>
+                    <li>We are <span class="highlight">not responsible</span> for any direct, indirect, or incidental loss or damage that may occur from using our website.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h3>📞 Contact Information</h3>
+            <p>For any queries regarding these Terms and Conditions, please contact us at:</p>
+            <a href="mailto:contact@saarkariresult.com" class="contact-email">
+                contact@saarkariresult.com
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 SaarkariResult.com | All Rights Reserved</p>
+            <p>Last Updated: July 2025</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -48,7 +48,7 @@ const Banner: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-yellow-400 text-black py-2 overflow-hidden">
+    <div className="bg-yellow-400 text-black py-3 overflow-hidden">
       <div className="w-full min-w-[1200px] px-4">
         <div className="flex items-center space-x-4">
           {/* Audio Button */}
@@ -67,9 +67,15 @@ const Banner: React.FC = () => {
           </button>
           
           {/* Marquee Text */}
-          <div className="flex-1 overflow-hidden">
-            <div className="animate-marquee whitespace-nowrap">
-              <span className="text-xl font-bold">
+          <div className="flex-1 overflow-hidden relative">
+            <div className="animate-marquee whitespace-nowrap flex">
+              <span className="text-xl font-bold px-4">
+                {marqueeText}
+              </span>
+              <span className="text-xl font-bold px-4">
+                {marqueeText}
+              </span>
+              <span className="text-xl font-bold px-4">
                 {marqueeText}
               </span>
             </div>

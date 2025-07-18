@@ -69,8 +69,11 @@ const Header: React.FC = () => {
           
           {/* Centered Title */}
           <div className="flex-1 text-center">
-            <h1 className="text-6xl font-bold tracking-wider whitespace-nowrap">SARKARI RESULT</h1>
-            <p className="text-4xl mt-2">www.sarkariresult.com</p>
+            <h1 className="text-7xl font-bold tracking-wider whitespace-nowrap">SARKARI RESULT</h1>
+            
+
+            <p className="text-4xl mt-2">WWW.SAARKARIRESULT.COM</p>
+
           </div>
           
           {/* Social Media Icons */}

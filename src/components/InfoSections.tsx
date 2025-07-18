@@ -143,13 +143,13 @@ At Sarkari Alert, we boast a dedicated team of seven individuals: saarkariresult
               <p className="text-sm text-gray-700 leading-relaxed text-justify">
                 {section.content}
               </p>
-              {index === 1 && (
+              {/* {index === 1 && (
                 <div className="mt-4 p-3 bg-gray-100 rounded-md">
                   <p className="text-sm text-gray-700">
                     <strong>• This Website Is Not Associated With Official Websites.</strong> All Information Provided Is For General Informational Purposes Only.
                   </p>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         ))}

@@ -29,11 +29,9 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
       const img = new Image();
       img.onload = () => {
         setOriginalDimensions({ width: img.width, height: img.height });
-        if (maintainAspectRatio) {
-          const aspectRatio = img.width / img.height;
-          setWidth(800);
-          setHeight(Math.round(800 / aspectRatio));
-        }
+        // Set default size but don't force aspect ratio
+        setWidth(800);
+        setHeight(600);
       };
       img.src = url;
     }
@@ -41,18 +39,12 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
 
   const handleWidthChange = (newWidth: number) => {
     setWidth(newWidth);
-    if (maintainAspectRatio && originalDimensions) {
-      const aspectRatio = originalDimensions.width / originalDimensions.height;
-      setHeight(Math.round(newWidth / aspectRatio));
-    }
+    // Remove automatic aspect ratio linking - allow independent changes
   };
 
   const handleHeightChange = (newHeight: number) => {
     setHeight(newHeight);
-    if (maintainAspectRatio && originalDimensions) {
-      const aspectRatio = originalDimensions.width / originalDimensions.height;
-      setWidth(Math.round(newHeight * aspectRatio));
-    }
+    // Remove automatic aspect ratio linking - allow independent changes
   };
 
   const resizeImage = () => {
@@ -64,11 +56,26 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
     const img = new Image();
 
     img.onload = () => {
-      canvas.width = width;
-      canvas.height = height;
+      let finalWidth = width;
+      let finalHeight = height;
+      
+      // If maintain aspect ratio is enabled, calculate the proper dimensions
+      if (maintainAspectRatio && originalDimensions) {
+        const aspectRatio = originalDimensions.width / originalDimensions.height;
+        if (width / height > aspectRatio) {
+          // Width is proportionally larger, adjust height
+          finalHeight = Math.round(width / aspectRatio);
+        } else {
+          // Height is proportionally larger, adjust width
+          finalWidth = Math.round(height * aspectRatio);
+        }
+      }
+      
+      canvas.width = finalWidth;
+      canvas.height = finalHeight;
       
       if (ctx) {
-        ctx.drawImage(img, 0, 0, width, height);
+        ctx.drawImage(img, 0, 0, finalWidth, finalHeight);
         const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
         setResizedUrl(resizedDataUrl);
       }
@@ -104,168 +111,191 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[90vh] flex flex-col">
-        {/* Header - Fixed */}
-        <div className="flex items-center justify-between p-6 border-b bg-gray-50 rounded-t-lg">
-          <h2 className="text-2xl font-bold text-gray-800">Photo Resizer</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-6xl h-[95vh] sm:h-[90vh] flex flex-col mx-auto">
+        {/* Header with Orange-to-Red Gradient */}
+        <div className="flex items-center justify-between p-4 sm:p-6 bg-gradient-to-r from-orange-500 to-red-600 rounded-t-lg">
+          <h2 className="text-lg sm:text-2xl font-bold text-white">Photo & Signature Resizer</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition-colors p-2 hover:bg-gray-200 rounded-full"
+            className="w-8 h-8 bg-red-700 hover:bg-red-800 text-white rounded-full flex items-center justify-center transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6">
-          {/* File Upload */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Upload Image
-            </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-purple-400 transition-colors">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileSelect}
-                className="hidden"
-              />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="flex items-center justify-center space-x-2 mx-auto px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
-              >
-                <Upload className="w-5 h-5" />
-                <span className="font-medium">Choose Image</span>
-              </button>
-              <p className="text-sm text-gray-500 mt-3">
-                Supports JPG, PNG, GIF (Max 10MB)
-              </p>
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col lg:flex-row p-4 sm:p-6 gap-4 sm:gap-6 overflow-y-auto">
+          {/* Left Panel - Controls */}
+          <div className="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+            {/* Section 1: Photo Upload */}
+            <div className="space-y-3">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800">1. Photo Upload Karein</h3>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base"
+                >
+                  Choose File
+                </button>
+                <span className="text-gray-600 font-medium text-sm sm:text-base break-all">
+                  {selectedFile ? selectedFile.name : "No file chosen"}
+                </span>
+              </div>
             </div>
-          </div>
 
-          {selectedFile && (
-            <>
-              {/* Original Image Preview */}
-              <div className="mb-6">
-                <h3 className="text-lg font-medium text-gray-800 mb-3">Original Image</h3>
-                <div className="border rounded-lg p-4 bg-gray-50">
-                  <img
-                    src={previewUrl}
-                    alt="Original"
-                    className="max-w-full max-h-48 mx-auto rounded shadow-sm"
-                  />
-                  {originalDimensions && (
-                    <p className="text-sm text-gray-600 mt-3 text-center font-medium">
-                      Original size: {originalDimensions.width} × {originalDimensions.height} pixels
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Resize Controls */}
-              <div className="mb-6">
-                <h3 className="text-lg font-medium text-gray-800 mb-3">Resize Settings</h3>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Width (pixels)
-                      </label>
-                      <input
-                        type="number"
-                        value={width}
-                        onChange={(e) => handleWidthChange(Number(e.target.value))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        min="1"
-                        max="4000"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Height (pixels)
-                      </label>
-                      <input
-                        type="number"
-                        value={height}
-                        onChange={(e) => handleHeightChange(Number(e.target.value))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        min="1"
-                        max="4000"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={maintainAspectRatio}
-                      onChange={(e) => setMaintainAspectRatio(e.target.checked)}
-                      className="mr-3 w-4 h-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                    />
-                    <span className="text-sm text-gray-700 font-medium">Maintain aspect ratio</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Resized Image Preview */}
-              {resizedUrl && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-800 mb-3">Resized Image</h3>
-                  <div className="border rounded-lg p-4 bg-gray-50">
-                    <img
-                      src={resizedUrl}
-                      alt="Resized"
-                      className="max-w-full max-h-48 mx-auto rounded shadow-sm"
-                    />
-                    <p className="text-sm text-gray-600 mt-3 text-center font-medium">
-                      New size: {width} × {height} pixels
-                    </p>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-
-        {/* Footer - Fixed with Action Buttons */}
-        <div className="border-t bg-gray-50 p-6 rounded-b-lg">
-          <div className="flex items-center justify-center space-x-4">
+            {/* Section 2: Size Input */}
             {selectedFile && (
-              <>
+              <div className="space-y-3">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800">2. Naya Size (pixels mein)</h3>
+                
+                {/* Original Dimensions Info */}
+                {originalDimensions && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                    <p className="text-sm text-blue-800 font-medium">
+                      Original Size: {originalDimensions.width} × {originalDimensions.height} pixels
+                    </p>
+                  </div>
+                )}
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Width (चौड़ाई)
+                    </label>
+                    <input
+                      type="number"
+                      value={width}
+                      onChange={(e) => handleWidthChange(Number(e.target.value))}
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                      min="1"
+                      max="4000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Height (लंबाई)
+                    </label>
+                    <input
+                      type="number"
+                      value={height}
+                      onChange={(e) => handleHeightChange(Number(e.target.value))}
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                      min="1"
+                      max="4000"
+                    />
+                  </div>
+                </div>
+                
+                {/* Aspect Ratio Toggle */}
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    checked={maintainAspectRatio}
+                    onChange={(e) => setMaintainAspectRatio(e.target.checked)}
+                    className="w-4 h-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                  />
+                  <span className="text-sm text-gray-700 font-medium">Maintain aspect ratio (अनुपात बनाए रखें)</span>
+                </div>
+                
+                {/* Quick Size Buttons */}
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => {
+                      if (originalDimensions) {
+                        setWidth(originalDimensions.width);
+                        setHeight(originalDimensions.height);
+                      }
+                    }}
+                    className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
+                  >
+                    Original Size
+                  </button>
+                  <button
+                    onClick={() => {
+                      setWidth(800);
+                      setHeight(600);
+                    }}
+                    className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
+                  >
+                    800×600
+                  </button>
+                  <button
+                    onClick={() => {
+                      setWidth(1024);
+                      setHeight(768);
+                    }}
+                    className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
+                  >
+                    1024×768
+                  </button>
+                  <button
+                    onClick={() => {
+                      setWidth(1920);
+                      setHeight(1080);
+                    }}
+                    className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
+                  >
+                    1920×1080
+                  </button>
+                </div>
+                
+                {/* Resize Button */}
                 <button
                   onClick={resizeImage}
                   disabled={isResizing}
-                  className="flex items-center justify-center space-x-2 px-8 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl font-medium"
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl"
                 >
                   {isResizing ? (
-                    <>
-                      <RotateCw className="w-5 h-5 animate-spin" />
+                    <div className="flex items-center justify-center space-x-2">
+                      <RotateCw className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                       <span>Resizing...</span>
-                    </>
+                    </div>
                   ) : (
-                    <span>Resize Image</span>
+                    "Resize Photo"
                   )}
                 </button>
-
-                {resizedUrl && (
-                  <button
-                    onClick={downloadImage}
-                    className="flex items-center space-x-2 px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl font-medium"
-                  >
-                    <Download className="w-5 h-5" />
-                    <span>Download Image</span>
-                  </button>
-                )}
-
-                <button
-                  onClick={resetImage}
-                  className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors font-medium"
-                >
-                  Upload New Image
-                </button>
-              </>
+              </div>
             )}
+
+            {/* Download Button */}
+            {resizedUrl && (
+              <button
+                onClick={downloadImage}
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-semibold text-base sm:text-lg transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+              >
+                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Download Resized Photo</span>
+              </button>
+            )}
+          </div>
+
+          {/* Right Panel - Preview */}
+          <div className="w-full lg:w-1/2 h-64 sm:h-80 lg:h-full">
+            <div className="h-full bg-gray-100 rounded-lg p-3 sm:p-4 flex items-center justify-center">
+              {previewUrl ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <img
+                    src={resizedUrl || previewUrl}
+                    alt="Preview"
+                    className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                  />
+                </div>
+              ) : (
+                <div className="text-center text-gray-500">
+                  <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">📷</div>
+                  <p className="text-base sm:text-lg font-medium">Photo preview yahan dikhega</p>
+                  <p className="text-xs sm:text-sm mt-2">Upload a photo to see preview</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -138,7 +138,7 @@ const ContentSections: React.FC = () => {
       <div className="w-full min-w-[1200px] px-4 py-6">
         <div className="grid grid-cols-3 gap-6" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
           {[...Array(6)].map((_, index) => (
-            <div key={index} className="bg-white border-2 border-red-600 rounded-lg overflow-hidden animate-pulse shadow-lg" style={{ minWidth: '380px' }}>
+            <div key={index} className="bg-white border-4 border-red-600 rounded-lg overflow-hidden animate-pulse shadow-lg" style={{ minWidth: '380px' }}>
               <div className="bg-gray-300 h-16"></div>
               <div className="p-4">
                 <div className="space-y-4">
@@ -184,7 +184,7 @@ const ContentSections: React.FC = () => {
   const totalResults = filteredSections.reduce((total, section) => total + section.allItems.length, 0);
 
   return (
-    <div className="w-full min-w-[1200px] px-4 py-6">
+    <div className="w-full min-w-[1200px] px-4 py-6 overflow-x-auto">
       {isSearching && filteredSections.length > 0 && (
         <div className="mb-4 text-center">
           <p className="text-lg text-gray-700">
@@ -201,10 +201,10 @@ const ContentSections: React.FC = () => {
           const hasMoreItems = section.allItems.length > maxItems;
           
           return (
-            <div key={index} className="bg-white border-2 border-red-600 rounded-lg overflow-hidden shadow-lg flex flex-col" style={{ minWidth: '380px' }}>
+            <div key={index} className="bg-white border-4 border-red-600 rounded-lg overflow-hidden shadow-lg flex flex-col relative" style={{ minWidth: '380px' }}>
               {/* Header - Centered */}
-              <div className={`${section.color} text-white p-4 text-center`}>
-                <h3 className="text-3xl font-bold">{section.title}</h3>
+              <div className={`${section.color} text-white p-4 text-center border-b-4 border-red-800 relative`}>
+                <h3 className="text-4xl font-black tracking-wide">{section.title}</h3>
                 {/* <p className="text-sm text-red-200 mt-1">
                   {displayItems.length} of {section.allItems.length} items
                 </p> */}
@@ -218,7 +218,7 @@ const ContentSections: React.FC = () => {
                     <li key={itemIndex} className="flex items-start space-x-3 py-1">
                       <Star className="w-6 h-6 text-yellow-500 mt-0.5 flex-shrink-0" />
                       <span 
-                        className="text-lg text-blue-600 cursor-pointer underline leading-relaxed"
+                        className="text-xl font-black text-blue-600 cursor-pointer underline leading-relaxed hover:text-blue-800 transition-colors"
                         onClick={() => handleItemClick(item)}
                       >
                         {item.contentTitle}
@@ -228,14 +228,14 @@ const ContentSections: React.FC = () => {
                 </ul>
                 
                 {/* Button Area - Bottom aligned */}
-                <div className="mt-6 pt-4 border-t border-gray-200 space-y-2">
+                <div className="mt-6 pt-4 border-t-4 border-gray-300 space-y-2">
                   {/* View More/Less Button */}
                   {hasMoreItems && (
                     <button 
-                      className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
+                      className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg border-2 border-green-800"
                       onClick={() => handleViewMore(section.title)}
                     >
-                      <span className="text-lg font-bold">
+                      <span className="text-lg font-black">
                         {isExpanded ? 'Show Less' : `View More (${section.allItems.length - maxItems} more)`}
                       </span>
                       <ArrowRight className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
@@ -244,10 +244,10 @@ const ContentSections: React.FC = () => {
                   
                   {/* View All Button */}
                   <button 
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg border-2 border-blue-800"
                     onClick={() => handleViewAll(section.title)}
                   >
-                    <span className="text-xl font-bold">View All</span>
+                    <span className="text-2xl font-black">View All</span>
                     <ArrowRight className="w-6 h-6" />
                   </button>
                 </div>
