@@ -27,7 +27,7 @@ const PrivacyPolicy: React.FC = () => {
           <div className="p-8">
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                At SaarkariResult.com, accessible from https://saarkariresult.com, the privacy of our visitors is of extreme importance to us. This Privacy Policy document outlines the types of personal information that is received and collected by SarkariResult.com and how it is used.
+                At SaarkariResult.com, accessible from https://saarkariresult.com, the privacy of our visitors is of extreme importance to us. This Privacy Policy document outlines the types of personal information that is received and collected by saarkariResult.com and how it is used.
               </p>
 
               <h2 className="text-2xl font-bold text-gray-800 mb-4">1. Information We Collect</h2>
@@ -49,7 +49,7 @@ const PrivacyPolicy: React.FC = () => {
 
               <h2 className="text-2xl font-bold text-gray-800 mb-4">3. Log Files</h2>
               <p className="text-gray-700 mb-4">
-                Like many other websites, SarkariResult.com uses log files. These files log visitors to the site — usually a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log files includes:
+                Like many other websites, saarkariResult.com uses log files. These files log visitors to the site — usually a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log files includes:
               </p>
               <ul className="list-disc pl-6 text-gray-700 mb-6 space-y-2">
                 <li>Internet Protocol (IP) addresses</li>
@@ -63,7 +63,7 @@ const PrivacyPolicy: React.FC = () => {
 
               <h2 className="text-2xl font-bold text-gray-800 mb-4">4. Cookies and Web Beacons</h2>
               <p className="text-gray-700 mb-4">
-                SarkariResult.com uses cookies to store information about visitors' preferences, record user-specific information on which pages the user accesses, and personalize or customize our web page content.
+                saarkariResult.com uses cookies to store information about visitors' preferences, record user-specific information on which pages the user accesses, and personalize or customize our web page content.
               </p>
               <p className="text-gray-700 mb-6">You can choose to disable cookies through your individual browser options.</p>
 
@@ -85,7 +85,7 @@ const PrivacyPolicy: React.FC = () => {
 
               <h2 className="text-2xl font-bold text-gray-800 mb-4">7. Children's Information</h2>
               <p className="text-gray-700 mb-6">
-                We do not knowingly collect any personally identifiable information from children under the age of 13. If a parent or guardian believes that SarkariResult.com has in its database the personally-identifiable information of a child under the age of 13, please contact us immediately and we will use our best efforts to promptly remove such information.
+                We do not knowingly collect any personally identifiable information from children under the age of 13. If a parent or guardian believes that saarkariResult.com has in its database the personally-identifiable information of a child under the age of 13, please contact us immediately and we will use our best efforts to promptly remove such information.
               </p>
 
               <h2 className="text-2xl font-bold text-gray-800 mb-4">8. Your Consent</h2>
@@ -104,7 +104,7 @@ const PrivacyPolicy: React.FC = () => {
               </p>
               <div className="bg-gray-100 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  📧 <strong>Email:</strong> <a href="mailto:sarkariresultcollaboration@gmail.com" className="text-blue-600 hover:text-blue-800 underline">sarkariresultcollaboration@gmail.com</a><br />
+                  📧 <strong>Email:</strong> <a href="mailto:saarkariresultcollaboration@gmail.com" className="text-blue-600 hover:text-blue-800 underline">saarkariresultcollaboration@gmail.com</a><br />
                   🌐 <strong>Website:</strong> <a href="https://saarkariresult.com" className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">https://saarkariresult.com</a>
                 </p>
               </div>

@@ -20,13 +20,20 @@ import DailyQuiz from './pages/DailyQuiz';
 import PhotoResizer from './pages/PhotoResizer';
 import SmartPrepProgressTracker from './pages/SmartPrepProgressTracker';
 import { SearchProvider } from './contexts/SearchContext';
+import { useScrollToTop } from './hooks/useScrollToTop';
+import ScrollToTopButton from './components/ScrollToTopButton';
+// import TitleSection from './components/TitleSection';
 
 function App() {
+  // Auto scroll to top on route change
+  useScrollToTop();
+
   return (
     <SearchProvider>
       <div className="min-h-screen bg-white overflow-x-auto" style={{ minWidth: '1200px' }}>
         <SEO />
         <Header />
+        {/* <TitleSection /> */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -45,6 +52,7 @@ function App() {
             <Route path="/disclaimer" element={<Disclaimer />} />
         </Routes>
         <Footer />
+        <ScrollToTopButton />
       </div>
     </SearchProvider>
   );

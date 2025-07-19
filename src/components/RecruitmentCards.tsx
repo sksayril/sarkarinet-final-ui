@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { slugify } from '../utils/slugify';
 import { useSearch } from '../contexts/SearchContext';
+import { scrollToTop } from '../utils/scrollToTop';
 
 interface TopDataItem {
   _id: string;
@@ -66,6 +67,7 @@ const RecruitmentCards: React.FC = () => {
 
   const handleCardClick = (card: TopDataItem) => {
     const slug = slugify(card.contentTitle);
+    scrollToTop();
     navigate(`/recruitment/${slug}`);
   };
 

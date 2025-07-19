@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sonic-momentum-466417-d2",
+  "private_key_id": "2f53149c0aa659d0ec6e69a6f6a9cfd8980333d7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCwciSNLEpmP0fN\nALGpTTPS/6oaw0ILO1SM0Ba+rKFHDWpj6HXx+iCt6OBJUn/wKDAaLkZnEz1/UQl0\nTmoUev+f8TFcHcwJfJTcnCPNfJhK6vLg5kpekQwtnhfm/9vLyfUPwl+Ipod462nu\nTU1uLKN3sRovd9jcHK4WQo9gxu/ydsYOMzoQpdMUNnw+TuyIpS1JPNJU3e2wo1qF\nVIUihpAWoZQChmoS8FHH1fJCy+M8G0ukNjvIURXZNaTnL2YW9hQBVxEI/kwE3C57\nsAWIQ9Cw7B/G9jxhR2bI239iX21rWvgHD6RL6qSYgrmw0zvxF64z4TNfU7NSuiR7\nBA82DOtpAgMBAAECggEACi8EUguQ3bbgR4I3PszAZXixEitb1/ccKaZm8alYA5hQ\nICUODaHAmhj7PPAghzVilVg/YvqWzY7ZS1etQrJYp5wNm8HygUep9dOjM1xyE7zc\nuMNB3pRjjgx2V7RDtM7asIao6eOmpQF9Uy4t/mJgKuvTVZMGtqmHGKzNxqmktqsw\no1d6Fg40iqbaoIzycohly6sd1hqM37xDq1Q1yKzYSjNT+5eEwjj4VSreBr4BGKwP\n0P4zlNgXXFlztPQXX8a3R8ZL1fzGpnfF8UTqkxTjhvzAFiaFmNrh/vxCGfzmBqqp\nWvVbce0dGgS9PgMgpG2QBMMBbvi0QieDRINgc1w5OwKBgQDnN4L40QIMad1aG6ZE\nfXWii0+t3kPCfRy2iX45GobgfrGXAfz4ELEDYFchc1WSBM4usEBBKIHMU2YgfZGy\nmQ7enEqJv00CZnQBmWAm/8wMAv/OGi1pvM2Yqj/OSiscK8s+Z4OpnTZN4NYSA6pe\n2l5gcHXCNOrarsgAmXfCBYfAEwKBgQDDW71jw2SoY2SEwHMwdE2r1T+CQMU2/ftL\nLl5TjS87yi6UecB6uSMlyXLkDtevnioOOpV2Tnr6TqFSXpkK+jELMmKcLouUl4I8\n/TDH5OvdurrOWTEz34/YWSJeisDArd4HjHr/gJw+JAHYujsPImsrssTM6Fgubz0R\nO8GAIvjuEwKBgF/hpD1cJvZQ3Ermll9mi2aZULRwLDc1vLdxctdpSa9Euo49c9LG\n0TDuPZOQiVahCYNQ8YRTsOezWfF1QPsH/6OOulY+70dkhwy2tqnVf58niz7Dmjtz\n4OpDB2ybUx8+hezd7jpjCEbpSrxzqq3k7igd2qdrXEzNGAEvovrhYjbjAoGAbhfU\nKlWh8zdYHWvrPmI8p1qc2MWxnmURafPumn1VIge1qlzWuRJ+mTvmsFkg+cpTfwNK\n2YouycLoLOg8rTAD1YCGi+e7J3ken0o8ZFpBBgrGXaVsEgSqJs1MjiT5rVwOZQip\nBDYxVt+p3r5MrCHEbbLoL2W81CZCLuUTDignStsCgYEA4fYlJfiFaA3Vf4Yz0Nz4\n8OVD4/VfA5nC2+6+CR42unFPntSB4Qsr7FmCVvuNzWKBODMRp2m6GDEWmLgM9H5t\nZkyszznk46WqCuwkilvo3G812Ldac9QsCc5nkmnvA+rYq8THyZ2US+Rz/eJkMkJZ\nvbHp5h4VlFoLXan8qusP4kk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "sarkariresults@sonic-momentum-466417-d2.iam.gserviceaccount.com",
+  "client_id": "103548428835729053857",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sarkariresults%40sonic-momentum-466417-d2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Star, Search, FileText, Briefcase, ExternalLink, Calendar, Tag } from 'lucide-react';
 import { slugify } from '../utils/slugify';
 import { useSearch } from '../contexts/SearchContext';
+import { scrollToTop } from '../utils/scrollToTop';
 
 interface TopDataItem {
   _id: string;
@@ -147,6 +148,7 @@ const SearchResults: React.FC = () => {
 
   const handleResultClick = (result: SearchResult) => {
     const slug = slugify(result.title);
+    scrollToTop();
     navigate(`/recruitment/${slug}`);
   };
 

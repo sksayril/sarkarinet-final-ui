@@ -99,10 +99,10 @@ const TermsConditions: React.FC = () => {
                 </p>
                 <div className="text-center">
                   <a 
-                    href="mailto:sarkariresultcollaboration@gmail.com" 
+                    href="mailto:saarkariresultcollaboration@gmail.com" 
                     className="text-blue-600 hover:text-blue-800 underline text-lg font-semibold"
                   >
-                    sarkariresultcollaboration@gmail.com
+                    saarkariresultcollaboration@gmail.com
                   </a>
                 </div>
               </div>

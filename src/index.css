@@ -45,11 +45,29 @@
   }
 }
 
+@keyframes marquee-slow {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .animate-marquee {
-  animation: marquee 45s linear infinite;
+  animation: marquee-slow 120s linear infinite;
 }
 
 .animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* For longer text, use even slower animation */
+.animate-marquee-long {
+  animation: marquee-slow 180s linear infinite;
+}
+
+.animate-marquee-long:hover {
   animation-play-state: paused;
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Youtube, Send, MessageCircle, Linkedin, } from 'lucide-react';
+import { Youtube, Send, MessageCircle, Linkedin, Cloud } from 'lucide-react';
+import { getGoogleCloudConfig } from '../utils/googleCloud';
 
 interface HomeContentData {
   _id: string;
@@ -24,6 +25,7 @@ const Header: React.FC = () => {
     telegram: 'https://t.me/saarkariresult',
     youtube: 'https://www.youtube.com/channel/UCVT29pLEmQMg2PSWnIaKKdw'
   });
+  const [googleCloudStatus, setGoogleCloudStatus] = useState<'loading' | 'connected' | 'error'>('loading');
 
   useEffect(() => {
     const fetchChannelLinks = async () => {
@@ -47,7 +49,20 @@ const Header: React.FC = () => {
       }
     };
 
+    // Check Google Cloud configuration
+    const checkGoogleCloud = () => {
+      const config = getGoogleCloudConfig();
+      if (config) {
+        setGoogleCloudStatus('connected');
+        console.log('Google Cloud configuration loaded:', config.projectId);
+      } else {
+        setGoogleCloudStatus('error');
+        console.warn('Google Cloud configuration not found');
+      }
+    };
+
     fetchChannelLinks();
+    checkGoogleCloud();
   }, []);
 
   const handleLinkClick = (url: string) => {
@@ -99,6 +114,20 @@ const Header: React.FC = () => {
             >
               <MessageCircle className="w-6 h-6 text-white" />
             </div>
+            
+            {/* Google Cloud Status Indicator */}
+            {/* <div 
+              className={`w-12 h-12 rounded-full flex items-center justify-center border-2 border-white shadow-2xl ${
+                googleCloudStatus === 'connected' 
+                  ? 'bg-gradient-to-r from-green-600 to-green-700' 
+                  : googleCloudStatus === 'error'
+                  ? 'bg-gradient-to-r from-red-600 to-red-700'
+                  : 'bg-gradient-to-r from-yellow-600 to-yellow-700'
+              }`}
+              title={`Google Cloud: ${googleCloudStatus === 'connected' ? 'Connected' : googleCloudStatus === 'error' ? 'Error' : 'Loading'}`}
+            >
+              <Cloud className="w-6 h-6 text-white" />
+            </div> */}
           </div>
         </div>
       </div>

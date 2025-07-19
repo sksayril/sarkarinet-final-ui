@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { X, Upload, Download, RotateCw } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X, Upload, Download, RotateCw, RefreshCw } from 'lucide-react';
 
 interface PhotoResizerModalProps {
   isOpen: boolean;
@@ -15,11 +15,24 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
   const [maintainAspectRatio, setMaintainAspectRatio] = useState<boolean>(true);
   const [originalDimensions, setOriginalDimensions] = useState<{ width: number; height: number } | null>(null);
   const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [quality, setQuality] = useState<number>(0.9);
+  const [fileType, setFileType] = useState<string>('image/jpeg');
+  const [error, setError] = useState<string>('');
+  const [manualWidthChange, setManualWidthChange] = useState<boolean>(false);
+  const [manualHeightChange, setManualHeightChange] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Reset state when modal opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      resetImage();
+    }
+  }, [isOpen]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
+      setError('');
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -29,71 +42,147 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
       const img = new Image();
       img.onload = () => {
         setOriginalDimensions({ width: img.width, height: img.height });
-        // Set default size but don't force aspect ratio
-        setWidth(800);
-        setHeight(600);
+        
+        // Set default size maintaining aspect ratio
+        const maxDimension = 800;
+        let newWidth = img.width;
+        let newHeight = img.height;
+        
+        if (img.width > maxDimension || img.height > maxDimension) {
+          if (img.width > img.height) {
+            newWidth = maxDimension;
+            newHeight = Math.round((img.height * maxDimension) / img.width);
+          } else {
+            newHeight = maxDimension;
+            newWidth = Math.round((img.width * maxDimension) / img.height);
+          }
+        }
+        
+        setWidth(newWidth);
+        setHeight(newHeight);
+      };
+      img.onerror = () => {
+        setError('Failed to load image. Please try another file.');
       };
       img.src = url;
+    } else if (file) {
+      setError('Please select a valid image file (JPEG, PNG, GIF, etc.)');
     }
   };
 
   const handleWidthChange = (newWidth: number) => {
+    if (newWidth <= 0) return;
+    
     setWidth(newWidth);
-    // Remove automatic aspect ratio linking - allow independent changes
+    setManualWidthChange(true);
+    
+    // Only auto-adjust height if aspect ratio is maintained AND user hasn't manually set height
+    if (maintainAspectRatio && originalDimensions && !manualHeightChange) {
+      const aspectRatio = originalDimensions.width / originalDimensions.height;
+      const newHeight = Math.round(newWidth / aspectRatio);
+      setHeight(newHeight);
+    }
   };
 
   const handleHeightChange = (newHeight: number) => {
+    if (newHeight <= 0) return;
+    
     setHeight(newHeight);
-    // Remove automatic aspect ratio linking - allow independent changes
+    setManualHeightChange(true);
+    
+    // Only auto-adjust width if aspect ratio is maintained AND user hasn't manually set width
+    if (maintainAspectRatio && originalDimensions && !manualWidthChange) {
+      const aspectRatio = originalDimensions.width / originalDimensions.height;
+      const newWidth = Math.round(newHeight * aspectRatio);
+      setWidth(newWidth);
+    }
   };
 
-  const resizeImage = () => {
-    if (!selectedFile) return;
+  // Force resize to exact dimensions regardless of aspect ratio
+  const forceResizeToExactDimensions = () => {
+    setMaintainAspectRatio(false);
+  };
+
+  const resizeImage = async () => {
+    if (!selectedFile || !previewUrl) {
+      setError('Please select an image first');
+      return;
+    }
 
     setIsResizing(true);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
+    setError('');
 
-    img.onload = () => {
-      let finalWidth = width;
-      let finalHeight = height;
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       
-      // If maintain aspect ratio is enabled, calculate the proper dimensions
-      if (maintainAspectRatio && originalDimensions) {
-        const aspectRatio = originalDimensions.width / originalDimensions.height;
-        if (width / height > aspectRatio) {
-          // Width is proportionally larger, adjust height
-          finalHeight = Math.round(width / aspectRatio);
-        } else {
-          // Height is proportionally larger, adjust width
-          finalWidth = Math.round(height * aspectRatio);
-        }
+      if (!ctx) {
+        throw new Error('Canvas context not available');
       }
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
       
-      canvas.width = finalWidth;
-      canvas.height = finalHeight;
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = previewUrl;
+      });
+
+      // Set canvas dimensions to exact requested size
+      canvas.width = width;
+      canvas.height = height;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
+
+      // Use better image smoothing for better quality
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      // Draw resized image to exact dimensions
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convert to data URL with specified quality and type
+      const mimeType = fileType === 'image/jpeg' ? 'image/jpeg' : 'image/png';
+      const resizedDataUrl = canvas.toDataURL(mimeType, quality);
       
-      if (ctx) {
-        ctx.drawImage(img, 0, 0, finalWidth, finalHeight);
-        const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-        setResizedUrl(resizedDataUrl);
-      }
+      setResizedUrl(resizedDataUrl);
+      
+      // Show success message
+      console.log(`Image successfully resized to ${width}×${height} pixels`);
+    } catch (err) {
+      console.error('Error resizing image:', err);
+      setError('Failed to resize image. Please try again.');
+    } finally {
       setIsResizing(false);
-    };
-
-    img.src = previewUrl;
+    }
   };
 
   const downloadImage = () => {
-    if (!resizedUrl) return;
+    if (!resizedUrl) {
+      setError('No resized image available. Please resize the image first.');
+      return;
+    }
 
-    const link = document.createElement('a');
-    link.href = resizedUrl;
-    link.download = `resized_${selectedFile?.name || 'image.jpg'}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const link = document.createElement('a');
+      link.href = resizedUrl;
+      
+      // Generate filename with dimensions
+      const originalName = selectedFile?.name || 'image';
+      const nameWithoutExt = originalName.split('.').slice(0, -1).join('.');
+      const extension = fileType === 'image/jpeg' ? 'jpg' : 'png';
+      const filename = `${nameWithoutExt}_${width}x${height}.${extension}`;
+      
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Error downloading image:', err);
+      setError('Failed to download image. Please try again.');
+    }
   };
 
   const resetImage = () => {
@@ -103,8 +192,24 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
     setWidth(800);
     setHeight(600);
     setOriginalDimensions(null);
+    setError('');
+    setQuality(0.9);
+    setFileType('image/jpeg');
+    setManualWidthChange(false);
+    setManualHeightChange(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+  };
+
+  const setPresetSize = (presetWidth: number, presetHeight: number) => {
+    setWidth(presetWidth);
+    setHeight(presetHeight);
+    setManualWidthChange(false);
+    setManualHeightChange(false);
+    // Temporarily disable aspect ratio for preset sizes to allow exact dimensions
+    if (maintainAspectRatio) {
+      setMaintainAspectRatio(false);
     }
   };
 
@@ -124,6 +229,13 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
           </button>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 mx-4 mt-2 rounded-lg">
+            {error}
+          </div>
+        )}
+
         {/* Main Content */}
         <div className="flex-1 flex flex-col lg:flex-row p-4 sm:p-6 gap-4 sm:gap-6 overflow-y-auto">
           {/* Left Panel - Controls */}
@@ -141,9 +253,10 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
                 />
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base"
+                  className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base flex items-center space-x-2"
                 >
-                  Choose File
+                  <Upload className="w-4 h-4" />
+                  <span>Choose File</span>
                 </button>
                 <span className="text-gray-600 font-medium text-sm sm:text-base break-all">
                   {selectedFile ? selectedFile.name : "No file chosen"}
@@ -204,6 +317,43 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
                   />
                   <span className="text-sm text-gray-700 font-medium">Maintain aspect ratio (अनुपात बनाए रखें)</span>
                 </div>
+                {maintainAspectRatio && (
+                  <p className="text-xs text-gray-500 italic">
+                    Tip: Uncheck this to set exact dimensions like 1280×720
+                  </p>
+                )}
+
+                {/* Quality and Format Settings */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Quality
+                    </label>
+                    <select
+                      value={quality}
+                      onChange={(e) => setQuality(Number(e.target.value))}
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                    >
+                      <option value={1.0}>High (100%)</option>
+                      <option value={0.9}>Good (90%)</option>
+                      <option value={0.8}>Medium (80%)</option>
+                      <option value={0.6}>Low (60%)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Format
+                    </label>
+                    <select
+                      value={fileType}
+                      onChange={(e) => setFileType(e.target.value)}
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                    >
+                      <option value="image/jpeg">JPEG</option>
+                      <option value="image/png">PNG</option>
+                    </select>
+                  </div>
+                </div>
                 
                 {/* Quick Size Buttons */}
                 <div className="flex flex-wrap gap-2">
@@ -219,49 +369,76 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
                     Original Size
                   </button>
                   <button
-                    onClick={() => {
-                      setWidth(800);
-                      setHeight(600);
-                    }}
+                    onClick={() => setPresetSize(1280, 720)}
+                    className="px-3 py-1 text-xs bg-blue-200 hover:bg-blue-300 text-blue-700 rounded transition-colors font-medium"
+                  >
+                    1280×720 (HD)
+                  </button>
+                  <button
+                    onClick={() => setPresetSize(1920, 1080)}
+                    className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
+                  >
+                    1920×1080 (Full HD)
+                  </button>
+                  <button
+                    onClick={() => setPresetSize(800, 600)}
                     className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
                   >
                     800×600
                   </button>
                   <button
-                    onClick={() => {
-                      setWidth(1024);
-                      setHeight(768);
-                    }}
+                    onClick={() => setPresetSize(1024, 768)}
                     className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
                   >
                     1024×768
                   </button>
                   <button
-                    onClick={() => {
-                      setWidth(1920);
-                      setHeight(1080);
-                    }}
+                    onClick={() => setPresetSize(400, 500)}
                     className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
                   >
-                    1920×1080
+                    400×500 (Passport)
+                  </button>
+                  <button
+                    onClick={() => setPresetSize(200, 200)}
+                    className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded transition-colors"
+                  >
+                    200×200 (Profile)
                   </button>
                 </div>
                 
-                {/* Resize Button */}
-                <button
-                  onClick={resizeImage}
-                  disabled={isResizing}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl"
-                >
-                  {isResizing ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <RotateCw className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-                      <span>Resizing...</span>
-                    </div>
-                  ) : (
-                    "Resize Photo"
-                  )}
-                </button>
+                {/* Resize Buttons */}
+                <div className="space-y-2">
+                  <button
+                    onClick={resizeImage}
+                    disabled={isResizing}
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl"
+                  >
+                    {isResizing ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <RotateCw className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                        <span>Resizing...</span>
+                      </div>
+                    ) : (
+                      "Resize Photo"
+                    )}
+                  </button>
+                  
+                  {/* Force HD Resize Button */}
+                  <button
+                    onClick={() => {
+                      setWidth(1280);
+                      setHeight(720);
+                      setMaintainAspectRatio(false);
+                      setManualWidthChange(false);
+                      setManualHeightChange(false);
+                      setTimeout(() => resizeImage(), 100);
+                    }}
+                    disabled={isResizing}
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl"
+                  >
+                    Force Resize to 1280×720 HD
+                  </button>
+                </div>
               </div>
             )}
 
@@ -269,10 +446,21 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
             {resizedUrl && (
               <button
                 onClick={downloadImage}
-                className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-semibold text-base sm:text-lg transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold text-base sm:text-lg transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
               >
                 <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Download Resized Photo</span>
+              </button>
+            )}
+
+            {/* Reset Button */}
+            {selectedFile && (
+              <button
+                onClick={resetImage}
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-semibold text-base sm:text-lg transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+              >
+                <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Reset</span>
               </button>
             )}
           </div>
@@ -287,6 +475,11 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
                     alt="Preview"
                     className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
                   />
+                  {resizedUrl && (
+                    <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs">
+                      {width} × {height}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="text-center text-gray-500">

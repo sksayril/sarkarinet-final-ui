@@ -132,24 +132,17 @@ At Sarkari Alert, we boast a dedicated team of seven individuals: saarkariresult
   ];
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="w-full min-w-[1200px] px-4 py-6">
       <div className="space-y-4">
         {sections.map((section, index) => (
-          <div key={index} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-            <div className={`${section.color} text-white p-3`}>
-              <h3 className="text-lg font-bold text-center">{section.title}</h3>
+          <div key={index} className="bg-white border-4 border-red-600 rounded-lg overflow-hidden shadow-lg">
+            <div className={`${section.color} text-white p-4 text-center border-b-4 border-red-800`}>
+              <h3 className="text-2xl font-bold tracking-wide">{section.title}</h3>
             </div>
-            <div className="p-4">
-              <p className="text-sm text-gray-700 leading-relaxed text-justify">
+            <div className="p-6">
+              <p className="text-base text-gray-800 leading-relaxed text-justify" style={{ fontFamily: 'Arial, sans-serif' }}>
                 {section.content}
               </p>
-              {/* {index === 1 && (
-                <div className="mt-4 p-3 bg-gray-100 rounded-md">
-                  <p className="text-sm text-gray-700">
-                    <strong>• This Website Is Not Associated With Official Websites.</strong> All Information Provided Is For General Informational Purposes Only.
-                  </p>
-                </div>
-              )} */}
             </div>
           </div>
         ))}

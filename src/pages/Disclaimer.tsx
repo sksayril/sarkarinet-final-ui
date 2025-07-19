@@ -84,11 +84,11 @@ const Disclaimer: React.FC = () => {
                 </p>
                 <div className="text-center">
                   <a 
-                    href="mailto:sarkariresultcollaboration@gmail.com" 
+                    href="mailto:saarkariresultcollaboration@gmail.com" 
                     className="text-blue-600 hover:text-blue-800 underline text-lg font-semibold flex items-center justify-center"
                   >
                     <span className="mr-2">📧</span>
-                    sarkariresultcollaboration@gmail.com
+                    saarkariresultcollaboration@gmail.com
                   </a>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { slugify } from '../utils/slugify';
+import { scrollToTop } from '../utils/scrollToTop';
 
 interface SubCategory {
   _id: string;
@@ -75,6 +76,7 @@ const CategoryPage: React.FC = () => {
 
   const handleItemClick = (item: SubCategory) => {
     const slug = slugify(item.contentTitle);
+    scrollToTop();
     navigate(`/recruitment/${slug}`);
   };
 

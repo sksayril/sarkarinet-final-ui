@@ -3,6 +3,7 @@ import { Star, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { slugify } from '../utils/slugify';
 import { useSearch } from '../contexts/SearchContext';
+import { scrollToTop } from '../utils/scrollToTop';
 
 interface SubCategory {
   _id: string;
@@ -107,6 +108,7 @@ const ContentSections: React.FC = () => {
 
   const handleItemClick = (item: SubCategory) => {
     const slug = slugify(item.contentTitle);
+    scrollToTop();
     navigate(`/recruitment/${slug}`);
   };
 
@@ -130,6 +132,7 @@ const ContentSections: React.FC = () => {
     };
     
     const route = routeMap[sectionTitle] || '/';
+    scrollToTop();
     navigate(route);
   };
 
@@ -204,7 +207,7 @@ const ContentSections: React.FC = () => {
             <div key={index} className="bg-white border-4 border-red-600 rounded-lg overflow-hidden shadow-lg flex flex-col relative" style={{ minWidth: '380px' }}>
               {/* Header - Centered */}
               <div className={`${section.color} text-white p-4 text-center border-b-4 border-red-800 relative`}>
-                <h3 className="text-4xl font-black tracking-wide">{section.title}</h3>
+                <h3 className="text-3xl font-bold tracking-wide" style={{ fontFamily: 'Arial, sans-serif' }}>{section.title}</h3>
                 {/* <p className="text-sm text-red-200 mt-1">
                   {displayItems.length} of {section.allItems.length} items
                 </p> */}
@@ -216,9 +219,10 @@ const ContentSections: React.FC = () => {
                 <ul className="space-y-4 flex-1">
                   {displayItems.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start space-x-3 py-1">
-                      <Star className="w-6 h-6 text-yellow-500 mt-0.5 flex-shrink-0" />
+                      <div className="w-2 h-2 bg-black rounded-full mt-3 flex-shrink-0"></div>
                       <span 
-                        className="text-xl font-black text-blue-600 cursor-pointer underline leading-relaxed hover:text-blue-800 transition-colors"
+                        className="text-xl font-normal text-blue-600 cursor-pointer underline leading-relaxed hover:text-blue-800 transition-colors"
+                        style={{ fontFamily: 'Arial, sans-serif' }}
                         onClick={() => handleItemClick(item)}
                       >
                         {item.contentTitle}
