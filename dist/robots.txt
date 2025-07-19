@@ -1,13 +1,72 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://sarkariresult.com/sitemap.xml
+# Sitemap location
+Sitemap: https://saarkariresult.com/sitemap.xml
 
-# Crawl-delay
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Crawl delay (optional - helps with server load)
 Crawl-delay: 1
+
+# Allow all important directories
+Allow: /latest-jobs/
+Allow: /results/
+Allow: /admit-card/
+Allow: /answer-key/
+Allow: /syllabus/
+Allow: /admission/
+Allow: /daily-quiz/
+Allow: /photo-resizer/
+Allow: /smartprep-progress-tracker/
+
+# Allow static assets
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /assets/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.ico
+Allow: /*.woff
+Allow: /*.woff2
+Allow: /*.ttf
+Allow: /*.eot
 
 # Disallow admin or private areas (if any)
 Disallow: /admin/
 Disallow: /private/
-Disallow: /api/ 
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Block common bot patterns
+User-agent: *
+Disallow: /search?
+Disallow: /*?*
+Disallow: /temp/
+Disallow: /cache/
+Disallow: /logs/
+Disallow: /backup/ 
