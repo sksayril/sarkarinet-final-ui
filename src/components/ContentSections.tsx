@@ -221,7 +221,7 @@ const ContentSections: React.FC = () => {
                     <li key={itemIndex} className="flex items-start space-x-3 py-1">
                       <div className="w-2 h-2 bg-black rounded-full mt-3 flex-shrink-0"></div>
                       <span 
-                        className="text-xl font-normal text-blue-600 cursor-pointer underline leading-relaxed hover:text-blue-800 transition-colors"
+                        className="text-xl font-normal text-blue-700 cursor-pointer underline leading-relaxed hover:text-blue-800 transition-colors"
                         style={{ fontFamily: 'Arial, sans-serif' }}
                         onClick={() => handleItemClick(item)}
                       >

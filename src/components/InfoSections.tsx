@@ -5,43 +5,58 @@ const InfoSections: React.FC = () => {
     {
       title: 'Sarkari Job For 12th Pass',
       color: 'bg-red-700',
-      content: `Sarkari Result is a page on saarkariresult.com, that provides information on all types of government jobs in India. You can find information on: Sarkari jobs
+      content: `Saarkariresult.com : Resources To Help Students to Get Government Jobs (Sarkari Jobs/Sarkari Naukari) 😎
 
-UPSC
-SSC
-Teaching Jobs
-Railway jobs
-State government jobs like PSC, Banks, Police & Teacher jobs, Assistant post jobs, High Court, Supreme Court, District Court jobs, Driver, Peon, clerk, etc.
-You can find the Sarkari result online form at saarkariresult.com. After applying for the exam, you have to appear for the exam and wait for the Sarkari exam result. You can also find information on Sarkari Result 2025 and Rojgar results here. The website also has a separate column for each government job information, like upcoming notifications, latest jobs, admit card, result, answer keys, and syllabus.
-`
+The future remains uncertain; however, a government job through Sarkari Jobs can provide the stability and security you seek. Click to explore trusted resources and expert assistance from Sarkari Result.
+
+In August 2021 alone, more than 1.5 million individuals across rural and urban India lost their jobs. The COVID-19 pandemic has had a profound impact on the job market, prompting both small enterprises and multinational corporations to reassess their staffing needs.
+
+Are you currently unemployed due to economic disruption? Are you employed in a multinational firm facing restructuring? Are you a recent graduate searching for your first opportunity? Are you contemplating whether a government position is the right path for you?
+
+You have arrived at the right destination. Sarkari Result offers valuable insights into the advantages of Indian government employment and is committed to guiding you towards a secure, long-term career that aligns with your aspirations.
+
+So We are Always Ready to Deliver the Latest Government Job Vacancies, Results, Admit Cards, and More — Superfast, All in One Place! Only On Sarkari Result.`
     },
     {
       title: 'Government Job Alerts On Sarkari Result: What We Share with You',
       color: 'bg-red-700',
-      content: `On Sarkari Result we provide you all Sarkari job notifications. You can search govt jobs here as per your qualification and your job location choices. Here you can get Sarkari result 10th pass job and 10+2 job and also get job info for graduation, post-graduation, BA, BSc, B.Tech, B.E, B. Com, diploma like I.T.I., Polytechnic, and College Admission Details, etc.
+      content: `🔎 Why To Choose Government Jobs With Sarkari Result?
+In India, a Sarkari Naukri—or government job—is widely regarded as one of the most prestigious and secure career options. 🏛️ It offers long-term job security 🔐, handsome salaries 💰, pension benefits 🧾, and a professional work environment 👔 that fosters respect, stability, and growth 📈.
 
-Also, It provides you all the Free Job Alert like up police results, UP Board Result 2025, RRB Group D, RRB NTPC, UP Police, SSC GD, SSC CHSL, etc.This is the best platform in India that provides the latest exam-related information in the Hindi language to the candidates who preparing for Sarkari jobs. This page provides all the notifications related to the new exams like Railway Job, Banks, UPSC, Board Result, Police, Police SI, SSC CPO SI, etc
-`
+Beyond financial rewards 💵, a government job provides a sense of purpose 🎯 and public service 🤝. Working in a Sarkari Naukri means contributing meaningfully to the development and welfare of the nation 🇮🇳.
+
+📉 Rising Unemployment and the Growing Demand for Sarkari Results
+According to the Centre for Monitoring Indian Economy (CMIE) 📊, India’s unemployment rate increased from 6.5% in November 2020 to 7.75% in October 2021. In today’s competitive and uncertain job market 😟, the demand for Sarkari Naukri notifications has surged 📢. Aspirants now actively rely on platforms like SarkariResult 💻 for real-time updates ⏱️ on the latest job vacancies 📝, exam dates 📆, admit cards 🎫, and results 📄.
+
+💼 High-Paying Government Jobs in India
+Some of the most lucrative and sought-after government jobs in India include positions in the:
+
+1. 🏆 Indian Administrative Service (IAS)
+
+2. 🌐 Indian Foreign Service (IFS)
+
+3. 🚓 Indian Police Service (IPS)
+
+These roles not only offer attractive pay scales 💸 and job perks 🎁 but also prestige 🏅 and influence 🧠. They are, however, highly competitive ⚔️, requiring a deep understanding of the application process, eligibility criteria, and exam patterns 📚.`
     },
     {
       title: 'Easy Guide to Landing a Government Job!',
       color: 'bg-red-700',
-      content: `Want a government job in India? It might seem tough with so much competition, but don’t worry! Here’s a simple guide in four steps to help you get closer to your dream government job.
+      content: `⭐ Why to Choose Only SarkariResult?
+When it comes to preparing for UPSC, SSC, Railway, Banking, or State Government Exams, SarkariResult stands out as the most trusted and feature-rich platform for millions of aspirants across India. 🇮🇳
 
-Know the Job Details with Sarkari Result (सरकारी रिजल्ट)
-First up, you need to know everything about the job you’re applying for. Government jobs have rules like age limits, needed education, and application deadlines. Plus, you might have to take an exam.
+What makes SarkariResult different from others?
+✅ Real-Time AI Voice Chatbot Support 🤖
+Need instant help or exam guidance? Our AI-powered voice chatbot is available 24/7 to answer your doubts, guide your preparation, and offer personalized support — just like a real mentor.
 
-Sarkari Result (सरकारी रिजल्ट) helps by giving you a one-page summary with all the key details like:
+✅ Challenging Quizzes to Sharpen Your Skills 🧠
+Master your exams with our tough and intelligently designed quizzes, created to simulate real exam difficulty. These quizzes are tailored for UPSC, SSC, Banking, and more — helping you identify your weak areas and improve faster.
 
-Number of jobs available
-Important dates to remember
-Application fee amount
-Education you need
-Age rules
-Exam details
-A link to apply online
-This page has everything you need to move from Step 1 to Step 4 and get closer to your government job in India. 
-`
+✅ Exclusive Productivity Tools – All in One Place 🛠️
+From image resizers for document uploads to PDF converters, and more — SarkariResult gives you access to essential tools you need during the application process, all under one roof.
+
+✅ Superfast, Reliable, and Accurate Updates ⚡
+Get instant alerts for new government job notifications, exam dates, admit cards, results, and cut-off marks — without delay or confusion.`
     },
     {
       title: 'Eligibility: What’s Needed to Apply',
