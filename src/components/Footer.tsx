@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
             </div>
             <div className="mt-6">
               <p className="text-gray-400 text-sm leading-relaxed">
-                Stay updated with latest government job notifications, exam dates, and results. Join our community for instant updates.
+              SaarkariResult.com for Sarkari Result, Sarkari Result jobs, Sarkari Result admit cards & Sarkari Result online forms. Sarkari Result 2025 live updates.
               </p>
             </div>
           </div>

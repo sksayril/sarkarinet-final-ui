@@ -54,44 +54,88 @@ From image resizers for document uploads to PDF converters, and more — Sarkari
 ✅ Superfast, Reliable, and Accurate Updates ⚡
 Get instant alerts for new government job notifications, exam dates, admit cards, results, and cut-off marks — without delay or confusion.`
     },
-//     {
-//       title: 'Eligibility: What’s Needed to Apply',
-//       color: 'bg-red-700',
-//       content: `Government jobs need more than just a good interview. Each job has different rules about who can apply. These rules can be about your age, your education, where you’re from, your work experience, marital status, and gender.`
-//     },
-//     {
-//       title: 'Important Dates: Mark Your Calendar!',
-//       color: 'bg-red-700',
-//       content: `Remembering all the important dates is super crucial. You don’t want to miss your chance because you forgot a date.
+    {
+      title: '🏛️ What Kind of Government Jobs Can I Get in India?',
+      color: 'bg-red-700',
+      content: `India offers a wide variety of Sarkari Naukri for every qualification — from 10th pass to graduates and postgraduates. Here's a quick look at major categories:
 
-// Some dates to keep in mind are:
+🔹 Civil Services (UPSC) – IAS, IPS, IFS – top-level jobs with prestige, power & pay.
+🔹 SSC Exams – CGL, CHSL, MTS, Steno – for 12th pass & graduates.
+🔹 Railway Jobs (RRB) – Station Master, Technician, Loco Pilot & Group D roles.
+🔹 Banking Jobs (IBPS, SBI, RBI) – PO, Clerk, SO, RBI Grade B – ideal for commerce & general grads.
+🔹 Defence & Police – Army, Navy, Air Force, CRPF, BSF, State Police.
+🔹 Teaching Jobs – TET, CTET, UGC-NET for school and college-level teaching.
+🔹 State Govt Jobs – via State PSCs – Revenue Officer, Sub Inspector, Forest Officer, etc.
+🔹 PSU Jobs – BHEL, ONGC, NTPC – Engineers & Management Trainees via GATE.
+🔹 Other Jobs – Indian Post (GDS, Postman), Court Jobs, Metro, FCI, LIC, ESIC & more.
 
-// When you can start applying
-// The last date to apply online
-// The last date to pay the exam fee
-// When the exam is (or if it gets moved to a new date)
-// The last date to change your exam location
-// When the first results will be available
-// Sarkari Result shows all these dates in an easy chart, so you won’t forget!
-// `
-//     },
-//     {
-//       title: 'Sections We Cover On Sarkari Result',
-//       color: 'bg-red-700',
-//       content: `We all know that, nowadays government jobs are significant for every youth, and many youths of India are working hard and preparing for these jobs, with the help of these sections you will get any government recruitment notification.
+🎯 No matter your background or goal, there's a Sarkari Job for you — and SarkariResult helps you find it, prepare for it, and get it.`
+    },
+    {
+      title: '🎯 How to Get a Government Job in This Competitive Era?',
+      color: 'bg-red-700',
+      content: `Getting a government job (Sarkari Naukri) in today’s competitive world may seem tough — but with the right strategy, tools, and dedication, it's absolutely possible.
 
-// Latest Jobs / Online Form
-// Admit Cards
-// Answer Keys
-// Result
-// Syllabus
-// Current Affairs
-// Sarkari Exam
-// Sarkari Exam is a term used for government exams in India. Every year, various government bodies like SSC, UPSC, Railway, and other state govt institutions like – UPSSSC, MPPEB, RPSC, CGPSC, BPSC, etc, conduct exams to select candidates for government jobs. These exams may include written tests, interviews, physical tests, etc. Candidates who qualify in these exams are chosen for final selection.
+Here’s a step-by-step roadmap to help you succeed:
 
-// Sarkari exams (सरकारी एग्जाम) are too much competitive, in India and candidates need to prepare well by studying the syllabus, practicing questions / Previous year papers, and staying updated with current affairs, which is too important for every Sarkari Exams. In India, there are many popular exams like – SSC CGL, UPSC Civil Services, RRB NTPC, UPTET, Super TET, REET, and CTET. Government exams provide opportunities for stable government jobs and employment in India
-// `
-//     },
+🔹 1. Choose Your Target Exam/Field
+Decide whether you want to go for UPSC, SSC, Banking, Railways, Teaching, Police, or State-level jobs. Focus helps you prepare better.
+
+🔹 2. Understand the Exam Pattern & Syllabus
+Go through the official syllabus, previous year papers, and exam structure. Knowing what to study is half the battle won.
+
+🔹 3. Follow a Daily Study Plan
+Create a realistic timetable with dedicated hours for each subject, revision, and practice. Stay consistent — even 4 focused hours a day can do wonders.
+
+🔹 4. Take Mock Tests & Solve Quizzes
+Practice with online mock tests, quizzes, and previous papers to improve speed, accuracy, and confidence.
+
+🔹 5. Stay Updated with Notifications
+Use platforms like saarkariresult.com/latest-jobs to get real-time alerts on job openings, exam dates, admit cards & results — don’t miss any opportunity.
+
+🔹 6. Use Smart Tools & Resources
+Use handy tools like image resizers, PDF converters, signature croppers, and AI-based help from SarkariResult to speed up the application process.
+
+🔹 7. Stay Motivated & Avoid Distractions
+It’s a tough race — but remember, lakhs crack these exams every year. Stay focused, be patient, and don’t compare your journey with others.
+
+✅ With smart preparation, consistent effort, and the right guidance, a government job is within your reach — and SarkariResult is here to help you at every step.`
+    },
+    {
+      title: '📝 Sarkari Result Online Application Process ?',
+      color: 'bg-red-700',
+      content: `Applying for a Sarkari Naukri through SaarkariResult.com is easy and hassle-free. Follow this simple process to apply online for any government job:
+
+🔹 Step 1: Visit the Official Notification
+Carefully read the job notification on SaarkariResult.com. Check eligibility, important dates, vacancy details, and application instructions.
+
+🔹 Step 2: Click on the “Apply Online” Link
+Click on the Apply Online button provided with the job post. It will redirect you to the official website of the recruiting body (like UPSC, SSC, IBPS, etc.).
+
+🔹 Step 3: Register Yourself
+If you’re a new user, complete your registration with basic details like name, email, mobile number, etc. You’ll receive login credentials.
+
+🔹 Step 4: Fill the Application Form
+Log in using your credentials and fill in all required details — personal info, educational background, preferences, etc.
+
+🔹 Step 5: Upload Required Documents
+Upload scanned copies of:
+
+Photograph 📷
+
+Signature ✍️
+
+Certificates (if required)
+Use image resizer and PDF tools available on SarkariResult to meet size guidelines.
+
+🔹 Step 6: Pay the Application Fee
+Pay online via UPI, Net Banking, Credit/Debit Card, etc. Save the receipt for future reference.
+
+🔹 Step 7: Final Submit & Print
+Review your form, click Final Submit, and take a printout or save the PDF copy of your application.
+
+✅ That’s it! You’re done. SarkariResult also updates you with real-time alerts on admit cards, exam dates, results, and cut-offs – so you stay ahead.`
+    },
 //     {
 //       title: 'Eligibility Criteria for Sarkari Exams',
 //       color: 'bg-red-700',

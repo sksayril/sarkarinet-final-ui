@@ -16,20 +16,20 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({
-  title = 'Sarkari Result - Latest Government Jobs, Results, Admit Cards',
-  description = 'Find latest Sarkari job vacancies, exam results, admit cards, and government job updates at SarkariResult.com. Get all information about government jobs, online forms, exams, and results in one place.',
-  keywords = 'sarkari result, government jobs, sarkari naukri, government exam results, admit card, online form, sarkari job vacancy',
+  title = 'SaarkariResult.com : Sarkari Result 2025, Sarkari Results, saarkariresult.com 2025 , sarkariresult 2025',
+  description = 'SaarkariResult.com for Sarkari Result, Sarkari Result jobs, Sarkari Result admit cards & Sarkari Result online forms. Sarkari Result 2025 live updates',
+  keywords = 'saarkari result, government jobs, saarkari naukri, government exam results, admit card, online form, saarkari job vacancy',
   image = '/PhotoRoom-20250716_202655.png',
-  url = 'https://sarkariresult.com',
+  url = 'https://saarkariresult.com',
   type = 'website',
   publishedTime,
   modifiedTime,
-  author = 'Sarkari Result',
+  author = 'Saarkari Result',
   section,
   tags = []
 }) => {
-  const fullUrl = url.startsWith('http') ? url : `https://sarkariresult.com${url}`;
-  const fullImageUrl = image.startsWith('http') ? image : `https://sarkariresult.com${image}`;
+  const fullUrl = url.startsWith('http') ? url : `https://saarkariresult.com${url}`;
+  const fullImageUrl = image.startsWith('http') ? image : `https://saarkariresult.com${image}`;
 
   return (
     <Helmet>
@@ -48,7 +48,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={fullImageUrl} />
-      <meta property="og:site_name" content="Sarkari Result" />
+      <meta property="og:site_name" content="Saarkari Result" />
       <meta property="og:locale" content="en_US" />
       
       {/* Twitter Card Meta Tags */}
@@ -56,7 +56,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullImageUrl} />
-      <meta name="twitter:site" content="@sarkariresult" />
+      <meta name="twitter:site" content="@saarkariresult" />
       
       {/* Article specific meta tags */}
       {type === 'article' && (
@@ -93,7 +93,7 @@ const SEO: React.FC<SEOProps> = ({
             "name": "Sarkari Result",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://sarkariresult.com/PhotoRoom-20250716_202655.png"
+              "url": "https://saarkariresult.com/PhotoRoom-20250716_202655.png"
             }
           },
           ...(type === 'article' && {
