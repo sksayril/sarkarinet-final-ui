@@ -1,6 +1,28 @@
 import React from 'react';
 
 const InfoSections: React.FC = () => {
+  // Function to convert text content to properly formatted paragraphs with clickable links
+  const formatContent = (content: string) => {
+    // Split content into paragraphs
+    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    
+    return paragraphs.map((paragraph, index) => {
+      // Convert .com links to clickable elements
+      const formattedParagraph = paragraph.replace(
+        /(\b(?:https?:\/\/)?[a-zA-Z0-9-]+\.com\b)/g,
+        (match) => {
+          const url = match.startsWith('http') ? match : `https://${match}`;
+          return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${match}</a>`;
+        }
+      );
+      
+      return (
+        <p key={index} className="text-base text-gray-800 leading-relaxed text-justify mb-4" style={{ fontFamily: 'Arial, sans-serif' }}>
+          <span dangerouslySetInnerHTML={{ __html: formattedParagraph }} />
+        </p>
+      );
+    });
+  };
   const sections = [
     {
       title: 'Saarkariresult.com : Resources To Help Students to Get Government Jobs (Sarkari Jobs/Sarkari Naukari) 😎',
@@ -195,9 +217,7 @@ At Sarkari Alert, we boast a dedicated team of seven individuals: saarkariresult
               <h3 className="text-2xl font-bold tracking-wide">{section.title}</h3>
             </div>
             <div className="p-6">
-              <p className="text-base text-gray-800 leading-relaxed text-justify" style={{ fontFamily: 'Arial, sans-serif' }}>
-                {section.content}
-              </p>
+              {formatContent(section.content)}
             </div>
           </div>
         ))}

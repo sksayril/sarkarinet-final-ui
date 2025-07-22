@@ -113,8 +113,8 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
     setError('');
 
     try {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
       
       if (!ctx) {
         throw new Error('Canvas context not available');
@@ -147,7 +147,7 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
       const mimeType = fileType === 'image/jpeg' ? 'image/jpeg' : 'image/png';
       const resizedDataUrl = canvas.toDataURL(mimeType, quality);
       
-      setResizedUrl(resizedDataUrl);
+        setResizedUrl(resizedDataUrl);
       
       // Show success message
       console.log(`Image successfully resized to ${width}×${height} pixels`);
@@ -166,8 +166,8 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
     }
 
     try {
-      const link = document.createElement('a');
-      link.href = resizedUrl;
+    const link = document.createElement('a');
+    link.href = resizedUrl;
       
       // Generate filename with dimensions
       const originalName = selectedFile?.name || 'image';
@@ -176,9 +176,9 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
       const filename = `${nameWithoutExt}_${width}x${height}.${extension}`;
       
       link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     } catch (err) {
       console.error('Error downloading image:', err);
       setError('Failed to download image. Please try again.');
@@ -408,20 +408,20 @@ const PhotoResizerModal: React.FC<PhotoResizerModalProps> = ({ isOpen, onClose }
                 
                 {/* Resize Buttons */}
                 <div className="space-y-2">
-                  <button
-                    onClick={resizeImage}
-                    disabled={isResizing}
-                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl"
-                  >
-                    {isResizing ? (
-                      <div className="flex items-center justify-center space-x-2">
-                        <RotateCw className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-                        <span>Resizing...</span>
-                      </div>
-                    ) : (
-                      "Resize Photo"
-                    )}
-                  </button>
+                <button
+                  onClick={resizeImage}
+                  disabled={isResizing}
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg hover:shadow-xl"
+                >
+                  {isResizing ? (
+                    <div className="flex items-center justify-center space-x-2">
+                      <RotateCw className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                      <span>Resizing...</span>
+                    </div>
+                  ) : (
+                    "Resize Photo"
+                  )}
+                </button>
                   
                   {/* Force HD Resize Button */}
                   <button
