@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { slugify } from '../utils/slugify';
 
@@ -43,6 +43,7 @@ const RecruitmentDetail: React.FC = () => {
   const [contentData, setContentData] = useState<ContentData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchContentData = async () => {
@@ -116,6 +117,17 @@ const RecruitmentDetail: React.FC = () => {
     }
   }, [slug]);
 
+  // Disable content editing after content is rendered
+  useEffect(() => {
+    if (contentRef.current && contentData) {
+      const editableElements = contentRef.current.querySelectorAll('[contenteditable="true"], [contenteditable]');
+      editableElements.forEach((element) => {
+        (element as HTMLElement).contentEditable = 'false';
+        (element as HTMLElement).style.cursor = 'default';
+      });
+    }
+  }, [contentData]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -167,8 +179,9 @@ const RecruitmentDetail: React.FC = () => {
           {/* Content */}
           <div className="p-8">
             <div 
+              ref={contentRef}
               dangerouslySetInnerHTML={{ __html: contentData.contentDescription }}
-              className="prose prose-lg max-w-none"
+              className="prose prose-lg max-w-none recruitment-content"
               style={{
                 fontFamily: 'Arial, sans-serif',
                 lineHeight: '1.6',

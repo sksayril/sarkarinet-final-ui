@@ -92,3 +92,23 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+/* Disable content editing in recruitment content */
+.recruitment-content *[contenteditable="true"] {
+  -webkit-user-modify: read-only !important;
+  -moz-user-modify: read-only !important;
+  user-modify: read-only !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.recruitment-content table,
+.recruitment-content td,
+.recruitment-content th,
+.recruitment-content div,
+.recruitment-content span,
+.recruitment-content p {
+  -webkit-user-modify: read-only !important;
+  -moz-user-modify: read-only !important;
+  user-modify: read-only !important;
+}
