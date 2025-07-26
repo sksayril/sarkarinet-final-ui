@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
         const allNavItems: NavItem[] = [
           { path: '/', label: 'Home' },
           ...categoryNavItems,
-          { path: '/aivoice', label: 'AI Assistant' }
+          // { path: '/aivoice', label: 'AI Assistant' }
         ];
         
         setNavItems(allNavItems);
@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
     { path: '/answer-key', label: 'Answer Key' },
     { path: '/syllabus', label: 'Syllabus' },
     { path: '/admission', label: 'Admission' },
-    { path: '/aivoice', label: 'AI Assistant' },
+    // { path: '/aivoice', label: 'AI Assistant' },
     { path: '/test-aivoice', label: 'Test AI' }
         ]);
       } finally {

@@ -90,7 +90,10 @@ const Banner: React.FC = () => {
               ref={marqueeRef}
               className="whitespace-nowrap flex"
               style={{
-                animation: `marquee-slow ${marqueeDuration}s linear infinite`,
+                animationName: 'marquee-slow',
+                animationDuration: `${marqueeDuration}s`,
+                animationTimingFunction: 'linear',
+                animationIterationCount: 'infinite',
                 animationPlayState: 'running'
               }}
               onMouseEnter={(e) => {

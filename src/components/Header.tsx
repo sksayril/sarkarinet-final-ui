@@ -115,7 +115,7 @@ const Header: React.FC = () => {
             >
               <MessageCircle className="w-6 h-6 text-white" />
             </div>
-            <Link to="/aivoice">
+            {/* <Link to="/aivoice">
               <div 
                 className="w-12 h-12 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center cursor-pointer hover:from-purple-700 hover:to-purple-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
                 title="AI Assistant"
@@ -123,7 +123,33 @@ const Header: React.FC = () => {
               >
                 <Bot className="w-6 h-6 text-white" />
               </div>
-            </Link>
+            </Link> */}
+            
+            {/* Test Thumbnail Popup Button */}
+            {/* <button
+              onClick={() => {
+                if ((window as any).showThumbnailPopup) {
+                  (window as any).showThumbnailPopup();
+                } else {
+                  console.log('Thumbnail popup not ready yet');
+                }
+              }}
+              className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border border-white"
+              title="Test Thumbnail Popup"
+            >
+              <span className="text-white text-xs font-bold">T</span>
+            </button>
+             */}
+            {/* Thumbnail Status Indicator */}
+            {/* <div className="text-white text-xs opacity-75">
+              {localStorage.getItem('thumbnailPopupLastShown') ? (
+                <span title={`Last shown: ${new Date(localStorage.getItem('thumbnailPopupLastShown')!).toLocaleString()}`}>
+                  📸
+                </span>
+              ) : (
+                <span title="Never shown">⏰</span>
+              )}
+            </div> */}
             
             {/* Google Cloud Status Indicator */}
             {/* <div 

@@ -9,6 +9,7 @@ import ContentSections from '../components/ContentSections';
 // import TopPagesTable from '../components/TopPagesTable';
 import InfoSections from '../components/InfoSections';
 import FAQ from '../components/FAQ';
+import ThumbnailPopup from '../components/ThumbnailPopup';
 import { useSearch } from '../contexts/SearchContext';
 
 const Home: React.FC = () => {
@@ -19,6 +20,9 @@ const Home: React.FC = () => {
       <Banner />
       <ActionButtons />
       <SearchBar />
+      
+      {/* Thumbnail Popup */}
+      <ThumbnailPopup />
       
       {/* Show search results when searching */}
       {isSearching && searchQuery && <SearchResults />}
