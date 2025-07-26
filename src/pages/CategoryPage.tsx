@@ -22,6 +22,9 @@ const CategoryPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { categorySlug } = useParams<{ categorySlug: string }>();
+  
+  console.log(`📄 CategoryPage loaded with categorySlug: ${categorySlug}, pathname: ${location.pathname}`);
+  
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

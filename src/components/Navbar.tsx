@@ -52,7 +52,8 @@ const Navbar: React.FC = () => {
         // Add Home as the first item
         const allNavItems: NavItem[] = [
           { path: '/', label: 'Home' },
-          ...categoryNavItems
+          ...categoryNavItems,
+          { path: '/aivoice', label: 'AI Assistant' }
         ];
         
         setNavItems(allNavItems);
@@ -66,7 +67,9 @@ const Navbar: React.FC = () => {
     { path: '/results', label: 'Results' },
     { path: '/answer-key', label: 'Answer Key' },
     { path: '/syllabus', label: 'Syllabus' },
-    { path: '/admission', label: 'Admission' }
+    { path: '/admission', label: 'Admission' },
+    { path: '/aivoice', label: 'AI Assistant' },
+    { path: '/test-aivoice', label: 'Test AI' }
         ]);
       } finally {
         setLoading(false);
@@ -102,6 +105,7 @@ const Navbar: React.FC = () => {
             <Link
               key={item.path}
               to={item.path}
+              onClick={() => console.log(`🔗 Navbar link clicked: ${item.path}`)}
               className={`py-6 px-8 text-lg font-bold hover:bg-gray-800 transition-colors whitespace-nowrap ${
                 location.pathname === item.path ? 'bg-gray-800' : ''
               }`}

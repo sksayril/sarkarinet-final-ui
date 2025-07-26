@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Youtube, Send, MessageCircle, Linkedin, Cloud } from 'lucide-react';
+import { Youtube, Send, MessageCircle, Linkedin, Cloud, Bot } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { getGoogleCloudConfig } from '../utils/googleCloud';
 
 interface HomeContentData {
@@ -114,6 +115,15 @@ const Header: React.FC = () => {
             >
               <MessageCircle className="w-6 h-6 text-white" />
             </div>
+            <Link to="/aivoice">
+              <div 
+                className="w-12 h-12 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center cursor-pointer hover:from-purple-700 hover:to-purple-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
+                title="AI Assistant"
+                onClick={() => console.log('🤖 Header AI Assistant button clicked!')}
+              >
+                <Bot className="w-6 h-6 text-white" />
+              </div>
+            </Link>
             
             {/* Google Cloud Status Indicator */}
             {/* <div 

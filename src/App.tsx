@@ -18,6 +18,7 @@ import TermsConditions from './pages/TermsConditions';
 import Disclaimer from './pages/Disclaimer';
 import DailyQuiz from './pages/DailyQuiz';
 import PhotoResizer from './pages/PhotoResizer';
+import AIVoice from './pages/AIVoice';
 import SmartPrepProgressTracker from './pages/SmartPrepProgressTracker';
 import { SearchProvider } from './contexts/SearchContext';
 import { useScrollToTop } from './hooks/useScrollToTop';
@@ -27,6 +28,8 @@ import ScrollToTopButton from './components/ScrollToTopButton';
 function App() {
   // Auto scroll to top on route change
   useScrollToTop();
+  
+  console.log('🚀 App component loaded, routes configured');
 
   return (
     <SearchProvider>
@@ -42,6 +45,8 @@ function App() {
           <Route path="/daily-quiz" element={<DailyQuiz />} />
           <Route path="/photo-resizer" element={<PhotoResizer />} />
           <Route path="/smartprep-progress-tracker" element={<SmartPrepProgressTracker />} />
+          <Route path="/aivoice" element={<AIVoice />} />
+          <Route path="/test-aivoice" element={<div>Test AI Voice Route Working!</div>} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/disclaimer" element={<Disclaimer />} />

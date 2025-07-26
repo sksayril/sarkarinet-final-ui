@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Sparkles, X, RotateCcw } from 'lucide-react';
-import AIAssistantModal from './AIAssistantModal';
+import { useNavigate } from 'react-router-dom';
 import { useSearch } from '../contexts/SearchContext';
 
 const SearchBar: React.FC = () => {
-  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const { searchQuery, setSearchQuery, isSearching, setIsSearching, clearSearch } = useSearch();
+  const navigate = useNavigate();
 
   // Update input value when search query changes
   useEffect(() => {
@@ -60,7 +60,10 @@ const SearchBar: React.FC = () => {
             </button>
           </div>
           <button 
-            onClick={() => setIsAIModalOpen(true)}
+            onClick={() => {
+              console.log('🤖 SearchBar AI Assistant button clicked! Navigating to /aivoice');
+              navigate('/aivoice');
+            }}
             className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-full flex items-center space-x-3 hover:from-purple-700 hover:to-purple-800 whitespace-nowrap shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-2 border-purple-500"
           >
             <Sparkles className="w-6 h-6" />
@@ -87,10 +90,6 @@ const SearchBar: React.FC = () => {
         )}
       </div>
       
-      <AIAssistantModal 
-        isOpen={isAIModalOpen} 
-        onClose={() => setIsAIModalOpen(false)} 
-      />
     </>
   );
 };
