@@ -8,14 +8,19 @@ const PhotoResizer: React.FC = () => {
   const [resizedUrl, setResizedUrl] = useState<string>('');
   const [width, setWidth] = useState<string>('800');
   const [height, setHeight] = useState<string>('600');
-  const [maintainAspectRatio, setMaintainAspectRatio] = useState<boolean>(true);
+  const [maintainAspectRatio, setMaintainAspectRatio] = useState<boolean>(false);
   const [originalDimensions, setOriginalDimensions] = useState<{ width: number; height: number } | null>(null);
   const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [quality, setQuality] = useState<number>(90);
+  const [format, setFormat] = useState<string>('JPEG');
+  const [rotation, setRotation] = useState<number>(0);
+  const [error, setError] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
+      setError('');
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -25,80 +30,184 @@ const PhotoResizer: React.FC = () => {
       const img = new Image();
       img.onload = () => {
         setOriginalDimensions({ width: img.width, height: img.height });
-        // Set default size but don't force aspect ratio
+        // Set default size
         setWidth('800');
         setHeight('600');
       };
       img.src = url;
+    } else if (file) {
+      setError('Please select a valid image file (JPEG, PNG, GIF, etc.)');
     }
   };
 
   const handleWidthChange = (newWidth: string) => {
     setWidth(newWidth);
-    // Remove automatic aspect ratio linking - allow independent changes
   };
 
   const handleHeightChange = (newHeight: string) => {
     setHeight(newHeight);
-    // Remove automatic aspect ratio linking - allow independent changes
   };
 
-  const resizeImage = () => {
-    if (!selectedFile) return;
+  const resizeImage = async () => {
+    if (!selectedFile) {
+      setError('Please select an image first');
+      return;
+    }
 
-    // Convert string values to numbers, use 0 if empty or invalid
+    // Convert string values to numbers
     const widthNum = parseInt(width) || 0;
     const heightNum = parseInt(height) || 0;
 
-    if (widthNum === 0 || heightNum === 0) {
-      alert('Please enter valid width and height values');
+    if (widthNum <= 0 || heightNum <= 0) {
+      setError('Please enter valid width and height values (greater than 0)');
       return;
     }
 
     setIsResizing(true);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
+    setError('');
 
-    img.onload = () => {
-      let finalWidth = widthNum;
-      let finalHeight = heightNum;
+    try {
+      // Create a canvas for exact dimension resizing
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       
-      // If maintain aspect ratio is enabled, calculate the proper dimensions
-      if (maintainAspectRatio && originalDimensions) {
-        const aspectRatio = originalDimensions.width / originalDimensions.height;
-        if (widthNum / heightNum > aspectRatio) {
-          // Width is proportionally larger, adjust height
-          finalHeight = Math.round(widthNum / aspectRatio);
+      if (!ctx) {
+        throw new Error('Canvas context not available');
+      }
+
+      // Set exact dimensions
+      canvas.width = widthNum;
+      canvas.height = heightNum;
+
+      // Create image element
+      const img = new Image();
+      
+      img.onload = () => {
+        // Clear canvas
+        ctx.clearRect(0, 0, widthNum, heightNum);
+        
+        // Apply rotation if needed
+        if (rotation !== 0) {
+          // Save the current context state
+          ctx.save();
+          
+          // Move to center of canvas
+          ctx.translate(widthNum / 2, heightNum / 2);
+          
+          // Apply rotation (convert degrees to radians)
+          const radians = (rotation * Math.PI) / 180;
+          ctx.rotate(radians);
+          
+          // Calculate dimensions for rotated image
+          let drawWidth, drawHeight;
+          
+          if (maintainAspectRatio) {
+            // Calculate aspect ratio to fit within bounds
+            const imgAspectRatio = img.width / img.height;
+            const targetAspectRatio = widthNum / heightNum;
+            
+            if (imgAspectRatio > targetAspectRatio) {
+              drawWidth = widthNum;
+              drawHeight = widthNum / imgAspectRatio;
+            } else {
+              drawHeight = heightNum;
+              drawWidth = heightNum * imgAspectRatio;
+            }
+          } else {
+            drawWidth = widthNum;
+            drawHeight = heightNum;
+          }
+          
+          // Draw image centered
+          ctx.drawImage(img, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+          
+          // Restore the context state
+          ctx.restore();
         } else {
-          // Height is proportionally larger, adjust width
-          finalWidth = Math.round(heightNum * aspectRatio);
+          // No rotation - draw normally
+          if (maintainAspectRatio) {
+            // Calculate aspect ratio to fit within bounds
+            const imgAspectRatio = img.width / img.height;
+            const targetAspectRatio = widthNum / heightNum;
+            
+            let drawWidth, drawHeight, offsetX = 0, offsetY = 0;
+            
+            if (imgAspectRatio > targetAspectRatio) {
+              // Image is wider than target, fit to width
+              drawWidth = widthNum;
+              drawHeight = widthNum / imgAspectRatio;
+              offsetY = (heightNum - drawHeight) / 2;
+            } else {
+              // Image is taller than target, fit to height
+              drawHeight = heightNum;
+              drawWidth = heightNum * imgAspectRatio;
+              offsetX = (widthNum - drawWidth) / 2;
+            }
+            
+            ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+          } else {
+            // Force exact dimensions (may distort image)
+            ctx.drawImage(img, 0, 0, widthNum, heightNum);
+          }
         }
-      }
-      
-      canvas.width = finalWidth;
-      canvas.height = finalHeight;
-      
-      if (ctx) {
-        ctx.drawImage(img, 0, 0, finalWidth, finalHeight);
-        const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-        setResizedUrl(resizedDataUrl);
-      }
-      setIsResizing(false);
-    };
 
-    img.src = previewUrl;
+        // Convert to base64 with specified format and quality
+        let mimeType = 'image/jpeg';
+        if (format === 'PNG') mimeType = 'image/png';
+        if (format === 'WEBP') mimeType = 'image/webp';
+        
+        const qualityValue = quality / 100;
+        const resizedDataUrl = canvas.toDataURL(mimeType, qualityValue);
+        
+        setResizedUrl(resizedDataUrl);
+        console.log(`✅ Image successfully resized to EXACT ${widthNum}×${heightNum} pixels`);
+      };
+
+      img.onerror = () => {
+        throw new Error('Failed to load image');
+      };
+
+      // Load image from file
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        if (e.target?.result) {
+          img.src = e.target.result as string;
+        }
+      };
+      fileReader.readAsDataURL(selectedFile);
+
+    } catch (err) {
+      console.error('Error resizing image:', err);
+      setError('Failed to resize image. Please try again.');
+    } finally {
+      setIsResizing(false);
+    }
   };
 
   const downloadImage = () => {
-    if (!resizedUrl) return;
+    if (!resizedUrl) {
+      setError('No resized image available. Please resize the image first.');
+      return;
+    }
 
-    const link = document.createElement('a');
-    link.href = resizedUrl;
-    link.download = `resized_${selectedFile?.name || 'image.jpg'}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const link = document.createElement('a');
+      link.href = resizedUrl;
+      
+      // Generate filename with dimensions
+      const originalName = selectedFile?.name || 'image';
+      const nameWithoutExt = originalName.split('.').slice(0, -1).join('.');
+      const extension = format.toLowerCase();
+      const filename = `${nameWithoutExt}_${width}x${height}.${extension}`;
+      
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Error downloading image:', err);
+      setError('Failed to download image. Please try again.');
+    }
   };
 
   const resetImage = () => {
@@ -108,6 +217,10 @@ const PhotoResizer: React.FC = () => {
     setWidth('800');
     setHeight('600');
     setOriginalDimensions(null);
+    setError('');
+    setQuality(90);
+    setFormat('JPEG');
+    setRotation(0);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -220,6 +333,75 @@ const PhotoResizer: React.FC = () => {
                     <span className="text-lg text-gray-700 font-semibold">Maintain aspect ratio (अनुपात बनाए रखें)</span>
                   </div>
                   
+                  {/* Dimension Mode Indicator */}
+                  <div className={`px-4 py-3 rounded-xl border-2 font-semibold text-lg ${
+                    maintainAspectRatio 
+                      ? 'bg-blue-50 border-blue-200 text-blue-800' 
+                      : 'bg-red-50 border-red-200 text-red-800'
+                  }`}>
+                    {maintainAspectRatio ? (
+                      <span>📐 Mode: Aspect Ratio Maintained (Image will fit within {width}×{height})</span>
+                    ) : (
+                      <span>🎯 Mode: Exact Dimensions (Image will be exactly {width}×{height} pixels)</span>
+                    )}
+                  </div>
+                  
+                  {/* Quality and Format Controls */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-lg font-bold text-gray-700 mb-3">
+                        Quality
+                      </label>
+                      <select
+                        value={quality}
+                        onChange={(e) => setQuality(Number(e.target.value))}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg font-semibold"
+                      >
+                        <option value={100}>High (100%)</option>
+                        <option value={90}>Good (90%)</option>
+                        <option value={80}>Medium (80%)</option>
+                        <option value={60}>Low (60%)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-lg font-bold text-gray-700 mb-3">
+                        Format
+                      </label>
+                      <select
+                        value={format}
+                        onChange={(e) => setFormat(e.target.value)}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg font-semibold"
+                      >
+                        <option value="JPEG">JPEG</option>
+                        <option value="PNG">PNG</option>
+                        <option value="WEBP">WEBP</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-lg font-bold text-gray-700 mb-3">
+                        Rotation
+                      </label>
+                      <select
+                        value={rotation}
+                        onChange={(e) => setRotation(Number(e.target.value))}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg font-semibold"
+                      >
+                        <option value={0}>0°</option>
+                        <option value={90}>90°</option>
+                        <option value={180}>180°</option>
+                        <option value={270}>270°</option>
+                        <option value={360}>360°</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  {/* Error Message */}
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                      {error}
+                    </div>
+                  )}
+                  
                   {/* Quick Size Buttons */}
                   <div className="flex flex-wrap gap-3">
                     <button
@@ -253,12 +435,30 @@ const PhotoResizer: React.FC = () => {
                     </button>
                     <button
                       onClick={() => {
+                        setWidth('1280');
+                        setHeight('720');
+                      }}
+                      className="px-4 py-2 text-sm bg-blue-200 hover:bg-blue-300 text-blue-700 rounded-lg transition-colors font-semibold"
+                    >
+                      1280×720 (HD)
+                    </button>
+                    <button
+                      onClick={() => {
                         setWidth('1920');
                         setHeight('1080');
                       }}
                       className="px-4 py-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors font-semibold"
                     >
-                      1920×1080
+                      1920×1080 (Full HD)
+                    </button>
+                    <button
+                      onClick={() => {
+                        setWidth('1460');
+                        setHeight('720');
+                      }}
+                      className="px-4 py-2 text-sm bg-green-200 hover:bg-green-300 text-green-700 rounded-lg transition-colors font-semibold"
+                    >
+                      1460×720
                     </button>
                   </div>
                   
@@ -288,6 +488,17 @@ const PhotoResizer: React.FC = () => {
                 >
                   <Download className="w-6 h-6" />
                   <span>Download Resized Photo</span>
+                </button>
+              )}
+
+              {/* Reset Button */}
+              {selectedFile && (
+                <button
+                  onClick={resetImage}
+                  className="w-full px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white rounded-xl font-bold text-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-3"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                  <span>Reset & Upload New Image</span>
                 </button>
               )}
             </div>

@@ -34,12 +34,17 @@ interface ContentData {
   metaDescription: string;
   colorCode?: string;
   mainCategory?: {
+    _id: string;
     title: string;
   };
 }
 
 const RecruitmentDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { mainCategory, subcategorySlug, slug } = useParams<{ 
+    mainCategory?: string; 
+    subcategorySlug?: string; 
+    slug?: string 
+  }>();
   const [contentData, setContentData] = useState<ContentData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +55,15 @@ const RecruitmentDetail: React.FC = () => {
       try {
         setLoading(true);
         
+        // Determine which slug to use
+        const targetSlug = subcategorySlug || slug;
+        
+        if (!targetSlug) {
+          setError('No slug provided');
+          setLoading(false);
+          return;
+        }
+        
         // Try to find data in both APIs
         let foundData: ContentData | null = null;
         
@@ -59,7 +73,7 @@ const RecruitmentDetail: React.FC = () => {
           if (topDataResponse.ok) {
             const topData = await topDataResponse.json();
             const topDataItem = topData.topDataList?.find((item: TopDataItem) => 
-              slugify(item.contentTitle) === slug
+              slugify(item.contentTitle) === targetSlug
             );
             if (topDataItem) {
               foundData = {
@@ -82,7 +96,7 @@ const RecruitmentDetail: React.FC = () => {
             if (subDataResponse.ok) {
               const subData = await subDataResponse.json();
               const subDataItem = subData.subCategories?.find((item: SubCategory) => 
-                slugify(item.contentTitle) === slug
+                slugify(item.contentTitle) === targetSlug
               );
               if (subDataItem) {
                 foundData = {
@@ -112,10 +126,8 @@ const RecruitmentDetail: React.FC = () => {
       }
     };
 
-    if (slug) {
-      fetchContentData();
-    }
-  }, [slug]);
+    fetchContentData();
+  }, [subcategorySlug, slug]);
 
   // Disable content editing after content is rendered
   useEffect(() => {

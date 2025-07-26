@@ -33,7 +33,15 @@ const RecruitmentCards: React.FC = () => {
         }
         
         const data = await response.json();
-        setCards(data.topDataList || []);
+        const topDataList = data.topDataList || [];
+        
+        // Sort recruitment cards in descending order (newest first)
+        const sortedCards = topDataList.sort((a: TopDataItem, b: TopDataItem) => {
+          // Sort by _id in descending order (newest first)
+          return b._id.localeCompare(a._id);
+        });
+        
+        setCards(sortedCards);
         setError(null);
       } catch (err) {
         console.error('Error fetching top data:', err);

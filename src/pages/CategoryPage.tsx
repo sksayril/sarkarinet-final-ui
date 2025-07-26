@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { slugify } from '../utils/slugify';
 import { scrollToTop } from '../utils/scrollToTop';
@@ -21,6 +21,7 @@ interface SubCategory {
 const CategoryPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { categorySlug } = useParams<{ categorySlug: string }>();
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +31,7 @@ const CategoryPage: React.FC = () => {
     const fetchSubCategories = async () => {
       try {
         setLoading(true);
+        
         const response = await fetch('https://api.dhanlaxmii.com/category/sub');
         
         if (!response.ok) {
@@ -39,11 +41,10 @@ const CategoryPage: React.FC = () => {
         const data = await response.json();
         const allSubCategories = data.subCategories || [];
         
-        // Get category from current URL path
-        const pathSegments = location.pathname.split('/');
-        const categorySlug = pathSegments[1]; // Get the first segment after /
+        // Get category from URL parameter
+        const currentSlug = categorySlug || '';
         
-        // Convert URL slug back to category title
+        // Convert URL slug back to category title - handle both static and dynamic mappings
         const categoryMap: { [key: string]: string } = {
           'latest-jobs': 'Latest Jobs',
           'admit-card': 'Admit Card',
@@ -53,7 +54,27 @@ const CategoryPage: React.FC = () => {
           'admission': 'Admission'
         };
         
-        const currentCategoryTitle = categoryMap[categorySlug] || 'Category';
+        // First try the static mapping
+        let currentCategoryTitle = categoryMap[currentSlug];
+        
+        // If not found in static mapping, try to find it in the API data
+        if (!currentCategoryTitle) {
+          // Look for a category that matches the slug
+          const matchingCategory = allSubCategories.find((item: SubCategory) => {
+            const categorySlugFromTitle = item.mainCategory.title.toLowerCase().replace(/\s+/g, '-');
+            return categorySlugFromTitle === currentSlug;
+          });
+          
+          if (matchingCategory) {
+            currentCategoryTitle = matchingCategory.mainCategory.title;
+          }
+        }
+        
+        // If still not found, use a default
+        if (!currentCategoryTitle) {
+          currentCategoryTitle = 'Category';
+        }
+        
         setCategoryTitle(currentCategoryTitle);
         
         // Filter subcategories by main category
@@ -61,7 +82,13 @@ const CategoryPage: React.FC = () => {
           (item: SubCategory) => item.mainCategory.title === currentCategoryTitle
         );
         
-        setSubCategories(filteredCategories);
+        // Sort subcategories in descending order (newest first)
+        const sortedCategories = filteredCategories.sort((a: SubCategory, b: SubCategory) => {
+          // Sort by _id in descending order (newest first)
+          return b._id.localeCompare(a._id);
+        });
+        
+        setSubCategories(sortedCategories);
         setError(null);
       } catch (err) {
         console.error('Error fetching sub categories:', err);
@@ -72,12 +99,13 @@ const CategoryPage: React.FC = () => {
     };
 
     fetchSubCategories();
-  }, [location.pathname]);
+  }, [categorySlug]);
 
   const handleItemClick = (item: SubCategory) => {
     const slug = slugify(item.contentTitle);
+    const mainCategorySlug = item.mainCategory.title.toLowerCase().replace(/\s+/g, '-');
     scrollToTop();
-    navigate(`/recruitment/${slug}`);
+    navigate(`/${mainCategorySlug}/${slug}`);
   };
 
   if (loading) {

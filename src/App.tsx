@@ -37,19 +37,23 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-            <Route path="/latest-jobs" element={<CategoryPage />} />
-            <Route path="/admit-card" element={<CategoryPage />} />
-            <Route path="/results" element={<CategoryPage />} />
-            <Route path="/answer-key" element={<CategoryPage />} />
-            <Route path="/syllabus" element={<CategoryPage />} />
-            <Route path="/admission" element={<CategoryPage />} />
-            <Route path="/recruitment/:slug" element={<RecruitmentDetail />} />
-            <Route path="/daily-quiz" element={<DailyQuiz />} />
-            <Route path="/photo-resizer" element={<PhotoResizer />} />
-            <Route path="/smartprep-progress-tracker" element={<SmartPrepProgressTracker />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-conditions" element={<TermsConditions />} />
-            <Route path="/disclaimer" element={<Disclaimer />} />
+          
+          {/* Specific routes for detailed pages - must come before dynamic route */}
+          <Route path="/daily-quiz" element={<DailyQuiz />} />
+          <Route path="/photo-resizer" element={<PhotoResizer />} />
+          <Route path="/smartprep-progress-tracker" element={<SmartPrepProgressTracker />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-conditions" element={<TermsConditions />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          
+          {/* Dynamic subcategory route - handles URLs like /results/aryan-testing */}
+          <Route path="/:mainCategory/:subcategorySlug" element={<RecruitmentDetail />} />
+          
+          {/* Recruitment route for recruitment cards (no main category) */}
+          <Route path="/recruitment/:slug" element={<RecruitmentDetail />} />
+          
+          {/* Dynamic category route - handles all category pages */}
+          <Route path="/:categorySlug" element={<CategoryPage />} />
         </Routes>
         <Footer />
         <ScrollToTopButton />

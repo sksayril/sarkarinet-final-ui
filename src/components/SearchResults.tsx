@@ -77,8 +77,18 @@ const SearchResults: React.FC = () => {
         const contentResponse = await fetch('https://api.dhanlaxmii.com/category/sub');
         const contentData = await contentResponse.json();
         
-        setRecruitmentCards(recruitmentData.topDataList || []);
-        setContentSections(contentData.subCategories || []);
+        // Sort recruitment cards in descending order (newest first)
+        const sortedRecruitmentCards = (recruitmentData.topDataList || []).sort((a: TopDataItem, b: TopDataItem) => {
+          return b._id.localeCompare(a._id);
+        });
+        
+        // Sort content sections in descending order (newest first)
+        const sortedContentSections = (contentData.subCategories || []).sort((a: SubCategory, b: SubCategory) => {
+          return b._id.localeCompare(a._id);
+        });
+        
+        setRecruitmentCards(sortedRecruitmentCards);
+        setContentSections(sortedContentSections);
         setError(null);
       } catch (err) {
         console.error('Error fetching search data:', err);
@@ -143,13 +153,22 @@ const SearchResults: React.FC = () => {
       }
     });
 
-    return results;
+    // Sort results in descending order (newest first) by ID
+    return results.sort((a, b) => b.id.localeCompare(a.id));
   }, [recruitmentCards, contentSections, searchQuery, isSearching]);
 
   const handleResultClick = (result: SearchResult) => {
     const slug = slugify(result.title);
     scrollToTop();
-    navigate(`/recruitment/${slug}`);
+    
+    if (result.type === 'content' && result.mainCategory) {
+      // For content items, use the new URL structure with main category
+      const mainCategorySlug = result.mainCategory.toLowerCase().replace(/\s+/g, '-');
+      navigate(`/${mainCategorySlug}/${slug}`);
+    } else {
+      // For recruitment items, use the old structure (they don't have main category)
+      navigate(`/recruitment/${slug}`);
+    }
   };
 
   if (loading) {

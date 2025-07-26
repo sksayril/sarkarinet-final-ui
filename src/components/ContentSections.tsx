@@ -57,6 +57,15 @@ const ContentSections: React.FC = () => {
           return acc;
         }, {});
 
+        // Sort subcategories within each category in descending order
+        // Sort by _id (assuming newer items have higher _id values) or by creation date
+        Object.keys(groupedData).forEach(categoryTitle => {
+          groupedData[categoryTitle].sort((a: SubCategory, b: SubCategory) => {
+            // Sort by _id in descending order (newest first)
+            return b._id.localeCompare(a._id);
+          });
+        });
+
         // Convert to sections format with all items stored
         const sectionsData: Section[] = Object.entries(groupedData).map(([title, items]) => ({
           title,
@@ -108,8 +117,9 @@ const ContentSections: React.FC = () => {
 
   const handleItemClick = (item: SubCategory) => {
     const slug = slugify(item.contentTitle);
+    const mainCategorySlug = item.mainCategory.title.toLowerCase().replace(/\s+/g, '-');
     scrollToTop();
-    navigate(`/recruitment/${slug}`);
+    navigate(`/${mainCategorySlug}/${slug}`);
   };
 
   const handleViewMore = (sectionTitle: string) => {
