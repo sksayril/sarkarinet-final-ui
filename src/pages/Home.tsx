@@ -5,8 +5,8 @@ import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
 import NotesSection from '../components/NotesSection';
 import RecruitmentCards from '../components/RecruitmentCards';
+import MainCategoryCards from '../components/MainCategoryCards';
 import ContentSections from '../components/ContentSections';
-// import TopPagesTable from '../components/TopPagesTable';
 import InfoSections from '../components/InfoSections';
 import FAQ from '../components/FAQ';
 import ThumbnailPopup from '../components/ThumbnailPopup';
@@ -30,12 +30,12 @@ const Home: React.FC = () => {
       {/* Show regular content when not searching */}
       {(!isSearching || !searchQuery) && (
         <>
-      <NotesSection />
-      <RecruitmentCards />
-      <ContentSections />
-      {/* <TopPagesTable /> */}
-      <InfoSections />
-      <FAQ />
+          <NotesSection />
+          <RecruitmentCards />
+          {/* <MainCategoryCards /> */}
+          <ContentSections />
+          <InfoSections />
+          <FAQ />
         </>
       )}
     </div>

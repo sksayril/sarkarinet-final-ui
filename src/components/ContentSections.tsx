@@ -34,6 +34,9 @@ const ContentSections: React.FC = () => {
   const navigate = useNavigate();
   const { searchQuery, isSearching } = useSearch();
 
+  // Define the specific category sequence
+  const categorySequence = ['Results', 'Admit Card', 'Latest Jobs', 'Answer Key', 'Syllabus', 'Admission'];
+
   useEffect(() => {
     const fetchSubCategories = async () => {
       try {
@@ -58,21 +61,21 @@ const ContentSections: React.FC = () => {
         }, {});
 
         // Sort subcategories within each category in descending order
-        // Sort by _id (assuming newer items have higher _id values) or by creation date
         Object.keys(groupedData).forEach(categoryTitle => {
           groupedData[categoryTitle].sort((a: SubCategory, b: SubCategory) => {
-            // Sort by _id in descending order (newest first)
             return b._id.localeCompare(a._id);
           });
         });
 
-        // Convert to sections format with all items stored
-        const sectionsData: Section[] = Object.entries(groupedData).map(([title, items]) => ({
-          title,
-          color: 'bg-red-700',
-          items: items.slice(0, 15), // Show 15 items initially for first row
-          allItems: items // Store all items for pagination
-        }));
+        // Create sections in the specific sequence
+        const sectionsData: Section[] = categorySequence
+          .filter(categoryTitle => groupedData[categoryTitle]) // Only include categories that have data
+          .map((title, index) => ({
+            title,
+            color: 'bg-red-700',
+            items: groupedData[title].slice(0, 15),
+            allItems: groupedData[title]
+          }));
 
         setSections(sectionsData);
         setError(null);
@@ -109,7 +112,7 @@ const ContentSections: React.FC = () => {
 
       return {
         ...section,
-        items: filteredItems.slice(0, expandedSections[section.title] ? 25 : 15), // Show more if expanded
+        items: filteredItems.slice(0, expandedSections[section.title] ? 25 : 15),
         allItems: filteredItems
       };
     }).filter(section => section.items.length > 0);
@@ -123,7 +126,6 @@ const ContentSections: React.FC = () => {
   };
 
   const handleViewMore = (sectionTitle: string) => {
-    // Toggle expanded state for this section
     setExpandedSections(prev => ({
       ...prev,
       [sectionTitle]: !prev[sectionTitle]
@@ -131,7 +133,6 @@ const ContentSections: React.FC = () => {
   };
 
   const handleViewAll = (sectionTitle: string) => {
-    // Navigate to the appropriate page based on section title
     const routeMap: { [key: string]: string } = {
       'Latest Jobs': '/latest-jobs',
       'Results': '/results',
@@ -183,7 +184,6 @@ const ContentSections: React.FC = () => {
     );
   }
 
-  // Show message when no search results found
   if (isSearching && filteredSections.length === 0) {
     return (
       <div className="w-full min-w-[1200px] px-4 py-6">
@@ -218,9 +218,6 @@ const ContentSections: React.FC = () => {
               {/* Header - Centered */}
               <div className={`${section.color} text-white p-4 text-center border-b-4 border-red-800 relative`}>
                 <h3 className="text-3xl font-bold tracking-wide" style={{ fontFamily: 'Arial, sans-serif' }}>{section.title}</h3>
-                {/* <p className="text-sm text-red-200 mt-1">
-                  {displayItems.length} of {section.allItems.length} items
-                </p> */}
               </div>
               
               {/* Content Area - Flex grow to fill space */}
@@ -243,8 +240,7 @@ const ContentSections: React.FC = () => {
                 
                 {/* Button Area - Bottom aligned */}
                 <div className="mt-6 pt-4 border-t-4 border-gray-300 space-y-2">
-                  {/* View More/Less Button */}
-                  {hasMoreItems && (
+                  {/* {hasMoreItems && (
                     <button 
                       className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg border-2 border-green-800"
                       onClick={() => handleViewMore(section.title)}
@@ -254,7 +250,7 @@ const ContentSections: React.FC = () => {
                       </span>
                       <ArrowRight className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
                     </button>
-                  )}
+                  )} */}
                   
                   {/* View All Button */}
                   <button 

@@ -323,40 +323,49 @@ const ThumbnailPopup: React.FC = () => {
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-1 sm:p-2"
         onClick={handleClose}
+        style={{ 
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain'
+        }}
       >
         {/* Popup Content */}
         <div 
-          className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+          className="relative bg-white rounded-lg sm:rounded-2xl shadow-2xl w-full max-w-lg sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-1 overflow-hidden max-h-[98vh] sm:max-h-[95vh] flex flex-col"
           onClick={(e) => e.stopPropagation()}
+          style={{ 
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'contain'
+          }}
         >
           {/* Close Button */}
           <button
             onClick={handleClose}
-            className="absolute top-3 right-3 z-10 p-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 p-2 sm:p-3 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full shadow-lg transition-all duration-200 hover:scale-110 touch-manipulation"
             title="Close"
+            style={{ minWidth: '48px', minHeight: '48px' }}
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />
           </button>
 
           {/* Loading State */}
           {isLoading && (
-            <div className="p-8 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading thumbnail...</p>
+            <div className="p-8 sm:p-16 text-center flex-1 flex flex-col items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 sm:h-20 sm:w-20 border-b-2 border-blue-500 mx-auto mb-6 sm:mb-8"></div>
+              <p className="text-gray-600 text-lg sm:text-xl">Loading thumbnail...</p>
             </div>
           )}
 
           {/* Error State */}
           {error && !isLoading && (
-            <div className="p-8 text-center">
-              <div className="text-red-500 text-4xl mb-4">⚠️</div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Unable to Load Thumbnail</h3>
-              <p className="text-gray-600 text-sm mb-4">{error}</p>
+            <div className="p-8 sm:p-16 text-center flex-1 flex flex-col items-center justify-center">
+              <div className="text-red-500 text-5xl sm:text-7xl mb-6 sm:mb-8">⚠️</div>
+              <h3 className="text-xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Unable to Load Thumbnail</h3>
+              <p className="text-gray-600 text-base sm:text-lg mb-8 sm:mb-10 px-6 break-words">{error}</p>
               <button
                 onClick={fetchThumbnail}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors"
+                className="px-8 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors text-lg sm:text-xl min-h-[52px] touch-manipulation"
               >
                 Try Again
               </button>
@@ -372,36 +381,39 @@ const ThumbnailPopup: React.FC = () => {
                   thumbnail.redirectUrl ? 'hover:shadow-lg' : ''
                 }`}
                 onClick={handleThumbnailClick}
+                style={{ touchAction: 'manipulation' }}
               >
-                                 <img
-                   src={thumbnail.imageUrl}
-                   alt={thumbnail.title || 'Thumbnail'}
-                   className="w-full h-auto object-cover"
-                   onError={(e) => {
-                     console.error('Failed to load thumbnail image, using fallback');
-                     e.currentTarget.src = 'https://picsum.photos/400/300?random=3';
-                   }}
-                 />
+                <img
+                  src={thumbnail.imageUrl}
+                  alt={thumbnail.title || 'Thumbnail'}
+                  className="w-full h-auto object-cover max-h-[70vh] sm:max-h-[75vh]"
+                  onError={(e) => {
+                    console.error('Failed to load thumbnail image, using fallback');
+                    e.currentTarget.src = 'https://picsum.photos/400/300?random=3';
+                  }}
+                  loading="lazy"
+                />
                 
                 {/* Click indicator if URL is available */}
                 {thumbnail.redirectUrl && (
-                  <div className="absolute top-3 left-3 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center space-x-1">
-                    <ExternalLink className="w-3 h-3" />
-                    <span>Click to visit</span>
+                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6 bg-blue-500 text-white px-4 py-3 rounded-full text-base font-semibold flex items-center space-x-2">
+                    <ExternalLink className="w-5 h-5" />
+                    <span className="hidden sm:inline">Click to visit</span>
+                    <span className="sm:hidden">Visit</span>
                   </div>
                 )}
               </div>
 
               {/* Content */}
               {(thumbnail.title || thumbnail.description) && (
-                <div className="p-4">
+                <div className="p-6 sm:p-8 lg:p-12 flex-1 overflow-y-auto">
                   {thumbnail.title && (
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 break-words">
                       {thumbnail.title}
                     </h3>
                   )}
                   {thumbnail.description && (
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed break-words">
                       {thumbnail.description}
                     </p>
                   )}
@@ -409,29 +421,29 @@ const ThumbnailPopup: React.FC = () => {
               )}
 
               {/* Action Buttons */}
-              <div className="p-4 pt-0 flex space-x-3">
+              <div className="p-6 sm:p-8 lg:p-12 pt-0 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
                 <button
                   onClick={handleClose}
-                  className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors"
+                  className="w-full sm:flex-1 px-8 py-5 sm:py-4 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors text-lg sm:text-xl min-h-[52px] touch-manipulation"
                 >
                   Close
                 </button>
                 {thumbnail.redirectUrl && (
                   <button
                     onClick={handleThumbnailClick}
-                    className="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
+                    className="w-full sm:flex-1 px-8 py-5 sm:py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors flex items-center justify-center space-x-3 text-lg sm:text-xl min-h-[52px] touch-manipulation"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-6 h-6" />
                     <span>Visit</span>
                   </button>
                 )}
               </div>
             </>
           )}
-                 </div>
-       </div>
-     </>
-   );
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default ThumbnailPopup; 

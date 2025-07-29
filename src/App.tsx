@@ -23,6 +23,7 @@ import SmartPrepProgressTracker from './pages/SmartPrepProgressTracker';
 import { SearchProvider } from './contexts/SearchContext';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import ThumbnailPopup from './components/ThumbnailPopup';
 // import TitleSection from './components/TitleSection';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
     <SearchProvider>
       <div className="min-h-screen bg-white overflow-x-auto" style={{ minWidth: '1200px' }}>
         <SEO />
+        <ThumbnailPopup />
         <Header />
         {/* <TitleSection /> */}
         <Navbar />

@@ -25,6 +25,9 @@ const Navbar: React.FC = () => {
   const [navItems, setNavItems] = useState<NavItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Define the specific category sequence
+  const categorySequence = ['Results', 'Admit Card', 'Latest Jobs', 'Answer Key', 'Syllabus', 'Admission'];
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -38,13 +41,18 @@ const Navbar: React.FC = () => {
         const data = await response.json();
         const subCategories = data.subCategories || [];
         
-        // Extract unique main categories
+        // Extract unique main categories and sort them according to the sequence
         const uniqueCategories: string[] = Array.from(
           new Set(subCategories.map((item: SubCategory) => item.mainCategory.title))
         );
         
-        // Create navigation items from categories
-        const categoryNavItems: NavItem[] = uniqueCategories.map((category: string) => ({
+        // Sort categories according to the predefined sequence
+        const sortedCategories = categorySequence.filter(category => 
+          uniqueCategories.includes(category)
+        );
+        
+        // Create navigation items from sorted categories
+        const categoryNavItems: NavItem[] = sortedCategories.map((category: string) => ({
           path: `/${category.toLowerCase().replace(/\s+/g, '-')}`,
           label: category
         }));
@@ -52,24 +60,20 @@ const Navbar: React.FC = () => {
         // Add Home as the first item
         const allNavItems: NavItem[] = [
           { path: '/', label: 'Home' },
-          ...categoryNavItems,
-          // { path: '/aivoice', label: 'AI Assistant' }
+          ...categoryNavItems
         ];
         
         setNavItems(allNavItems);
       } catch (err) {
         console.error('Error fetching categories:', err);
-        // Fallback to static categories if API fails
+        // Fallback to static categories in the correct sequence
         setNavItems([
-    { path: '/', label: 'Home' },
-    { path: '/latest-jobs', label: 'Latest Jobs' },
-    { path: '/admit-card', label: 'Admit Card' },
-    { path: '/results', label: 'Results' },
-    { path: '/answer-key', label: 'Answer Key' },
-    { path: '/syllabus', label: 'Syllabus' },
-    { path: '/admission', label: 'Admission' },
-    // { path: '/aivoice', label: 'AI Assistant' },
-    { path: '/test-aivoice', label: 'Test AI' }
+          { path: '/', label: 'Home' },
+          { path: '/results', label: 'Results' },
+          { path: '/admit-card', label: 'Admit Card' },
+          { path: '/latest-jobs', label: 'Latest Jobs' },
+          { path: '/answer-key', label: 'Answer Key' },
+          { path: '/syllabus', label: 'Syllabus' }
         ]);
       } finally {
         setLoading(false);
@@ -84,7 +88,7 @@ const Navbar: React.FC = () => {
       <nav className="bg-black text-white">
         <div className="w-full min-w-[1200px] px-4">
           <div className="flex items-center justify-center space-x-8">
-            {[...Array(7)].map((_, index) => (
+            {[...Array(6)].map((_, index) => (
               <div
                 key={index}
                 className="py-6 px-8 text-lg font-bold animate-pulse bg-gray-700 rounded"
