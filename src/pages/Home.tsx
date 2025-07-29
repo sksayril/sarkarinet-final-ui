@@ -22,7 +22,7 @@ const Home: React.FC = () => {
       <SearchBar />
       
       {/* Thumbnail Popup */}
-      <ThumbnailPopup />
+      {/* <ThumbnailPopup /> */}
       
       {/* Show search results when searching */}
       {isSearching && searchQuery && <SearchResults />}
