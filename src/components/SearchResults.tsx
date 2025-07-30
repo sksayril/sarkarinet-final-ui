@@ -70,11 +70,11 @@ const SearchResults: React.FC = () => {
         setLoading(true);
         
         // Fetch recruitment cards
-        const recruitmentResponse = await fetch('https://api.dhanlaxmii.com/category/topdata');
+        const recruitmentResponse = await fetch('https://api.mydost.site/category/topdata');
         const recruitmentData = await recruitmentResponse.json();
         
         // Fetch content sections
-        const contentResponse = await fetch('https://api.dhanlaxmii.com/category/sub');
+        const contentResponse = await fetch('https://api.mydost.site/category/sub');
         const contentData = await contentResponse.json();
         
         // Sort recruitment cards in descending order (newest first)

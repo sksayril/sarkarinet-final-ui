@@ -26,7 +26,7 @@ const RecruitmentCards: React.FC = () => {
     const fetchTopData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://api.dhanlaxmii.com/category/topdata');
+        const response = await fetch('https://api.mydost.site/category/topdata');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

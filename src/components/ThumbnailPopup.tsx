@@ -80,7 +80,7 @@ const ThumbnailPopup: React.FC = () => {
     (window as any).testThumbnailAPI = async () => {
       try {
         console.log('🧪 Testing thumbnail API...');
-        const response = await fetch('https://api.dhanlaxmii.com/thumbnails');
+        const response = await fetch('https://api.mydost.site/thumbnails');
         const data = await response.json();
         console.log('🧪 API Response:', data);
         console.log('🧪 Response type:', typeof data);
@@ -127,7 +127,7 @@ const ThumbnailPopup: React.FC = () => {
     (window as any).createYourDataThumbnail = () => {
       const yourDataThumbnail: ThumbnailData = {
         id: 'your-data',
-        imageUrl: 'https://api.dhanlaxmii.com/uploads/thumbnails/thumbnail-1753508570770-360167883.avif',
+        imageUrl: 'https://api.mydost.site/uploads/thumbnails/thumbnail-1753508570770-360167883.avif',
         title: 'testfestible',
         description: 'test',
         redirectUrl: 'https://github.com/sksayril/final-mahavitdemo-landingpage/blob/main/dist/index.html',
@@ -154,7 +154,7 @@ const ThumbnailPopup: React.FC = () => {
       setError(null);
 
       console.log('📡 Fetching thumbnail from API...');
-      const response = await fetch('https://api.dhanlaxmii.com/thumbnails');
+      const response = await fetch('https://api.mydost.site/thumbnails');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -225,7 +225,7 @@ const ThumbnailPopup: React.FC = () => {
       if (thumbnailData[0].imageUrl) {
         // If the URL is relative, make it absolute
         if (thumbnailData[0].imageUrl.startsWith('/uploads/')) {
-          thumbnailData[0].imageUrl = `https://api.dhanlaxmii.com${thumbnailData[0].imageUrl}`;
+          thumbnailData[0].imageUrl = `https://api.mydost.site${thumbnailData[0].imageUrl}`;
         }
         // If it's already a full URL, use it as is
         else if (thumbnailData[0].imageUrl.startsWith('http')) {
@@ -233,7 +233,7 @@ const ThumbnailPopup: React.FC = () => {
         }
         // If it's just a filename, construct the full URL
         else {
-          thumbnailData[0].imageUrl = `https://api.dhanlaxmii.com/${thumbnailData[0].imageUrl}`;
+          thumbnailData[0].imageUrl = `https://api.mydost.site/${thumbnailData[0].imageUrl}`;
         }
         
         // Fix double slashes in URL (common issue)

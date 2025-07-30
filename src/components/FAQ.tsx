@@ -34,7 +34,7 @@ const FAQ: React.FC = () => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('https://api.dhanlaxmii.com/home-content/public/active');
+        const response = await fetch('https://api.mydost.site/home-content/public/active');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

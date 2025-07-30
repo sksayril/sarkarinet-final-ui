@@ -41,7 +41,7 @@ const ContentSections: React.FC = () => {
     const fetchSubCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://api.dhanlaxmii.com/category/sub');
+        const response = await fetch('https://api.mydost.site/category/sub');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

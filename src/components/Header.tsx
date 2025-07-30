@@ -31,7 +31,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     const fetchChannelLinks = async () => {
       try {
-        const response = await fetch('https://api.dhanlaxmii.com/home-content/public/active');
+        const response = await fetch('https://api.mydost.site/home-content/public/active');
         
         if (response.ok) {
           const result: ApiResponse = await response.json();
