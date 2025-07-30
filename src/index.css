@@ -103,28 +103,55 @@
 /* Custom wave animations for AI Voice */
 @keyframes wave-animation {
   0%, 100% {
-    transform: scaleY(0.3);
+    transform: scaleY(0.2);
+  }
+  25% {
+    transform: scaleY(0.6);
   }
   50% {
     transform: scaleY(1);
+  }
+  75% {
+    transform: scaleY(0.8);
   }
 }
 
 @keyframes wave-animation-fast {
   0%, 100% {
-    transform: scaleY(0.2);
+    transform: scaleY(0.1);
+  }
+  25% {
+    transform: scaleY(0.7);
   }
   50% {
-    transform: scaleY(1.2);
+    transform: scaleY(1.3);
+  }
+  75% {
+    transform: scaleY(0.9);
   }
 }
 
 @keyframes wave-animation-slow {
   0%, 100% {
-    transform: scaleY(0.4);
+    transform: scaleY(0.3);
+  }
+  25% {
+    transform: scaleY(0.5);
   }
   50% {
-    transform: scaleY(0.8);
+    transform: scaleY(0.9);
+  }
+  75% {
+    transform: scaleY(0.6);
+  }
+}
+
+@keyframes wave-animation-micro {
+  0%, 100% {
+    transform: scaleY(0.1);
+  }
+  50% {
+    transform: scaleY(0.4);
   }
 }
 
@@ -139,31 +166,55 @@
   }
 }
 
+@keyframes wave-flow {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 .wave-bar {
   animation: wave-animation 1.2s ease-in-out infinite;
+  transform-origin: bottom;
 }
 
 .wave-bar:nth-child(1) { animation-delay: 0ms; }
-.wave-bar:nth-child(2) { animation-delay: 100ms; }
-.wave-bar:nth-child(3) { animation-delay: 200ms; }
-.wave-bar:nth-child(4) { animation-delay: 300ms; }
-.wave-bar:nth-child(5) { animation-delay: 400ms; }
-.wave-bar:nth-child(6) { animation-delay: 500ms; }
-.wave-bar:nth-child(7) { animation-delay: 600ms; }
-.wave-bar:nth-child(8) { animation-delay: 700ms; }
-.wave-bar:nth-child(9) { animation-delay: 800ms; }
-.wave-bar:nth-child(10) { animation-delay: 900ms; }
+.wave-bar:nth-child(2) { animation-delay: 120ms; }
+.wave-bar:nth-child(3) { animation-delay: 240ms; }
+.wave-bar:nth-child(4) { animation-delay: 360ms; }
+.wave-bar:nth-child(5) { animation-delay: 480ms; }
+.wave-bar:nth-child(6) { animation-delay: 600ms; }
+.wave-bar:nth-child(7) { animation-delay: 720ms; }
+.wave-bar:nth-child(8) { animation-delay: 840ms; }
+.wave-bar:nth-child(9) { animation-delay: 960ms; }
+.wave-bar:nth-child(10) { animation-delay: 1080ms; }
 
 .wave-bar-fast {
   animation: wave-animation-fast 0.8s ease-in-out infinite;
+  transform-origin: bottom;
 }
 
 .wave-bar-slow {
   animation: wave-animation-slow 1.5s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+.wave-bar-micro {
+  animation: wave-animation-micro 0.6s ease-in-out infinite;
+  transform-origin: bottom;
 }
 
 .ripple-effect {
   animation: ripple-effect 2s ease-out infinite;
+}
+
+.wave-flow {
+  animation: wave-flow 2s ease-in-out infinite;
 }
 
 .recruitment-content *[contenteditable="true"] {

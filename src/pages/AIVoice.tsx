@@ -271,11 +271,11 @@ Remember: You are here to help users navigate the complex world of government jo
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-green-100">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 shadow-xl">
+      <div className="bg-gradient-to-r from-green-600 via-blue-600 to-green-500 text-white p-6 shadow-xl">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3 hover:text-purple-200 transition-colors">
+          <Link to="/" className="flex items-center space-x-3 hover:text-green-200 transition-colors">
             <ArrowLeft className="w-6 h-6" />
             <span className="font-semibold text-lg">Back to Home</span>
           </Link>
@@ -295,7 +295,7 @@ Remember: You are here to help users navigate the complex world of government jo
             </button>
             <button
               onClick={resetVoice}
-              className="p-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
               title="Clear Chat"
             >
               <Settings className="w-5 h-5" />
@@ -305,7 +305,7 @@ Remember: You are here to help users navigate the complex world of government jo
       </div>
 
       <div className="max-w-4xl mx-auto p-6">
-        <div className="bg-white rounded-3xl shadow-2xl border border-purple-100 overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-2xl border border-green-100 overflow-hidden">
           {/* Voice Interaction Area */}
           <div className="h-full flex flex-col items-center justify-center p-6 space-y-6">
             <div className="text-center">
@@ -321,14 +321,14 @@ Remember: You are here to help users navigate the complex world of government jo
                 disabled={isProcessing}
                 className={`relative p-10 rounded-full transition-all duration-500 ${
                   isListening 
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white scale-110 shadow-2xl' 
+                    ? 'bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white scale-110 shadow-2xl' 
                     : isProcessing
                     ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white scale-105 shadow-xl'
                     : isSpeaking
                     ? 'bg-gradient-to-r from-green-500 to-green-600 text-white scale-105 shadow-xl'
                     : continuousMode
                     ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl'
-                    : 'bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl'
+                    : 'bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl'
                 } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
                 title={isListening ? 'Stop Listening' : 'Start Voice Input'}
               >
@@ -354,10 +354,10 @@ Remember: You are here to help users navigate the complex world of government jo
                 {/* Enhanced Pulsing Animation Rings */}
                 {isListening && (
                   <>
-                    <div className="absolute inset-0 rounded-full bg-red-400 animate-ping opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-red-300 animate-ping opacity-50" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="absolute inset-4 rounded-full bg-red-200 animate-ping opacity-25" style={{ animationDelay: '0.4s' }}></div>
-                    <div className="absolute inset-6 rounded-full bg-red-100 animate-ping opacity-15" style={{ animationDelay: '0.6s' }}></div>
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-red-400 animate-ping opacity-75"></div>
+                    <div className="absolute inset-2 rounded-full bg-gradient-to-r from-red-300 to-pink-300 animate-ping opacity-50" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="absolute inset-4 rounded-full bg-gradient-to-r from-pink-200 to-orange-200 animate-ping opacity-25" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="absolute inset-6 rounded-full bg-gradient-to-r from-orange-100 to-red-100 animate-ping opacity-15" style={{ animationDelay: '0.6s' }}></div>
                   </>
                 )}
                 
@@ -382,32 +382,44 @@ Remember: You are here to help users navigate the complex world of government jo
               {isSpeaking && (
                 <div className="absolute -top-24 -left-24 w-48 h-48 flex items-center justify-center">
                   <div className="relative">
-                    {/* Multiple wave layers for 3D effect */}
-                    <div className="absolute inset-0 flex items-end space-x-1 h-20">
-                      <div className="w-1.5 bg-green-300 rounded-full wave-bar" style={{ height: '50%' }}></div>
-                      <div className="w-1.5 bg-green-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
-                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1.5 bg-green-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
-                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1.5 bg-green-400 rounded-full wave-bar" style={{ height: '60%' }}></div>
-                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
-                      <div className="w-1.5 bg-green-600 rounded-full wave-bar" style={{ height: '75%' }}></div>
-                      <div className="w-1.5 bg-green-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
-                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                    {/* Main wave layer */}
+                    <div className="absolute inset-0 flex items-end space-x-1.5 h-24">
+                      <div className="w-2 bg-green-200 rounded-full wave-bar-micro" style={{ height: '30%' }}></div>
+                      <div className="w-2 bg-green-300 rounded-full wave-bar-slow" style={{ height: '50%' }}></div>
+                      <div className="w-2 bg-green-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-2 bg-green-500 rounded-full wave-bar-fast" style={{ height: '90%' }}></div>
+                      <div className="w-2 bg-green-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-2 bg-green-500 rounded-full wave-bar-slow" style={{ height: '80%' }}></div>
+                      <div className="w-2 bg-green-400 rounded-full wave-bar-fast" style={{ height: '60%' }}></div>
+                      <div className="w-2 bg-green-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
+                      <div className="w-2 bg-green-600 rounded-full wave-bar-slow" style={{ height: '75%' }}></div>
+                      <div className="w-2 bg-green-400 rounded-full wave-bar-fast" style={{ height: '85%' }}></div>
+                      <div className="w-2 bg-green-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                      <div className="w-2 bg-green-300 rounded-full wave-bar-micro" style={{ height: '45%' }}></div>
                     </div>
                     
-                    {/* Second layer for depth */}
-                    <div className="absolute inset-0 flex items-end space-x-1 h-20" style={{ transform: 'translateY(-2px)' }}>
-                      <div className="w-1 bg-green-200 rounded-full wave-bar" style={{ height: '40%' }}></div>
+                    {/* Background wave layer */}
+                    <div className="absolute inset-0 flex items-end space-x-1.5 h-24" style={{ transform: 'translateY(-3px)' }}>
+                      <div className="w-1 bg-green-100 rounded-full wave-bar-slow" style={{ height: '25%' }}></div>
+                      <div className="w-1 bg-green-200 rounded-full wave-bar-micro" style={{ height: '40%' }}></div>
                       <div className="w-1 bg-green-300 rounded-full wave-bar" style={{ height: '60%' }}></div>
-                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar-fast" style={{ height: '80%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar-slow" style={{ height: '90%' }}></div>
                       <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
-                      <div className="w-1 bg-green-300 rounded-full wave-bar" style={{ height: '50%' }}></div>
-                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1 bg-green-300 rounded-full wave-bar-micro" style={{ height: '50%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar-fast" style={{ height: '85%' }}></div>
                       <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
-                      <div className="w-1 bg-green-300 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1 bg-green-300 rounded-full wave-bar-slow" style={{ height: '75%' }}></div>
                       <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '55%' }}></div>
+                      <div className="w-1 bg-green-200 rounded-full wave-bar-micro" style={{ height: '35%' }}></div>
+                    </div>
+
+                    {/* Floating wave particles */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      <div className="absolute w-1 h-1 bg-green-400 rounded-full wave-flow" style={{ top: '10%', left: '20%' }}></div>
+                      <div className="absolute w-1 h-1 bg-green-500 rounded-full wave-flow" style={{ top: '20%', right: '15%', animationDelay: '0.5s' }}></div>
+                      <div className="absolute w-1 h-1 bg-green-300 rounded-full wave-flow" style={{ bottom: '15%', left: '10%', animationDelay: '1s' }}></div>
+                      <div className="absolute w-1 h-1 bg-green-400 rounded-full wave-flow" style={{ bottom: '25%', right: '20%', animationDelay: '1.5s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -417,32 +429,44 @@ Remember: You are here to help users navigate the complex world of government jo
               {isListening && (
                 <div className="absolute -top-24 -left-24 w-48 h-48 flex items-center justify-center">
                   <div className="relative">
-                    {/* Multiple wave layers for 3D effect */}
-                    <div className="absolute inset-0 flex items-end space-x-1 h-20">
-                      <div className="w-1.5 bg-red-300 rounded-full wave-bar" style={{ height: '60%' }}></div>
-                      <div className="w-1.5 bg-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '100%' }}></div>
-                      <div className="w-1.5 bg-red-600 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '70%' }}></div>
-                      <div className="w-1.5 bg-red-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
-                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
-                      <div className="w-1.5 bg-red-600 rounded-full wave-bar" style={{ height: '75%' }}></div>
-                      <div className="w-1.5 bg-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                    {/* Main wave layer */}
+                    <div className="absolute inset-0 flex items-end space-x-1.5 h-24">
+                      <div className="w-2 bg-gradient-to-t from-orange-200 to-red-200 rounded-full wave-bar-micro" style={{ height: '40%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-red-300 to-pink-300 rounded-full wave-bar-slow" style={{ height: '60%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-pink-400 to-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-red-500 to-orange-500 rounded-full wave-bar-fast" style={{ height: '100%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-orange-600 to-red-600 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-red-500 to-pink-500 rounded-full wave-bar-slow" style={{ height: '70%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-pink-400 to-red-400 rounded-full wave-bar-fast" style={{ height: '85%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-red-500 to-orange-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-orange-600 to-red-600 rounded-full wave-bar-slow" style={{ height: '75%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-red-400 to-pink-400 rounded-full wave-bar-fast" style={{ height: '80%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-pink-500 to-red-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                      <div className="w-2 bg-gradient-to-t from-red-300 to-orange-300 rounded-full wave-bar-micro" style={{ height: '55%' }}></div>
                     </div>
                     
-                    {/* Second layer for depth */}
-                    <div className="absolute inset-0 flex items-end space-x-1 h-20" style={{ transform: 'translateY(-2px)' }}>
-                      <div className="w-1 bg-red-200 rounded-full wave-bar" style={{ height: '50%' }}></div>
-                      <div className="w-1 bg-red-300 rounded-full wave-bar" style={{ height: '70%' }}></div>
-                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '100%' }}></div>
-                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1 bg-red-300 rounded-full wave-bar" style={{ height: '60%' }}></div>
-                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
-                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '75%' }}></div>
-                      <div className="w-1 bg-red-300 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '55%' }}></div>
+                    {/* Background wave layer */}
+                    <div className="absolute inset-0 flex items-end space-x-1.5 h-24" style={{ transform: 'translateY(-3px)' }}>
+                      <div className="w-1 bg-gradient-to-t from-orange-100 to-red-100 rounded-full wave-bar-slow" style={{ height: '35%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-red-200 to-pink-200 rounded-full wave-bar-micro" style={{ height: '50%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-pink-300 to-red-300 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-red-400 to-orange-400 rounded-full wave-bar-fast" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-orange-500 to-red-500 rounded-full wave-bar-slow" style={{ height: '100%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-red-400 to-pink-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-pink-300 to-red-300 rounded-full wave-bar-micro" style={{ height: '60%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-red-400 to-orange-400 rounded-full wave-bar-fast" style={{ height: '85%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-orange-500 to-red-500 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-red-300 to-pink-300 rounded-full wave-bar-slow" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-pink-400 to-red-400 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                      <div className="w-1 bg-gradient-to-t from-red-200 to-orange-200 rounded-full wave-bar-micro" style={{ height: '45%' }}></div>
+                    </div>
+
+                    {/* Floating wave particles */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      <div className="absolute w-1 h-1 bg-gradient-to-r from-orange-400 to-red-400 rounded-full wave-flow" style={{ top: '15%', left: '25%' }}></div>
+                      <div className="absolute w-1 h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full wave-flow" style={{ top: '25%', right: '20%', animationDelay: '0.5s' }}></div>
+                      <div className="absolute w-1 h-1 bg-gradient-to-r from-pink-300 to-red-300 rounded-full wave-flow" style={{ bottom: '20%', left: '15%', animationDelay: '1s' }}></div>
+                      <div className="absolute w-1 h-1 bg-gradient-to-r from-red-400 to-orange-400 rounded-full wave-flow" style={{ bottom: '30%', right: '25%', animationDelay: '1.5s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -452,13 +476,13 @@ Remember: You are here to help users navigate the complex world of government jo
               {(isListening || isSpeaking) && (
                 <div className="absolute inset-0 rounded-full">
                   <div className={`absolute inset-0 rounded-full border-2 ${
-                    isListening ? 'border-red-400' : 'border-green-400'
+                    isListening ? 'border-gradient-to-r from-orange-400 to-red-400' : 'border-green-400'
                   } animate-ping opacity-30`}></div>
                   <div className={`absolute inset-2 rounded-full border-2 ${
-                    isListening ? 'border-red-300' : 'border-green-300'
+                    isListening ? 'border-gradient-to-r from-red-300 to-pink-300' : 'border-green-300'
                   } animate-ping opacity-20`} style={{ animationDelay: '0.5s' }}></div>
                   <div className={`absolute inset-4 rounded-full border-2 ${
-                    isListening ? 'border-red-200' : 'border-green-200'
+                    isListening ? 'border-gradient-to-r from-pink-200 to-orange-200' : 'border-green-200'
                   } animate-ping opacity-10`} style={{ animationDelay: '1s' }}></div>
                 </div>
               )}
@@ -468,7 +492,7 @@ Remember: You are here to help users navigate the complex world of government jo
                 <div className="absolute inset-0 pointer-events-none">
                   {/* Particle 1 */}
                   <div className={`absolute w-2 h-2 rounded-full ${
-                    isListening ? 'bg-red-400' : 'bg-green-400'
+                    isListening ? 'bg-gradient-to-r from-orange-400 to-red-400' : 'bg-green-400'
                   } animate-bounce`} style={{ 
                     top: '10%', 
                     left: '20%', 
@@ -478,7 +502,7 @@ Remember: You are here to help users navigate the complex world of government jo
                   
                   {/* Particle 2 */}
                   <div className={`absolute w-1.5 h-1.5 rounded-full ${
-                    isListening ? 'bg-red-300' : 'bg-green-300'
+                    isListening ? 'bg-gradient-to-r from-red-300 to-pink-300' : 'bg-green-300'
                   } animate-bounce`} style={{ 
                     top: '30%', 
                     right: '15%', 
@@ -488,7 +512,7 @@ Remember: You are here to help users navigate the complex world of government jo
                   
                   {/* Particle 3 */}
                   <div className={`absolute w-1 h-1 rounded-full ${
-                    isListening ? 'bg-red-500' : 'bg-green-500'
+                    isListening ? 'bg-gradient-to-r from-pink-500 to-red-500' : 'bg-green-500'
                   } animate-bounce`} style={{ 
                     bottom: '20%', 
                     left: '10%', 
@@ -498,7 +522,7 @@ Remember: You are here to help users navigate the complex world of government jo
                   
                   {/* Particle 4 */}
                   <div className={`absolute w-1.5 h-1.5 rounded-full ${
-                    isListening ? 'bg-red-400' : 'bg-green-400'
+                    isListening ? 'bg-gradient-to-r from-red-400 to-orange-400' : 'bg-green-400'
                   } animate-bounce`} style={{ 
                     bottom: '10%', 
                     right: '25%', 
@@ -512,7 +536,7 @@ Remember: You are here to help users navigate the complex world of government jo
               {(isListening || isSpeaking) && (
                 <div className="absolute inset-0 pointer-events-none">
                   <div className={`absolute w-4 h-4 rounded-full ${
-                    isListening ? 'bg-red-500' : 'bg-green-500'
+                    isListening ? 'bg-gradient-to-r from-orange-500 to-red-500' : 'bg-green-500'
                   } opacity-60 animate-pulse`} style={{ 
                     top: '5%', 
                     left: '50%', 
@@ -521,7 +545,7 @@ Remember: You are here to help users navigate the complex world of government jo
                   }}></div>
                   
                   <div className={`absolute w-3 h-3 rounded-full ${
-                    isListening ? 'bg-red-400' : 'bg-green-400'
+                    isListening ? 'bg-gradient-to-r from-red-400 to-pink-400' : 'bg-green-400'
                   } opacity-40 animate-pulse`} style={{ 
                     bottom: '5%', 
                     left: '30%',
@@ -530,7 +554,7 @@ Remember: You are here to help users navigate the complex world of government jo
                   }}></div>
                   
                   <div className={`absolute w-3 h-3 rounded-full ${
-                    isListening ? 'bg-red-400' : 'bg-green-400'
+                    isListening ? 'bg-gradient-to-r from-pink-400 to-red-400' : 'bg-green-400'
                   } opacity-40 animate-pulse`} style={{ 
                     bottom: '5%', 
                     right: '30%',
@@ -545,12 +569,12 @@ Remember: You are here to help users navigate the complex world of government jo
             <div className="text-center">
               <div className={`inline-block px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg ${
                 isListening 
-                  ? 'bg-gradient-to-r from-red-500 to-red-600 animate-pulse' 
+                  ? 'bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 animate-pulse' 
                   : isProcessing
                   ? 'bg-gradient-to-r from-yellow-500 to-yellow-600'
                   : isSpeaking
                   ? 'bg-gradient-to-r from-green-500 to-green-600'
-                  : 'bg-gradient-to-r from-purple-500 to-purple-600'
+                  : 'bg-gradient-to-r from-green-500 to-blue-600'
               }`}>
                 <div className="flex items-center space-x-2">
                   {isListening && (
@@ -591,7 +615,7 @@ Remember: You are here to help users navigate the complex world of government jo
 
             {/* AI Response Display */}
             {/* {lastAnswer && (
-              <div className="w-full max-w-md bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-2xl shadow-inner border border-purple-200">
+                                <div className="w-full max-w-md bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-2xl shadow-inner border border-green-200">
                 <div className="flex items-start space-x-3">
                   <Bot className="w-6 h-6 text-purple-500 mt-1" />
                   <div className="flex-1">
@@ -626,12 +650,12 @@ Remember: You are here to help users navigate the complex world of government jo
             {/* Voice Controls */}
             <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={autoSpeak}
-                  onChange={(e) => setAutoSpeak(e.target.checked)}
-                  className="w-4 h-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                />
+                                  <input
+                    type="checkbox"
+                    checked={autoSpeak}
+                    onChange={(e) => setAutoSpeak(e.target.checked)}
+                    className="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
                 <span className="text-sm text-gray-600">Auto-speak responses</span>
               </label>
               
@@ -707,15 +731,15 @@ Remember: You are here to help users navigate the complex world of government jo
 
           {/* Features Info */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-green-100">
               <div className="flex items-center space-x-3 mb-4">
-                <Mic className="w-8 h-8 text-purple-500" />
+                <Mic className="w-8 h-8 text-green-500" />
                 <h3 className="text-lg font-bold text-gray-800">Voice Queries</h3>
               </div>
               <p className="text-gray-600">Ask questions about government jobs, exams, and recruitment in your own voice.</p>
             </div>
             
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-blue-100">
               <div className="flex items-center space-x-3 mb-4">
                 <Volume2 className="w-8 h-8 text-blue-500" />
                 <h3 className="text-lg font-bold text-gray-800">Voice Responses</h3>
@@ -723,12 +747,12 @@ Remember: You are here to help users navigate the complex world of government jo
               <p className="text-gray-600">Get spoken answers about exam dates, application processes, and job updates.</p>
             </div>
             
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-green-100">
               <div className="flex items-center space-x-3 mb-4">
                 <Bot className="w-8 h-8 text-green-500" />
                 <h3 className="text-lg font-bold text-gray-800">Government Job Expert</h3>
               </div>
-              <p className="text-gray-600">Specialized in government jobs, exams, recruitment, and career guidance.</p>
+              <p className="text-gray-800">Specialized in government jobs, exams, recruitment, and career guidance.</p>
             </div>
           </div>
         </div>

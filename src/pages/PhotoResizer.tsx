@@ -227,11 +227,11 @@ const PhotoResizer: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-green-100">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 shadow-xl">
+      <div className="bg-gradient-to-r from-green-600 via-blue-600 to-green-500 text-white p-6 shadow-xl">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3 hover:text-purple-200 transition-colors">
+          <Link to="/" className="flex items-center space-x-3 hover:text-green-200 transition-colors">
             <ArrowLeft className="w-6 h-6" />
             <span className="font-semibold text-lg">Back to Home</span>
           </Link>
@@ -241,7 +241,7 @@ const PhotoResizer: React.FC = () => {
       </div>
 
       <div className="max-w-6xl mx-auto p-6">
-        <div className="bg-white rounded-3xl shadow-2xl p-8 border border-purple-100">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 border border-green-100">
           {/* Main Content */}
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left Panel - Controls */}
