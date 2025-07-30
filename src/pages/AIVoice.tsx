@@ -26,6 +26,7 @@ const AIVoice: React.FC = () => {
   const [recognitionLanguage, setRecognitionLanguage] = useState<string>('en-US');
   const [continuousMode, setContinuousMode] = useState<boolean>(false);
   const [autoListenAfterSpeak, setAutoListenAfterSpeak] = useState<boolean>(true);
+  const [hasWelcomed, setHasWelcomed] = useState<boolean>(false);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -80,6 +81,24 @@ const AIVoice: React.FC = () => {
       setCurrentStatus('Voice input not supported in your browser');
     }
   }, [isProcessing]);
+
+  // Welcome message on first visit
+  useEffect(() => {
+    if (!hasWelcomed && voiceEnabled && autoSpeak && !isSpeaking && !isListening && !isProcessing) {
+      const welcomeMessage = speechLanguage === 'hi-IN' 
+        ? 'नमस्ते! मैं सरकारी रिजल्ट AI असिस्टेंट हूं। मैं आपकी सरकारी नौकरियों और परीक्षाओं के बारे में मदद कर सकता हूं। कृपया अपना सवाल पूछें।'
+        : 'Hello! I am the Sarkari Result AI Assistant. I can help you with government jobs and exams. Please ask your question.';
+      
+      const welcomeTimeout = setTimeout(() => {
+        if (!hasWelcomed && !isSpeaking && !isListening && !isProcessing) {
+          setHasWelcomed(true); // Set this first to prevent duplicate
+          speakText(welcomeMessage);
+        }
+      }, 1000); // Wait 1 second before speaking
+      
+      return () => clearTimeout(welcomeTimeout); // Cleanup timeout
+    }
+  }, [hasWelcomed, voiceEnabled, autoSpeak, speechLanguage, isSpeaking, isListening, isProcessing]);
 
   const callAIAPI = async (userMessage: string): Promise<string> => {
     try {
@@ -246,6 +265,7 @@ Remember: You are here to help users navigate the complex world of government jo
     setIsSpeaking(false);
     setIsProcessing(false);
     setContinuousMode(false);
+    setHasWelcomed(false); // Reset welcome state
     if ('speechSynthesis' in window) {
       speechSynthesis.cancel();
     }
@@ -311,6 +331,13 @@ Remember: You are here to help users navigate the complex world of government jo
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Sarkari Result AI Assistant</h2>
               <p className="text-gray-600">Ask me about government jobs, exams, recruitment, and more!</p>
+              {!hasWelcomed && (
+                <div className="mt-4 p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl border border-green-200">
+                  <p className="text-sm text-green-700 font-medium">
+                    🎤 AI will speak a welcome message automatically...
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Enhanced Animated Voice Status */}
@@ -709,10 +736,28 @@ Remember: You are here to help users navigate the complex world of government jo
                   {continuousMode ? '🔄 Continuous' : '⏹️ Single'}
                 </span>
               </button>
+
+              {/* Welcome Message Button */}
+              <button
+                onClick={() => {
+                  if (!isSpeaking && !isListening && !isProcessing && !hasWelcomed) {
+                    const welcomeMessage = speechLanguage === 'hi-IN' 
+                      ? 'नमस्ते! मैं सरकारी रिजल्ट AI असिस्टेंट हूं। मैं आपकी सरकारी नौकरियों और परीक्षाओं के बारे में मदद कर सकता हूं। कृपया अपना सवाल पूछें।'
+                      : 'Hello! I am the Sarkari Result AI Assistant. I can help you with government jobs and exams. Please ask your question.';
+                    setHasWelcomed(true); // Set this first to prevent duplicate
+                    speakText(welcomeMessage);
+                  }
+                }}
+                disabled={isSpeaking || isListening || isProcessing || hasWelcomed}
+                className="px-3 py-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white rounded-lg font-semibold transition-all duration-300 disabled:opacity-50"
+                title="Play Welcome Message"
+              >
+                <span className="text-sm font-medium">🎤 Welcome</span>
+              </button>
             </div>
 
             {/* Status Information */}
-            <div className="text-center space-y-2">
+            {/* <div className="text-center space-y-2">
               <p className="text-sm text-gray-500">
                 Current Language: {speechLanguage === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'}
               </p>
@@ -726,35 +771,11 @@ Remember: You are here to help users navigate the complex world of government jo
                   🔊 Auto-listen enabled - Will start listening after AI speaks
                 </p>
               )}
-            </div>
+            </div> */}
           </div>
 
           {/* Features Info */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-green-100">
-              <div className="flex items-center space-x-3 mb-4">
-                <Mic className="w-8 h-8 text-green-500" />
-                <h3 className="text-lg font-bold text-gray-800">Voice Queries</h3>
-              </div>
-              <p className="text-gray-600">Ask questions about government jobs, exams, and recruitment in your own voice.</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-blue-100">
-              <div className="flex items-center space-x-3 mb-4">
-                <Volume2 className="w-8 h-8 text-blue-500" />
-                <h3 className="text-lg font-bold text-gray-800">Voice Responses</h3>
-              </div>
-              <p className="text-gray-600">Get spoken answers about exam dates, application processes, and job updates.</p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-green-100">
-              <div className="flex items-center space-x-3 mb-4">
-                <Bot className="w-8 h-8 text-green-500" />
-                <h3 className="text-lg font-bold text-gray-800">Government Job Expert</h3>
-              </div>
-              <p className="text-gray-800">Specialized in government jobs, exams, recruitment, and career guidance.</p>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
