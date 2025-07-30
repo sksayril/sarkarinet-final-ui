@@ -110,6 +110,35 @@
   }
 }
 
+@keyframes wave-animation-fast {
+  0%, 100% {
+    transform: scaleY(0.2);
+  }
+  50% {
+    transform: scaleY(1.2);
+  }
+}
+
+@keyframes wave-animation-slow {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(0.8);
+  }
+}
+
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
 .wave-bar {
   animation: wave-animation 1.2s ease-in-out infinite;
 }
@@ -124,6 +153,18 @@
 .wave-bar:nth-child(8) { animation-delay: 700ms; }
 .wave-bar:nth-child(9) { animation-delay: 800ms; }
 .wave-bar:nth-child(10) { animation-delay: 900ms; }
+
+.wave-bar-fast {
+  animation: wave-animation-fast 0.8s ease-in-out infinite;
+}
+
+.wave-bar-slow {
+  animation: wave-animation-slow 1.5s ease-in-out infinite;
+}
+
+.ripple-effect {
+  animation: ripple-effect 2s ease-out infinite;
+}
 
 .recruitment-content *[contenteditable="true"] {
   pointer-events: none !important;

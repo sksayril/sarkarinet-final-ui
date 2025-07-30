@@ -24,6 +24,8 @@ const AIVoice: React.FC = () => {
   const [lastAnswer, setLastAnswer] = useState<string>('');
   const [speechLanguage, setSpeechLanguage] = useState<string>('en-US');
   const [recognitionLanguage, setRecognitionLanguage] = useState<string>('en-US');
+  const [continuousMode, setContinuousMode] = useState<boolean>(false);
+  const [autoListenAfterSpeak, setAutoListenAfterSpeak] = useState<boolean>(true);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -143,6 +145,20 @@ Remember: You are here to help users navigate the complex world of government jo
       setCurrentStatus('Error processing your question. Please try again.');
     } finally {
       setIsProcessing(false);
+      
+      // In continuous mode, auto-start listening after processing
+      if (continuousMode && autoListenAfterSpeak && !isListening) {
+        setTimeout(() => {
+          if (recognition && !isProcessing) {
+            try {
+              recognition.start();
+              setCurrentStatus('Continuous mode: Listening for next question...');
+            } catch (error) {
+              console.error('Error starting continuous recognition:', error);
+            }
+          }
+        }, 2000); // Wait 2 seconds in continuous mode
+      }
     }
   };
 
@@ -162,6 +178,20 @@ Remember: You are here to help users navigate the complex world of government jo
       utterance.onend = () => {
         setIsSpeaking(false);
         setCurrentStatus('Ready for next question');
+        
+        // Auto-start listening after speaking if enabled
+        if (autoListenAfterSpeak && !isProcessing) {
+          setTimeout(() => {
+            if (recognition && !isListening && !isProcessing) {
+              try {
+                recognition.start();
+                setCurrentStatus('Auto-listening... Speak now!');
+              } catch (error) {
+                console.error('Error auto-starting recognition:', error);
+              }
+            }
+          }, 1000); // Wait 1 second before auto-listening
+        }
       };
       
       utterance.onerror = () => {
@@ -215,6 +245,7 @@ Remember: You are here to help users navigate the complex world of government jo
     setIsListening(false);
     setIsSpeaking(false);
     setIsProcessing(false);
+    setContinuousMode(false);
     if ('speechSynthesis' in window) {
       speechSynthesis.cancel();
     }
@@ -227,6 +258,15 @@ Remember: You are here to help users navigate the complex world of government jo
     } else {
       setSpeechLanguage('en-US');
       setRecognitionLanguage('en-US');
+    }
+  };
+
+  const toggleContinuousMode = () => {
+    setContinuousMode(!continuousMode);
+    if (!continuousMode) {
+      setCurrentStatus('Continuous mode enabled - Speak to start conversation');
+    } else {
+      setCurrentStatus('Continuous mode disabled');
     }
   };
 
@@ -273,114 +313,266 @@ Remember: You are here to help users navigate the complex world of government jo
               <p className="text-gray-600">Ask me about government jobs, exams, recruitment, and more!</p>
             </div>
 
-            {/* Animated Voice Status */}
+            {/* Enhanced Animated Voice Status */}
             <div className="relative">
-              {/* Main Voice Button with Animation */}
+              {/* Main Voice Button with Enhanced Animation */}
               <button
                 onClick={toggleListening}
                 disabled={isProcessing}
-                className={`relative p-8 rounded-full transition-all duration-300 ${
+                className={`relative p-10 rounded-full transition-all duration-500 ${
                   isListening 
-                    ? 'bg-red-500 text-white scale-110 shadow-2xl' 
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white scale-110 shadow-2xl' 
                     : isProcessing
-                    ? 'bg-yellow-500 text-white scale-105 shadow-xl'
+                    ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white scale-105 shadow-xl'
                     : isSpeaking
-                    ? 'bg-green-500 text-white scale-105 shadow-xl'
-                    : 'bg-purple-500 hover:bg-purple-600 text-white shadow-lg hover:shadow-xl'
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white scale-105 shadow-xl'
+                    : continuousMode
+                    ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl'
+                    : 'bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl'
                 } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
                 title={isListening ? 'Stop Listening' : 'Start Voice Input'}
               >
                 {isListening ? (
-                  <MicOff className="w-12 h-12" />
+                  <MicOff className="w-14 h-14" />
                 ) : isProcessing ? (
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-14 h-14 flex items-center justify-center">
+                    <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 ) : isSpeaking ? (
-                  <Volume2 className="w-12 h-12" />
+                  <Volume2 className="w-14 h-14" />
                 ) : (
-                  <Mic className="w-12 h-12" />
+                  <div className="relative">
+                    <Mic className="w-14 h-14" />
+                    {continuousMode && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <span className="text-xs text-yellow-900 font-bold">∞</span>
+                      </div>
+                    )}
+                  </div>
                 )}
                
-                {/* Pulsing Animation Rings */}
+                {/* Enhanced Pulsing Animation Rings */}
                 {isListening && (
                   <>
                     <div className="absolute inset-0 rounded-full bg-red-400 animate-ping opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-red-300 animate-ping opacity-50"></div>
-                    <div className="absolute inset-4 rounded-full bg-red-200 animate-ping opacity-25"></div>
+                    <div className="absolute inset-2 rounded-full bg-red-300 animate-ping opacity-50" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="absolute inset-4 rounded-full bg-red-200 animate-ping opacity-25" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="absolute inset-6 rounded-full bg-red-100 animate-ping opacity-15" style={{ animationDelay: '0.6s' }}></div>
                   </>
                 )}
                 
                 {isProcessing && (
                   <>
                     <div className="absolute inset-0 rounded-full bg-yellow-400 animate-pulse opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-yellow-300 animate-pulse opacity-50"></div>
+                    <div className="absolute inset-2 rounded-full bg-yellow-300 animate-pulse opacity-50" style={{ animationDelay: '0.3s' }}></div>
+                    <div className="absolute inset-4 rounded-full bg-yellow-200 animate-pulse opacity-25" style={{ animationDelay: '0.6s' }}></div>
                   </>
                 )}
                 
                 {isSpeaking && (
                   <>
                     <div className="absolute inset-0 rounded-full bg-green-400 animate-pulse opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-green-300 animate-pulse opacity-50"></div>
+                    <div className="absolute inset-2 rounded-full bg-green-300 animate-pulse opacity-50" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="absolute inset-4 rounded-full bg-green-200 animate-pulse opacity-25" style={{ animationDelay: '0.4s' }}></div>
                   </>
                 )}
               </button>
 
-              {/* Wave Animation for Speaking */}
+              {/* Enhanced Wave Animation for Speaking */}
               {isSpeaking && (
-                <div className="absolute -top-20 -left-20 w-40 h-40 flex items-center justify-center">
+                <div className="absolute -top-24 -left-24 w-48 h-48 flex items-center justify-center">
                   <div className="relative">
-                    {/* Wave bars */}
-                    <div className="flex items-end space-x-1 h-16">
-                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '60%' }}></div>
-                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1 bg-green-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
-                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '70%' }}></div>
-                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '60%' }}></div>
-                      <div className="w-1 bg-green-600 rounded-full wave-bar" style={{ height: '85%' }}></div>
-                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '75%' }}></div>
-                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
-                      <div className="w-1 bg-green-600 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                    {/* Multiple wave layers for 3D effect */}
+                    <div className="absolute inset-0 flex items-end space-x-1 h-20">
+                      <div className="w-1.5 bg-green-300 rounded-full wave-bar" style={{ height: '50%' }}></div>
+                      <div className="w-1.5 bg-green-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1.5 bg-green-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1.5 bg-green-400 rounded-full wave-bar" style={{ height: '60%' }}></div>
+                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
+                      <div className="w-1.5 bg-green-600 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1.5 bg-green-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1.5 bg-green-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                    </div>
+                    
+                    {/* Second layer for depth */}
+                    <div className="absolute inset-0 flex items-end space-x-1 h-20" style={{ transform: 'translateY(-2px)' }}>
+                      <div className="w-1 bg-green-200 rounded-full wave-bar" style={{ height: '40%' }}></div>
+                      <div className="w-1 bg-green-300 rounded-full wave-bar" style={{ height: '60%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-1 bg-green-300 rounded-full wave-bar" style={{ height: '50%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                      <div className="w-1 bg-green-300 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '55%' }}></div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Wave Animation for Listening */}
+              {/* Enhanced Wave Animation for Listening */}
               {isListening && (
-                <div className="absolute -top-20 -left-20 w-40 h-40 flex items-center justify-center">
+                <div className="absolute -top-24 -left-24 w-48 h-48 flex items-center justify-center">
                   <div className="relative">
-                    {/* Wave bars */}
-                    <div className="flex items-end space-x-1 h-16">
-                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
-                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1 bg-red-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
-                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '80%' }}></div>
-                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '95%' }}></div>
-                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '75%' }}></div>
-                      <div className="w-1 bg-red-600 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                    {/* Multiple wave layers for 3D effect */}
+                    <div className="absolute inset-0 flex items-end space-x-1 h-20">
+                      <div className="w-1.5 bg-red-300 rounded-full wave-bar" style={{ height: '60%' }}></div>
+                      <div className="w-1.5 bg-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-1.5 bg-red-600 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-1.5 bg-red-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
+                      <div className="w-1.5 bg-red-600 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1.5 bg-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1.5 bg-red-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                    </div>
+                    
+                    {/* Second layer for depth */}
+                    <div className="absolute inset-0 flex items-end space-x-1 h-20" style={{ transform: 'translateY(-2px)' }}>
+                      <div className="w-1 bg-red-200 rounded-full wave-bar" style={{ height: '50%' }}></div>
+                      <div className="w-1 bg-red-300 rounded-full wave-bar" style={{ height: '70%' }}></div>
                       <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '90%' }}></div>
-                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
-                      <div className="w-1 bg-red-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1 bg-red-300 rounded-full wave-bar" style={{ height: '60%' }}></div>
+                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1 bg-red-300 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '55%' }}></div>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* Circular Ripple Effects */}
+              {(isListening || isSpeaking) && (
+                <div className="absolute inset-0 rounded-full">
+                  <div className={`absolute inset-0 rounded-full border-2 ${
+                    isListening ? 'border-red-400' : 'border-green-400'
+                  } animate-ping opacity-30`}></div>
+                  <div className={`absolute inset-2 rounded-full border-2 ${
+                    isListening ? 'border-red-300' : 'border-green-300'
+                  } animate-ping opacity-20`} style={{ animationDelay: '0.5s' }}></div>
+                  <div className={`absolute inset-4 rounded-full border-2 ${
+                    isListening ? 'border-red-200' : 'border-green-200'
+                  } animate-ping opacity-10`} style={{ animationDelay: '1s' }}></div>
+                </div>
+              )}
+
+              {/* Floating Particles */}
+              {(isListening || isSpeaking) && (
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* Particle 1 */}
+                  <div className={`absolute w-2 h-2 rounded-full ${
+                    isListening ? 'bg-red-400' : 'bg-green-400'
+                  } animate-bounce`} style={{ 
+                    top: '10%', 
+                    left: '20%', 
+                    animationDelay: '0s',
+                    animationDuration: '2s'
+                  }}></div>
+                  
+                  {/* Particle 2 */}
+                  <div className={`absolute w-1.5 h-1.5 rounded-full ${
+                    isListening ? 'bg-red-300' : 'bg-green-300'
+                  } animate-bounce`} style={{ 
+                    top: '30%', 
+                    right: '15%', 
+                    animationDelay: '0.5s',
+                    animationDuration: '2.5s'
+                  }}></div>
+                  
+                  {/* Particle 3 */}
+                  <div className={`absolute w-1 h-1 rounded-full ${
+                    isListening ? 'bg-red-500' : 'bg-green-500'
+                  } animate-bounce`} style={{ 
+                    bottom: '20%', 
+                    left: '10%', 
+                    animationDelay: '1s',
+                    animationDuration: '1.8s'
+                  }}></div>
+                  
+                  {/* Particle 4 */}
+                  <div className={`absolute w-1.5 h-1.5 rounded-full ${
+                    isListening ? 'bg-red-400' : 'bg-green-400'
+                  } animate-bounce`} style={{ 
+                    bottom: '10%', 
+                    right: '25%', 
+                    animationDelay: '1.5s',
+                    animationDuration: '2.2s'
+                  }}></div>
+                </div>
+              )}
+
+              {/* Energy Orbs */}
+              {(isListening || isSpeaking) && (
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className={`absolute w-4 h-4 rounded-full ${
+                    isListening ? 'bg-red-500' : 'bg-green-500'
+                  } opacity-60 animate-pulse`} style={{ 
+                    top: '5%', 
+                    left: '50%', 
+                    transform: 'translateX(-50%)',
+                    animationDuration: '1.5s'
+                  }}></div>
+                  
+                  <div className={`absolute w-3 h-3 rounded-full ${
+                    isListening ? 'bg-red-400' : 'bg-green-400'
+                  } opacity-40 animate-pulse`} style={{ 
+                    bottom: '5%', 
+                    left: '30%',
+                    animationDuration: '2s',
+                    animationDelay: '0.5s'
+                  }}></div>
+                  
+                  <div className={`absolute w-3 h-3 rounded-full ${
+                    isListening ? 'bg-red-400' : 'bg-green-400'
+                  } opacity-40 animate-pulse`} style={{ 
+                    bottom: '5%', 
+                    right: '30%',
+                    animationDuration: '2s',
+                    animationDelay: '1s'
+                  }}></div>
                 </div>
               )}
             </div>
 
-            {/* Status Display */}
+            {/* Enhanced Status Display */}
             <div className="text-center">
-              <div className={`inline-block px-6 py-3 rounded-full text-white font-semibold ${
+              <div className={`inline-block px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg ${
                 isListening 
-                  ? 'bg-red-500 animate-pulse' 
+                  ? 'bg-gradient-to-r from-red-500 to-red-600 animate-pulse' 
                   : isProcessing
-                  ? 'bg-yellow-500'
+                  ? 'bg-gradient-to-r from-yellow-500 to-yellow-600'
                   : isSpeaking
-                  ? 'bg-green-500'
-                  : 'bg-purple-500'
+                  ? 'bg-gradient-to-r from-green-500 to-green-600'
+                  : 'bg-gradient-to-r from-purple-500 to-purple-600'
               }`}>
-                {currentStatus}
+                <div className="flex items-center space-x-2">
+                  {isListening && (
+                    <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                  )}
+                  {isProcessing && (
+                    <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
+                  )}
+                  {isSpeaking && (
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  )}
+                  <span>{currentStatus}</span>
+                  {isListening && (
+                    <div className="w-2 h-2 bg-white rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                  )}
+                  {isProcessing && (
+                    <div className="w-2 h-2 bg-white rounded-full animate-spin" style={{ animationDelay: '0.3s' }}></div>
+                  )}
+                  {isSpeaking && (
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.7s' }}></div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -467,13 +659,49 @@ Remember: You are here to help users navigate the complex world of government jo
                   {speechLanguage === 'hi-IN' ? 'हिंदी' : 'EN'}
                 </span>
               </button>
+
+              {/* Auto-Listen After Speak Toggle */}
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={autoListenAfterSpeak}
+                  onChange={(e) => setAutoListenAfterSpeak(e.target.checked)}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <span className="text-sm text-gray-600">Auto-listen after speak</span>
+              </label>
+
+              {/* Continuous Mode Toggle */}
+              <button
+                onClick={toggleContinuousMode}
+                className={`p-2 rounded-lg transition-colors ${
+                  continuousMode 
+                    ? 'bg-purple-100 text-purple-700 border border-purple-300' 
+                    : 'bg-gray-100 text-gray-700 border border-gray-300'
+                }`}
+                title={continuousMode ? 'Disable Continuous Mode' : 'Enable Continuous Mode'}
+              >
+                <span className="text-sm font-medium">
+                  {continuousMode ? '🔄 Continuous' : '⏹️ Single'}
+                </span>
+              </button>
             </div>
 
-            {/* Language Status */}
-            <div className="text-center">
+            {/* Status Information */}
+            <div className="text-center space-y-2">
               <p className="text-sm text-gray-500">
                 Current Language: {speechLanguage === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'}
               </p>
+              {continuousMode && (
+                <p className="text-sm text-purple-600 font-medium">
+                  🔄 Continuous Mode Active - AI will keep listening for questions
+                </p>
+              )}
+              {autoListenAfterSpeak && (
+                <p className="text-sm text-blue-600">
+                  🔊 Auto-listen enabled - Will start listening after AI speaks
+                </p>
+              )}
             </div>
           </div>
 
