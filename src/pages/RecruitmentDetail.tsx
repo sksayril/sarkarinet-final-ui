@@ -176,15 +176,18 @@ const RecruitmentDetail: React.FC = () => {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          {/* Header with dynamic color */}
+          {/* Header with green and blue gradient */}
           <div 
-            className="p-8 text-white"
-            style={{ backgroundColor: contentData.colorCode || '#dc2626' }}
+            className="p-8"
+            style={{ 
+              background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #3b82f6 100%)',
+              color: 'white'
+            }}
           >
-            <h1 className="text-3xl font-bold mb-2">{contentData.contentTitle}</h1>
-            <p className="text-lg opacity-90">{contentData.metaDescription}</p>
+            <h1 className="text-3xl font-bold mb-2 text-white">{contentData.contentTitle}</h1>
+            <p className="text-lg opacity-90 text-white">{contentData.metaDescription}</p>
             {contentData.mainCategory && (
-              <p className="text-sm opacity-75 mt-2">Category: {contentData.mainCategory.title}</p>
+              <p className="text-sm opacity-75 mt-2 text-white">Category: {contentData.mainCategory.title}</p>
             )}
           </div>
           
