@@ -22,6 +22,8 @@ const AIVoice: React.FC = () => {
   const [currentStatus, setCurrentStatus] = useState<string>('Ready to listen');
   const [lastQuestion, setLastQuestion] = useState<string>('');
   const [lastAnswer, setLastAnswer] = useState<string>('');
+  const [speechLanguage, setSpeechLanguage] = useState<string>('en-US');
+  const [recognitionLanguage, setRecognitionLanguage] = useState<string>('en-US');
 
   // Initialize speech recognition
   useEffect(() => {
@@ -31,7 +33,7 @@ const AIVoice: React.FC = () => {
       
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
-      recognitionInstance.lang = 'en-US';
+      recognitionInstance.lang = recognitionLanguage;
       
       recognitionInstance.onstart = () => {
         console.log('🎤 Speech recognition started');
@@ -87,7 +89,7 @@ const AIVoice: React.FC = () => {
 3. Guide users about application processes and deadlines 
 4. Share information about various government departments and positions 
 5. Be friendly, professional, and encouraging 
-6. Respond in a mix of Hindi and English (Hinglish) when appropriate 
+6. Respond in ${speechLanguage === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'} language as per user preference
 7. Keep responses concise but informative (2-3 sentences max for voice) 
 8. Always verify information accuracy and suggest checking official websites 
 
@@ -151,6 +153,7 @@ Remember: You are here to help users navigate the complex world of government jo
       utterance.rate = 0.9;
       utterance.pitch = 1;
       utterance.volume = 0.8;
+      utterance.lang = speechLanguage;
       
       utterance.onstart = () => {
         setCurrentStatus('Speaking...');
@@ -214,6 +217,16 @@ Remember: You are here to help users navigate the complex world of government jo
     setIsProcessing(false);
     if ('speechSynthesis' in window) {
       speechSynthesis.cancel();
+    }
+  };
+
+  const toggleLanguage = () => {
+    if (speechLanguage === 'en-US') {
+      setSpeechLanguage('hi-IN');
+      setRecognitionLanguage('hi-IN');
+    } else {
+      setSpeechLanguage('en-US');
+      setRecognitionLanguage('en-US');
     }
   };
 
@@ -312,6 +325,48 @@ Remember: You are here to help users navigate the complex world of government jo
                   </>
                 )}
               </button>
+
+              {/* Wave Animation for Speaking */}
+              {isSpeaking && (
+                <div className="absolute -top-20 -left-20 w-40 h-40 flex items-center justify-center">
+                  <div className="relative">
+                    {/* Wave bars */}
+                    <div className="flex items-end space-x-1 h-16">
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '60%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1 bg-green-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '60%' }}></div>
+                      <div className="w-1 bg-green-600 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1 bg-green-400 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1 bg-green-500 rounded-full wave-bar" style={{ height: '95%' }}></div>
+                      <div className="w-1 bg-green-600 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Wave Animation for Listening */}
+              {isListening && (
+                <div className="absolute -top-20 -left-20 w-40 h-40 flex items-center justify-center">
+                  <div className="relative">
+                    {/* Wave bars */}
+                    <div className="flex items-end space-x-1 h-16">
+                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '70%' }}></div>
+                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-red-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '80%' }}></div>
+                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '95%' }}></div>
+                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '75%' }}></div>
+                      <div className="w-1 bg-red-600 rounded-full wave-bar" style={{ height: '85%' }}></div>
+                      <div className="w-1 bg-red-400 rounded-full wave-bar" style={{ height: '90%' }}></div>
+                      <div className="w-1 bg-red-500 rounded-full wave-bar" style={{ height: '65%' }}></div>
+                      <div className="w-1 bg-red-600 rounded-full wave-bar" style={{ height: '100%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Status Display */}
@@ -343,7 +398,7 @@ Remember: You are here to help users navigate the complex world of government jo
             )}
 
             {/* AI Response Display */}
-            {lastAnswer && (
+            {/* {lastAnswer && (
               <div className="w-full max-w-md bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-2xl shadow-inner border border-purple-200">
                 <div className="flex items-start space-x-3">
                   <Bot className="w-6 h-6 text-purple-500 mt-1" />
@@ -374,7 +429,7 @@ Remember: You are here to help users navigate the complex world of government jo
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Voice Controls */}
             <div className="flex items-center space-x-4">
@@ -397,6 +452,28 @@ Remember: You are here to help users navigate the complex world of government jo
               >
                 {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
               </button>
+
+              {/* Language Toggle Button */}
+              <button
+                onClick={toggleLanguage}
+                className={`p-2 rounded-lg transition-colors ${
+                  speechLanguage === 'hi-IN' 
+                    ? 'bg-orange-100 text-orange-700 border border-orange-300' 
+                    : 'bg-blue-100 text-blue-700 border border-blue-300'
+                }`}
+                title={speechLanguage === 'hi-IN' ? 'Switch to English' : 'Switch to Hindi'}
+              >
+                <span className="text-sm font-medium">
+                  {speechLanguage === 'hi-IN' ? 'हिंदी' : 'EN'}
+                </span>
+              </button>
+            </div>
+
+            {/* Language Status */}
+            <div className="text-center">
+              <p className="text-sm text-gray-500">
+                Current Language: {speechLanguage === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'}
+              </p>
             </div>
           </div>
 
