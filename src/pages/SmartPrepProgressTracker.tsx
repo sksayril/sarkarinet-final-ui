@@ -556,7 +556,7 @@ Make the analysis practical, specific to ${latestData.jobPreparation}, and actio
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 shadow-xl">
+      <div className="bg-gradient-to-r from-purple-600 to-blue-500 text-white p-6 shadow-xl">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 hover:text-blue-200 transition-colors">
             <ArrowLeft className="w-6 h-6" />

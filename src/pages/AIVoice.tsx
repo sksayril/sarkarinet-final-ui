@@ -293,7 +293,7 @@ Remember: You are here to help users navigate the complex world of government jo
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-green-100">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 via-blue-600 to-green-500 text-white p-6 shadow-xl">
+      <div className="bg-gradient-to-r from-purple-600 to-blue-500 text-white p-6 shadow-xl">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 hover:text-green-200 transition-colors">
             <ArrowLeft className="w-6 h-6" />

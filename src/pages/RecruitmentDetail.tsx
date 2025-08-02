@@ -180,7 +180,7 @@ const RecruitmentDetail: React.FC = () => {
           <div 
             className="p-8"
             style={{ 
-              background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #3b82f6 100%)',
+              background: 'linear-gradient(90deg, #9333ea 0%, #3b82f6 100%)',
               color: 'white'
             }}
           >

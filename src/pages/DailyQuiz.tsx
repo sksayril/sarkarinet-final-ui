@@ -473,7 +473,7 @@ const DailyQuiz: React.FC = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50">
         {/* Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-4 shadow-lg">
+        <div className="bg-gradient-to-r from-purple-600 to-blue-500 text-white p-4 shadow-lg">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2 hover:text-orange-200 transition-colors">
               <ArrowLeft className="w-5 h-5" />
