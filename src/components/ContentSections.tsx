@@ -122,7 +122,7 @@ const ContentSections: React.FC = () => {
     const slug = slugify(item.contentTitle);
     const mainCategorySlug = item.mainCategory.title.toLowerCase().replace(/\s+/g, '-');
     scrollToTop();
-    navigate(`/${mainCategorySlug}/${slug}`);
+    navigate(`/${mainCategorySlug}/${slug}?id=${item._id}`);
   };
 
   const handleViewMore = (sectionTitle: string) => {
@@ -227,13 +227,17 @@ const ContentSections: React.FC = () => {
                   {displayItems.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start space-x-3 py-1">
                       <div className="w-2 h-2 bg-black rounded-full mt-3 flex-shrink-0"></div>
-                      <span 
+                      <a 
+                        href={`/${item.mainCategory.title.toLowerCase().replace(/\s+/g, '-')}/${slugify(item.contentTitle)}?id=${item._id}`}
                         className="text-xl font-normal text-blue-700 cursor-pointer underline leading-relaxed hover:text-blue-800 transition-colors"
                         style={{ fontFamily: 'Arial, sans-serif' }}
-                        onClick={() => handleItemClick(item)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleItemClick(item);
+                        }}
                       >
                         {item.contentTitle}
-                      </span>
+                      </a>
                     </li>
                   ))}
                 </ul>

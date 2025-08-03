@@ -55,11 +55,38 @@ const RecruitmentDetail: React.FC = () => {
       try {
         setLoading(true);
         
-        // Determine which slug to use
+        // Check if we have a direct subcategory ID in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const subcategoryId = urlParams.get('id');
+        
+        // If we have a direct subcategory ID, fetch it directly
+        if (subcategoryId) {
+          try {
+            const directResponse = await fetch(`https://api.mydost.site/category/sub/${subcategoryId}`);
+            if (directResponse.ok) {
+              const data = await directResponse.json();
+              if (data.subCategory) {
+                setContentData({
+                  _id: data.subCategory._id,
+                  contentTitle: data.subCategory.contentTitle,
+                  contentDescription: data.subCategory.contentDescription,
+                  metaDescription: data.subCategory.metaDescription,
+                  mainCategory: data.subCategory.mainCategory
+                });
+                setLoading(false);
+                return;
+              }
+            }
+          } catch (err) {
+            console.log('Direct subcategory API failed, trying other methods');
+          }
+        }
+        
+        // Determine which slug to use if no direct ID
         const targetSlug = subcategorySlug || slug;
         
         if (!targetSlug) {
-          setError('No slug provided');
+          setError('No slug or ID provided');
           setLoading(false);
           return;
         }
@@ -99,13 +126,40 @@ const RecruitmentDetail: React.FC = () => {
                 slugify(item.contentTitle) === targetSlug
               );
               if (subDataItem) {
-                foundData = {
-                  _id: subDataItem._id,
-                  contentTitle: subDataItem.contentTitle,
-                  contentDescription: subDataItem.contentDescription,
-                  metaDescription: subDataItem.metaDescription,
-                  mainCategory: subDataItem.mainCategory
-                };
+                // If found by slug, fetch the full content directly from the specific API
+                try {
+                  const directResponse = await fetch(`https://api.mydost.site/category/sub/${subDataItem._id}`);
+                  if (directResponse.ok) {
+                    const directData = await directResponse.json();
+                    if (directData.subCategory) {
+                      foundData = {
+                        _id: directData.subCategory._id,
+                        contentTitle: directData.subCategory.contentTitle,
+                        contentDescription: directData.subCategory.contentDescription,
+                        metaDescription: directData.subCategory.metaDescription,
+                        mainCategory: directData.subCategory.mainCategory
+                      };
+                    }
+                  } else {
+                    // Fallback to original data if direct fetch fails
+                    foundData = {
+                      _id: subDataItem._id,
+                      contentTitle: subDataItem.contentTitle,
+                      contentDescription: subDataItem.contentDescription,
+                      metaDescription: subDataItem.metaDescription,
+                      mainCategory: subDataItem.mainCategory
+                    };
+                  }
+                } catch (err) {
+                  console.log('Direct subcategory API failed, using list data');
+                  foundData = {
+                    _id: subDataItem._id,
+                    contentTitle: subDataItem.contentTitle,
+                    contentDescription: subDataItem.contentDescription,
+                    metaDescription: subDataItem.metaDescription,
+                    mainCategory: subDataItem.mainCategory
+                  };
+                }
               }
             }
           } catch (err) {
