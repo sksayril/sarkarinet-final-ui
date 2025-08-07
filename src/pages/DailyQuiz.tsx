@@ -479,7 +479,7 @@ const DailyQuiz: React.FC = () => {
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold">Daily Quiz</h1>
+            <h1 className="text-2xl font-bold">Mock Test</h1>
             <div></div>
           </div>
         </div>
@@ -851,7 +851,7 @@ const DailyQuiz: React.FC = () => {
               <span className="font-bold text-2xl">{formatTime(quizState.timeLeft)}</span>
             </div>
           </div>
-          <h1 className="text-3xl font-bold">Daily Quiz</h1>
+          <h1 className="text-3xl font-bold">Mock Test</h1>
           <div className="text-right">
             <div className="text-lg opacity-90 mb-1">Question {quizState.currentQuestion + 1} of {quizState.questions.length}</div>
             <div className="text-xl font-bold">Score: {quizState.score}</div>

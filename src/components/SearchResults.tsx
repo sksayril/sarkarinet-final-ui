@@ -7,27 +7,27 @@ import { scrollToTop } from '../utils/scrollToTop';
 
 interface TopDataItem {
   _id: string;
-  metaTitle: string;
-  metaDescription: string;
-  keywords: string[];
-  tags: string[];
-  contentTitle: string;
-  contentDescription: string;
-  colorCode: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  tags?: string[];
+  contentTitle?: string;
+  contentDescription?: string;
+  colorCode?: string;
 }
 
 interface SubCategory {
   _id: string;
-  mainCategory: {
+  mainCategory?: {
     _id: string;
     title: string;
   };
-  metaTitle: string;
-  metaDescription: string;
-  keywords: string[];
-  tags: string[];
-  contentTitle: string;
-  contentDescription: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  tags?: string[];
+  contentTitle?: string;
+  contentDescription?: string;
 }
 
 interface SearchResult {
@@ -49,7 +49,7 @@ const SearchResults: React.FC = () => {
   const { searchQuery, isSearching } = useSearch();
 
   // Function to strip HTML tags and get clean text
-  const stripHtmlTags = (html: string): string => {
+  const stripHtmlTags = (html: string | undefined | null): string => {
     if (!html) return '';
     // Create a temporary div to parse HTML and extract text
     const tempDiv = document.createElement('div');
@@ -58,7 +58,7 @@ const SearchResults: React.FC = () => {
   };
 
   // Function to truncate text to a certain length
-  const truncateText = (text: string, maxLength: number = 150): string => {
+  const truncateText = (text: string | undefined | null, maxLength: number = 150): string => {
     if (!text) return '';
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength).trim() + '...';
@@ -68,31 +68,52 @@ const SearchResults: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);
         
         // Fetch recruitment cards
         const recruitmentResponse = await fetch('https://api.mydost.site/category/topdata');
+        if (!recruitmentResponse.ok) {
+          throw new Error(`Failed to fetch recruitment data: ${recruitmentResponse.status}`);
+        }
         const recruitmentData = await recruitmentResponse.json();
         
         // Fetch content sections
         const contentResponse = await fetch('https://api.mydost.site/category/sub');
+        if (!contentResponse.ok) {
+          throw new Error(`Failed to fetch content data: ${contentResponse.status}`);
+        }
         const contentData = await contentResponse.json();
         
+        // Validate and process recruitment cards
+        const validRecruitmentCards = (recruitmentData.topDataList || []).filter((card: any) => {
+          return card && card._id && (card.contentTitle || card.metaTitle);
+        });
+        
+        // Validate and process content sections
+        const validContentSections = (contentData.subCategories || []).filter((item: any) => {
+          return item && item._id && (item.contentTitle || item.metaTitle);
+        });
+        
         // Sort recruitment cards in descending order (newest first)
-        const sortedRecruitmentCards = (recruitmentData.topDataList || []).sort((a: TopDataItem, b: TopDataItem) => {
+        const sortedRecruitmentCards = validRecruitmentCards.sort((a: TopDataItem, b: TopDataItem) => {
           return b._id.localeCompare(a._id);
         });
         
         // Sort content sections in descending order (newest first)
-        const sortedContentSections = (contentData.subCategories || []).sort((a: SubCategory, b: SubCategory) => {
+        const sortedContentSections = validContentSections.sort((a: SubCategory, b: SubCategory) => {
           return b._id.localeCompare(a._id);
+        });
+        
+        console.log('Fetched data:', {
+          recruitmentCards: sortedRecruitmentCards.length,
+          contentSections: sortedContentSections.length
         });
         
         setRecruitmentCards(sortedRecruitmentCards);
         setContentSections(sortedContentSections);
-        setError(null);
       } catch (err) {
         console.error('Error fetching search data:', err);
-        setError('Failed to load search data');
+        setError(err instanceof Error ? err.message : 'Failed to load search data');
       } finally {
         setLoading(false);
       }
@@ -103,71 +124,82 @@ const SearchResults: React.FC = () => {
 
   // Filter and combine search results
   const searchResults = useMemo(() => {
-    if (!isSearching || !searchQuery.trim()) {
+    try {
+      if (!isSearching || !searchQuery.trim()) {
+        return [];
+      }
+
+      const query = searchQuery.toLowerCase();
+      const results: SearchResult[] = [];
+
+      // Filter recruitment cards
+      recruitmentCards.forEach(card => {
+        if (
+          (card.contentTitle && card.contentTitle.toLowerCase().includes(query)) ||
+          (card.metaTitle && card.metaTitle.toLowerCase().includes(query)) ||
+          (card.metaDescription && card.metaDescription.toLowerCase().includes(query)) ||
+          (card.contentDescription && card.contentDescription.toLowerCase().includes(query)) ||
+          (card.keywords && Array.isArray(card.keywords) && card.keywords.some(keyword => keyword && keyword.toLowerCase().includes(query))) ||
+          (card.tags && Array.isArray(card.tags) && card.tags.some(tag => tag && tag.toLowerCase().includes(query)))
+        ) {
+          results.push({
+            id: card._id,
+            title: card.contentTitle || 'Untitled',
+            description: truncateText(stripHtmlTags(card.contentDescription || card.metaDescription || '')),
+            category: 'Recruitment',
+            type: 'recruitment',
+            colorCode: card.colorCode
+          });
+        }
+      });
+
+      // Filter content sections
+      contentSections.forEach(item => {
+        if (
+          (item.contentTitle && item.contentTitle.toLowerCase().includes(query)) ||
+          (item.metaTitle && item.metaTitle.toLowerCase().includes(query)) ||
+          (item.metaDescription && item.metaDescription.toLowerCase().includes(query)) ||
+          (item.contentDescription && item.contentDescription.toLowerCase().includes(query)) ||
+          (item.keywords && Array.isArray(item.keywords) && item.keywords.some(keyword => keyword && keyword.toLowerCase().includes(query))) ||
+          (item.tags && Array.isArray(item.tags) && item.tags.some(tag => tag && tag.toLowerCase().includes(query))) ||
+          (item.mainCategory && item.mainCategory.title && item.mainCategory.title.toLowerCase().includes(query))
+        ) {
+          results.push({
+            id: item._id,
+            title: item.contentTitle || 'Untitled',
+            description: truncateText(stripHtmlTags(item.contentDescription || item.metaDescription || '')),
+            category: item.mainCategory?.title || 'Content',
+            type: 'content',
+            mainCategory: item.mainCategory?.title || 'Content'
+          });
+        }
+      });
+
+      // Sort results in descending order (newest first) by ID
+      return results.sort((a, b) => b.id.localeCompare(a.id));
+    } catch (error) {
+      console.error('Error processing search results:', error);
       return [];
     }
-
-    const query = searchQuery.toLowerCase();
-    const results: SearchResult[] = [];
-
-    // Filter recruitment cards
-    recruitmentCards.forEach(card => {
-      if (
-        card.contentTitle.toLowerCase().includes(query) ||
-        card.metaTitle.toLowerCase().includes(query) ||
-        card.metaDescription.toLowerCase().includes(query) ||
-        card.contentDescription.toLowerCase().includes(query) ||
-        card.keywords.some(keyword => keyword.toLowerCase().includes(query)) ||
-        card.tags.some(tag => tag.toLowerCase().includes(query))
-      ) {
-        results.push({
-          id: card._id,
-          title: card.contentTitle,
-          description: truncateText(stripHtmlTags(card.contentDescription || card.metaDescription)),
-          category: 'Recruitment',
-          type: 'recruitment',
-          colorCode: card.colorCode
-        });
-      }
-    });
-
-    // Filter content sections
-    contentSections.forEach(item => {
-      if (
-        item.contentTitle.toLowerCase().includes(query) ||
-        item.metaTitle.toLowerCase().includes(query) ||
-        item.metaDescription.toLowerCase().includes(query) ||
-        item.contentDescription.toLowerCase().includes(query) ||
-        item.keywords.some(keyword => keyword.toLowerCase().includes(query)) ||
-        item.tags.some(tag => tag.toLowerCase().includes(query)) ||
-        item.mainCategory.title.toLowerCase().includes(query)
-      ) {
-        results.push({
-          id: item._id,
-          title: item.contentTitle,
-          description: truncateText(stripHtmlTags(item.contentDescription || item.metaDescription)),
-          category: item.mainCategory.title,
-          type: 'content',
-          mainCategory: item.mainCategory.title
-        });
-      }
-    });
-
-    // Sort results in descending order (newest first) by ID
-    return results.sort((a, b) => b.id.localeCompare(a.id));
   }, [recruitmentCards, contentSections, searchQuery, isSearching]);
 
   const handleResultClick = (result: SearchResult) => {
-    const slug = slugify(result.title);
-    scrollToTop();
-    
-    if (result.type === 'content' && result.mainCategory) {
-      // For content items, use the new URL structure with main category
-      const mainCategorySlug = result.mainCategory.toLowerCase().replace(/\s+/g, '-');
-      navigate(`/${mainCategorySlug}/${slug}`);
-    } else {
-      // For recruitment items, use the old structure (they don't have main category)
-      navigate(`/recruitment/${slug}`);
+    try {
+      const slug = slugify(result.title || 'untitled');
+      scrollToTop();
+      
+      if (result.type === 'content' && result.mainCategory) {
+        // For content items, use the new URL structure with main category
+        const mainCategorySlug = result.mainCategory.toLowerCase().replace(/\s+/g, '-');
+        navigate(`/${mainCategorySlug}/${slug}`);
+      } else {
+        // For recruitment items, use the old structure (they don't have main category)
+        navigate(`/recruitment/${slug}`);
+      }
+    } catch (error) {
+      console.error('Error navigating to result:', error);
+      // Fallback navigation
+      navigate('/');
     }
   };
 

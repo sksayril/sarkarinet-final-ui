@@ -10,11 +10,11 @@ const SearchBar: React.FC = () => {
 
   // Update input value when search query changes
   useEffect(() => {
-    setInputValue(searchQuery);
+    setInputValue(searchQuery || '');
   }, [searchQuery]);
 
   const handleSearch = () => {
-    if (inputValue.trim()) {
+    if (inputValue && inputValue.trim()) {
       setSearchQuery(inputValue.trim());
       setIsSearching(true);
     }
@@ -76,7 +76,7 @@ const SearchBar: React.FC = () => {
           <div className="mt-4 text-center">
             <div className="flex items-center justify-center space-x-4">
               <p className="text-lg text-gray-700">
-                Showing search results for: <span className="font-bold text-red-600">"{searchQuery}"</span>
+                Showing search results for: <span className="font-bold text-red-600">"{searchQuery || ''}"</span>
               </p>
               <button 
                 onClick={handleClearSearch}
