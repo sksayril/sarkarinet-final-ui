@@ -76,7 +76,7 @@ const SearchBar: React.FC = () => {
             }}
             className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-full flex items-center space-x-3 hover:from-purple-700 hover:to-purple-800 whitespace-nowrap shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-2 border-purple-500"
           >
-            <Sparkles className="w-6 h-6" />
+            <span className="text-2xl">🎤</span>
             <span className="text-lg font-bold">Ask S.R AI Assistant</span>
           </button>
         </div>

@@ -273,15 +273,7 @@ Remember: You are here to help users navigate the complex world of government jo
     }
   };
 
-  const toggleLanguage = () => {
-    if (speechLanguage === 'en-US') {
-      setSpeechLanguage('hi-IN');
-      setRecognitionLanguage('hi-IN');
-    } else {
-      setSpeechLanguage('en-US');
-      setRecognitionLanguage('en-US');
-    }
-  };
+
 
   const toggleContinuousMode = () => {
     setContinuousMode(!continuousMode);
@@ -425,7 +417,7 @@ Remember: You are here to help users navigate the complex world of government jo
                     isProcessing
                       ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white scale-105 shadow-xl'
                       : continuousMode
-                      ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl'
+                      ? 'bg-transparent hover:bg-white/10 transition-colors'
                       : 'bg-transparent hover:bg-white/10 transition-colors'
                   } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
                   title={isListening ? 'Stop Listening' : 'Start Voice Input'}
@@ -436,11 +428,7 @@ Remember: You are here to help users navigate the complex world of government jo
                     </div>
                   ) : (
                     <div className="relative">
-                      {continuousMode && (
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-purple-500 rounded-full flex items-center justify-center">
-                          <span className="text-xs text-white font-bold">∞</span>
-                        </div>
-                      )}
+                      {/* Continuous mode indicator removed */}
                     </div>
                   )}
                 </button>
@@ -450,6 +438,7 @@ Remember: You are here to help users navigate the complex world of government jo
               {isSpeaking && (
                 <div className="absolute -top-24 -left-24 w-48 h-48 flex items-center justify-center">
                   <div className="relative">
+                    {/* Continuous Mode Indicator for Speaking - Removed */}
                     {/* Main wave layer */}
                     <div className="absolute inset-0 flex items-end space-x-1.5 h-24">
                       <div className="w-2 bg-green-200 rounded-full wave-bar-micro" style={{ height: '30%' }}></div>
@@ -497,6 +486,7 @@ Remember: You are here to help users navigate the complex world of government jo
               {isListening && (
                 <div className="absolute -top-24 -left-24 w-48 h-48 flex items-center justify-center">
                   <div className="relative">
+                    {/* Continuous Mode Indicator for Listening - Removed */}
                     {/* Main wave layer */}
                     <div className="absolute inset-0 flex items-end space-x-1.5 h-24">
                       <div className="w-2 bg-gradient-to-t from-orange-200 to-red-200 rounded-full wave-bar-micro" style={{ height: '40%' }}></div>
@@ -744,21 +734,41 @@ Remember: You are here to help users navigate the complex world of government jo
                 </div>
               </button>
 
-              {/* Language Toggle Button */}
+              {/* Hindi Language Button */}
               <button
-                onClick={toggleLanguage}
+                onClick={() => {
+                  setSpeechLanguage('hi-IN');
+                  setRecognitionLanguage('hi-IN');
+                }}
                 className={`px-6 py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
                   speechLanguage === 'hi-IN' 
-                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700' 
-                    : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700'
+                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg scale-105' 
+                    : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white hover:from-gray-500 hover:to-gray-600'
                 }`}
-                title={speechLanguage === 'hi-IN' ? 'Switch to English' : 'Switch to Hindi'}
+                title="Switch to Hindi"
               >
                 <div className="flex items-center space-x-2">
-                  <span className="text-lg font-bold">🌐</span>
-                  <span className="text-lg font-bold">
-                    {speechLanguage === 'hi-IN' ? 'हिंदी' : 'EN'}
-                  </span>
+                  <span className="text-lg font-bold">🇮🇳</span>
+                  <span className="text-lg font-bold">हिंदी</span>
+                </div>
+              </button>
+
+              {/* English Language Button */}
+              <button
+                onClick={() => {
+                  setSpeechLanguage('en-US');
+                  setRecognitionLanguage('en-US');
+                }}
+                className={`px-6 py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                  speechLanguage === 'en-US' 
+                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg scale-105' 
+                    : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white hover:from-gray-500 hover:to-gray-600'
+                }`}
+                title="Switch to English"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-bold">🇺🇸</span>
+                  <span className="text-lg font-bold">English</span>
                 </div>
               </button>
 
