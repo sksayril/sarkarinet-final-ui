@@ -254,6 +254,14 @@ const PhotoResizer: React.FC = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-gray-800">1. Photo Upload Karein</h3>
                 </div>
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                  <p className="text-blue-800 text-sm leading-relaxed">
+                    <strong>📸 Supported Formats:</strong> JPEG, PNG, GIF, WEBP, BMP<br/>
+                    <strong>📏 Max File Size:</strong> 10 MB<br/>
+                    <strong>🎯 Perfect For:</strong> Government forms, passport photos, ID cards, profile pictures<br/>
+                    <strong>💡 Tip:</strong> Use high-quality images for best results. Clear, well-lit photos work best.
+                  </p>
+                </div>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                   <input
                     ref={fileInputRef}

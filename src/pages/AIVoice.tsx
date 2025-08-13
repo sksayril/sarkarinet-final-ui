@@ -775,7 +775,128 @@ Remember: You are here to help users navigate the complex world of government jo
           </div>
 
           {/* Features Info */}
-          
+          <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 border-t border-gray-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Feature Card 1 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <Mic className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800">Voice Recognition</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Advanced speech recognition technology that understands both English and Hindi. 
+                  Simply speak your questions about government jobs, exams, and recruitment processes.
+                </p>
+              </div>
+
+              {/* Feature Card 2 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <Bot className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800">AI Assistant</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Powered by advanced AI technology to provide accurate information about government 
+                  jobs, exam dates, application processes, and career guidance.
+                </p>
+              </div>
+
+              {/* Feature Card 3 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                    <Volume2 className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800">Voice Response</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Get spoken responses in your preferred language. The AI speaks clearly and 
+                  naturally, making it easy to understand complex information.
+                </p>
+              </div>
+
+              {/* Feature Card 4 */}
+              {/* <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">∞</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800">Continuous Mode</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Enable continuous conversation mode for uninterrupted interaction. 
+                  Perfect for extended discussions about career planning and exam preparation.
+                </p>
+              </div> */}
+
+              {/* Feature Card 5 */}
+              {/* <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-green-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">हिं</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800">Bilingual Support</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Full support for both English and Hindi languages. Switch between languages 
+                  seamlessly for comfortable communication in your preferred language.
+                </p>
+              </div> */}
+
+              {/* Feature Card 6 */}
+              {/* <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">⚡</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800">Real-time Updates</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Get instant updates on latest government job notifications, exam dates, 
+                  and recruitment processes. Stay informed with real-time information.
+                </p>
+              </div> */}
+            </div>
+
+            {/* Additional Info Section */}
+            <div className="mt-8 p-6 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl border border-green-200">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">How to Use AI Voice Assistant</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">1</div>
+                    <p className="text-gray-700 text-sm">Click the microphone button to start voice recognition</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">2</div>
+                    <p className="text-gray-700 text-sm">Speak your question clearly about government jobs or exams</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">3</div>
+                    <p className="text-gray-700 text-sm">Wait for AI to process and respond with voice and text</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">4</div>
+                    <p className="text-gray-700 text-sm">Enable continuous mode for ongoing conversation</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">5</div>
+                    <p className="text-gray-700 text-sm">Switch between English and Hindi as needed</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">6</div>
+                    <p className="text-gray-700 text-sm">Use auto-listen feature for hands-free interaction</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
