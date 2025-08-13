@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Sparkles, X, RotateCcw } from 'lucide-react';
+import { Search, Sparkles, X, RotateCcw, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSearch } from '../contexts/SearchContext';
 
@@ -29,6 +29,7 @@ const SearchBar: React.FC = () => {
   const handleClearSearch = () => {
     setInputValue('');
     clearSearch();
+    navigate('/');
   };
 
   return (
@@ -44,12 +45,21 @@ const SearchBar: React.FC = () => {
               placeholder="Search for jobs, results, admit cards..."
               className="w-full px-6 py-4 border-2 border-gray-400 rounded-full focus:outline-none focus:ring-4 focus:ring-red-500 focus:border-red-500 text-lg shadow-2xl hover:shadow-3xl transition-all duration-300"
             />
-            {inputValue && (
+            {inputValue && !isSearching && (
               <button 
                 onClick={handleClearSearch}
                 className="absolute right-16 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <X className="w-5 h-5" />
+              </button>
+            )}
+            {isSearching && (
+              <button 
+                onClick={handleClearSearch}
+                className="absolute right-16 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors"
+                title="Back to Home"
+              >
+                <ArrowLeft className="w-5 h-5" />
               </button>
             )}
             <button 
@@ -80,10 +90,11 @@ const SearchBar: React.FC = () => {
               </p>
               <button 
                 onClick={handleClearSearch}
-                className="flex items-center space-x-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-full transition-colors"
+                className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full transition-colors"
+                title="Back to Home"
               >
-                <RotateCcw className="w-4 h-4" />
-                <span>Clear Search</span>
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to Home</span>
               </button>
             </div>
           </div>

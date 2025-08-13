@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Mic, MicOff, Volume2, VolumeX, Bot, Settings } from 'lucide-react';
+import { ArrowLeft, Volume2, VolumeX, Bot, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 // TypeScript declarations for Web Speech API
 declare global {
@@ -27,6 +28,7 @@ const AIVoice: React.FC = () => {
   const [continuousMode, setContinuousMode] = useState<boolean>(false);
   const [autoListenAfterSpeak, setAutoListenAfterSpeak] = useState<boolean>(true);
   const [hasWelcomed, setHasWelcomed] = useState<boolean>(false);
+  const [currentAnimation, setCurrentAnimation] = useState<string>('welcome');
 
   // Initialize speech recognition
   useEffect(() => {
@@ -290,6 +292,21 @@ Remember: You are here to help users navigate the complex world of government jo
     }
   };
 
+  // Update animation state based on current status
+  useEffect(() => {
+    if (isListening) {
+      setCurrentAnimation('listening');
+    } else if (isSpeaking) {
+      setCurrentAnimation('speaking');
+    } else if (isProcessing) {
+      setCurrentAnimation('processing');
+    } else if (!hasWelcomed && !isListening && !isSpeaking && !isProcessing) {
+      setCurrentAnimation('welcome');
+    } else {
+      setCurrentAnimation('idle');
+    }
+  }, [isListening, isSpeaking, hasWelcomed, isProcessing]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-green-100">
       {/* Header */}
@@ -340,70 +357,86 @@ Remember: You are here to help users navigate the complex world of government jo
               )}
             </div>
 
-            {/* Enhanced Animated Voice Status */}
+            {/* Enhanced Animated Voice Status with Lottie */}
             <div className="relative">
-              {/* Main Voice Button with Enhanced Animation */}
-              <button
-                onClick={toggleListening}
-                disabled={isProcessing}
-                className={`relative p-10 rounded-full transition-all duration-500 ${
-                  isListening 
-                    ? 'bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white scale-110 shadow-2xl' 
-                    : isProcessing
-                    ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white scale-105 shadow-xl'
-                    : isSpeaking
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white scale-105 shadow-xl'
-                    : continuousMode
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl'
-                    : 'bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl'
-                } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
-                title={isListening ? 'Stop Listening' : 'Start Voice Input'}
-              >
-                {isListening ? (
-                  <MicOff className="w-14 h-14" />
-                ) : isProcessing ? (
-                  <div className="w-14 h-14 flex items-center justify-center">
-                    <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                  </div>
-                ) : isSpeaking ? (
-                  <Volume2 className="w-14 h-14" />
-                ) : (
-                  <div className="relative">
-                    <Mic className="w-14 h-14" />
-                    {continuousMode && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
-                        <span className="text-xs text-yellow-900 font-bold">∞</span>
-                      </div>
-                    )}
-                  </div>
-                )}
-               
-                {/* Enhanced Pulsing Animation Rings */}
-                {isListening && (
-                  <>
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-red-400 animate-ping opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-gradient-to-r from-red-300 to-pink-300 animate-ping opacity-50" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="absolute inset-4 rounded-full bg-gradient-to-r from-pink-200 to-orange-200 animate-ping opacity-25" style={{ animationDelay: '0.4s' }}></div>
-                    <div className="absolute inset-6 rounded-full bg-gradient-to-r from-orange-100 to-red-100 animate-ping opacity-15" style={{ animationDelay: '0.6s' }}></div>
-                  </>
-                )}
+              {/* Lottie Animation Container */}
+              <div className="relative w-48 h-48 flex items-center justify-center">
+                {/* Single Lottie Animation - Only one shows at a time */}
+                <div className="absolute inset-0">
+                  {currentAnimation === 'welcome' && !hasWelcomed && (
+                    <DotLottieReact
+                      src="/Voice Search.json"
+                      loop
+                      autoplay
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  )}
+                  
+                  {currentAnimation === 'listening' && isListening && (
+                    <DotLottieReact
+                      src="/Voice.json"
+                      loop
+                      autoplay
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  )}
+                  
+                  {currentAnimation === 'speaking' && isSpeaking && (
+                    <DotLottieReact
+                      src="/Voice.json"
+                      loop
+                      autoplay
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  )}
+                  
+                  {currentAnimation === 'processing' && isProcessing && (
+                    <DotLottieReact
+                      src="/Voice.json"
+                      loop
+                      autoplay
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  )}
+                  
+                  {currentAnimation === 'idle' && !isListening && !isSpeaking && !isProcessing && (
+                    <DotLottieReact
+                      src="/Voice Search.json"
+                      loop
+                      autoplay
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  )}
+                </div>
                 
-                {isProcessing && (
-                  <>
-                    <div className="absolute inset-0 rounded-full bg-yellow-400 animate-pulse opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-yellow-300 animate-pulse opacity-50" style={{ animationDelay: '0.3s' }}></div>
-                    <div className="absolute inset-4 rounded-full bg-yellow-200 animate-pulse opacity-25" style={{ animationDelay: '0.6s' }}></div>
-                  </>
-                )}
-                
-                {isSpeaking && (
-                  <>
-                    <div className="absolute inset-0 rounded-full bg-green-400 animate-pulse opacity-75"></div>
-                    <div className="absolute inset-2 rounded-full bg-green-300 animate-pulse opacity-50" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="absolute inset-4 rounded-full bg-green-200 animate-pulse opacity-25" style={{ animationDelay: '0.4s' }}></div>
-                  </>
-                )}
-              </button>
+                {/* Main Voice Button */}
+                <button
+                  onClick={toggleListening}
+                  disabled={isProcessing}
+                  className={`relative p-10 rounded-full transition-all duration-500 ${
+                    isProcessing
+                      ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white scale-105 shadow-xl'
+                      : continuousMode
+                      ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl'
+                      : 'bg-transparent hover:bg-white/10 transition-colors'
+                  } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  title={isListening ? 'Stop Listening' : 'Start Voice Input'}
+                >
+                  {isProcessing ? (
+                    <div className="w-14 h-14 flex items-center justify-center">
+                      <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      {continuousMode && (
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-purple-500 rounded-full flex items-center justify-center">
+                          <span className="text-xs text-white font-bold">∞</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </button>
+              </div>
 
               {/* Enhanced Wave Animation for Speaking */}
               {isSpeaking && (
@@ -631,7 +664,9 @@ Remember: You are here to help users navigate the complex world of government jo
             {lastQuestion && (
               <div className="w-full max-w-md bg-gray-100 p-4 rounded-2xl shadow-inner">
                 <div className="flex items-center space-x-3">
-                  <Mic className="w-6 h-6 text-purple-500" />
+                  <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs">🎤</span>
+                  </div>
                   <div className="flex-1">
                     <p className="text-sm text-gray-600 font-medium">You said:</p>
                     <p className="text-gray-800 font-semibold">{lastQuestion}</p>
@@ -776,12 +811,292 @@ Remember: You are here to help users navigate the complex world of government jo
 
           {/* Features Info */}
           <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 border-t border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Main Introduction */}
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">Sarkari Result AI Assistant – Your Smart Education Partner</h2>
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                In today's fast-paced world, students don't have time to search through dozens of websites to find accurate and timely information about their exams. Whether it's checking Sarkari Result, downloading admit cards, knowing exam dates, or understanding the syllabus of competitive exams, students want instant answers.
+              </p>
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed mt-4">
+                To meet this need, we have built something truly innovative – <strong>Sarkari Result AI Assistant</strong>. This is not just a chatbot. It's an intelligent voice-enabled AI assistant that listens to your queries, understands them, and responds instantly – either by text or voice.
+              </p>
+            </div>
+
+            {/* What is AI Assistant */}
+            <div className="mb-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">What is Sarkari Result AI Assistant?</h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                The Sarkari Result AI Assistant is an advanced AI-powered virtual education assistant designed to help students get all government exam-related updates instantly. It combines the latest artificial intelligence technology with real-time data so that students never miss important updates.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-white text-sm">🎤</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Voice Recognition</h4>
+                    <p className="text-sm text-gray-600">Students can ask questions by speaking.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-white text-sm">🔊</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Voice Output</h4>
+                    <p className="text-sm text-gray-600">The assistant responds with voice, making it easy to understand.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-white text-sm">⏰</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">24/7 Availability</h4>
+                    <p className="text-sm text-gray-600">Get answers anytime, anywhere.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-white text-sm">🔄</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Real-Time Updates</h4>
+                    <p className="text-sm text-gray-600">Always fetches the latest Sarkari Result and related news.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-white text-sm">👥</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">User-Friendly</h4>
+                    <p className="text-sm text-gray-600">No complicated steps; just ask your question.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Key Features */}
+            <div className="mb-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Key Features of Sarkari Result AI Assistant</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">1</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Voice Interaction</h4>
+                      <p className="text-sm text-gray-600">No need to type long queries. Just say "When is the SSC CGL result coming?" and get an immediate voice reply.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">2</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Instant Sarkari Result Updates</h4>
+                      <p className="text-sm text-gray-600">It directly connects to our updated database to fetch the latest exam results.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">3</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Exam Date Alerts</h4>
+                      <p className="text-sm text-gray-600">Never miss an important date – whether it's an application deadline, admit card release, or exam day.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">4</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Syllabus & Preparation Tips</h4>
+                      <p className="text-sm text-gray-600">Ask: "What is the syllabus for UPSC Prelims?" and get a complete answer.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">5</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Admit Card Download Guidance</h4>
+                      <p className="text-sm text-gray-600">The assistant can guide you on how to download your admit card step-by-step.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-indigo-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">6</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">24/7 Availability</h4>
+                      <p className="text-sm text-gray-600">No waiting for office hours – you can get help anytime, day or night.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* How it Works */}
+            <div className="mb-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">How Sarkari Result AI Assistant Works</h3>
+              <p className="text-gray-600 text-center mb-8">The process is simple and user-friendly:</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white font-bold">1</span>
+                  </div>
+                  <p className="text-sm text-gray-600">Open the Sarkari Result AI Assistant on our website.</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white font-bold">2</span>
+                  </div>
+                  <p className="text-sm text-gray-600">Click the microphone icon and speak your query.</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white font-bold">3</span>
+                  </div>
+                  <p className="text-sm text-gray-600">The AI processes your voice using Natural Language Processing (NLP).</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white font-bold">4</span>
+                  </div>
+                  <p className="text-sm text-gray-600">It searches verified sources for the correct information.</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white font-bold">5</span>
+                  </div>
+                  <p className="text-sm text-gray-600">You receive both text and voice answers instantly.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="mb-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Benefits of Using Sarkari Result AI Assistant</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
+                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white text-xl">⏱️</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Saves Time</h4>
+                  <p className="text-sm text-gray-600">No more searching multiple sites.</p>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
+                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white text-xl">✅</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Accuracy Guaranteed</h4>
+                  <p className="text-sm text-gray-600">Only verified results and dates.</p>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
+                  <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white text-xl">👥</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Easy to Use</h4>
+                  <p className="text-sm text-gray-600">Perfect for all age groups.</p>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl">
+                  <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white text-xl">🎤</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Voice Enabled</h4>
+                  <p className="text-sm text-gray-600">Helpful for those who struggle with typing.</p>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-xl">
+                  <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-white text-xl">🔄</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Keeps You Updated</h4>
+                  <p className="text-sm text-gray-600">Always in sync with the latest announcements.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Who Can Use */}
+            <div className="mb-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Who Can Use Sarkari Result AI Assistant?</h3>
+              <p className="text-gray-600 text-center mb-8">The assistant is designed for:</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
+                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">🎓</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">School Students</h4>
+                  <p className="text-sm text-gray-600">For board exam results and scholarship updates.</p>
+                </div>
+                <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
+                  <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">🏫</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">College Students</h4>
+                  <p className="text-sm text-gray-600">For university results, entrance exam dates, and admissions.</p>
+                </div>
+                <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
+                  <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">📚</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Competitive Exam Aspirants</h4>
+                  <p className="text-sm text-gray-600">SSC, UPSC, Railway, Bank, Defence, Teaching, etc.</p>
+                </div>
+                <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl">
+                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">👨‍👩‍👧‍👦</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Parents</h4>
+                  <p className="text-sm text-gray-600">To check updates for their children.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* FAQs */}
+            <div className="mb-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Frequently Asked Questions (FAQs)</h3>
+              <div className="space-y-6">
+                <div className="border-l-4 border-blue-500 pl-6">
+                  <h4 className="font-semibold text-gray-800 mb-2">What is the Sarkari Result AI Assistant?</h4>
+                  <p className="text-gray-600">It's an AI-powered voice-enabled assistant that provides instant Sarkari Result updates and answers to education-related queries.</p>
+                </div>
+                <div className="border-l-4 border-green-500 pl-6">
+                  <h4 className="font-semibold text-gray-800 mb-2">How is it different from other Sarkari Result websites?</h4>
+                  <p className="text-gray-600">Unlike static sites, it offers interactive voice and text responses with real-time updates.</p>
+                </div>
+                <div className="border-l-4 border-purple-500 pl-6">
+                  <h4 className="font-semibold text-gray-800 mb-2">Can I ask questions in Hindi?</h4>
+                  <p className="text-gray-600">Yes, it supports both English and Hindi queries.</p>
+                </div>
+                <div className="border-l-4 border-orange-500 pl-6">
+                  <h4 className="font-semibold text-gray-800 mb-2">Do I need to install an app?</h4>
+                  <p className="text-gray-600">No, you can access it directly from our website, but a mobile app is coming soon.</p>
+                </div>
+                <div className="border-l-4 border-red-500 pl-6">
+                  <h4 className="font-semibold text-gray-800 mb-2">Is the information 100% accurate?</h4>
+                  <p className="text-gray-600">Yes, the assistant uses only verified and trusted sources.</p>
+                </div>
+                <div className="border-l-4 border-indigo-500 pl-6">
+                  <h4 className="font-semibold text-gray-800 mb-2">Is it free to use?</h4>
+                  <p className="text-gray-600">Yes, the basic version is free for all users.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Conclusion */}
+            <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-8 border border-blue-200">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Conclusion</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                The Sarkari Result AI Assistant is more than just a tool – it's a reliable study companion for every student preparing for government exams. With features like voice-based queries, instant updates, and 24/7 availability, it ensures you never miss any important information.
+              </p>
+              <p className="text-gray-600 text-center leading-relaxed mt-4">
+                Whether you're a school student, college aspirant, or competitive exam candidate, this AI assistant will save you time, provide accurate details, and make your preparation journey smoother.
+              </p>
+              <p className="text-gray-600 text-center leading-relaxed mt-4 font-semibold">
+                Next time you need a Sarkari Result or any education-related update, don't waste hours searching – just ask the Sarkari Result AI Assistant, and let it do the work for you.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
               {/* Feature Card 1 */}
               <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
-                    <Mic className="w-5 h-5 text-white" />
+                    <span className="text-white text-lg">🎤</span>
                   </div>
                   <h3 className="text-lg font-bold text-gray-800">Voice Recognition</h3>
                 </div>

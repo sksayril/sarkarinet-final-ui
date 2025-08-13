@@ -139,7 +139,10 @@ const ContentSections: React.FC = () => {
       'Admit Card': '/admit-card',
       'Answer Key': '/answer-key',
       'Syllabus': '/syllabus',
-      'Admission': '/admission'
+      'Admission': '/admission',
+      'Important':'/important',
+      'Previous Year Paper':'/previousyearpapers',
+      'Private Jobs':'/privatejobs',
     };
     
     const route = routeMap[sectionTitle] || '/';
