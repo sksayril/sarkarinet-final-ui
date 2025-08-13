@@ -320,22 +320,30 @@ Remember: You are here to help users navigate the complex world of government jo
             <Bot className="w-8 h-8" />
             <h1 className="text-3xl font-bold">Sarkari Result AI Assistant</h1>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <button
               onClick={() => setVoiceEnabled(!voiceEnabled)}
-              className={`p-2 rounded-lg transition-colors ${
-                voiceEnabled ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'
+              className={`px-4 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                voiceEnabled 
+                  ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white' 
+                  : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
               }`}
               title={voiceEnabled ? 'Voice Enabled' : 'Voice Disabled'}
             >
-              {voiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+              <div className="flex items-center space-x-2">
+                {voiceEnabled ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
+                <span className="font-semibold text-sm">{voiceEnabled ? 'ON' : 'OFF'}</span>
+              </div>
             </button>
             <button
               onClick={resetVoice}
-              className="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+              className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
               title="Clear Chat"
             >
-              <Settings className="w-5 h-5" />
+              <div className="flex items-center space-x-2">
+                <Settings className="w-6 h-6" />
+                <span className="font-semibold text-sm">Reset</span>
+              </div>
             </button>
           </div>
         </div>
@@ -710,66 +718,79 @@ Remember: You are here to help users navigate the complex world of government jo
             )} */}
 
             {/* Voice Controls */}
-            <div className="flex items-center space-x-4">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                                  <input
-                    type="checkbox"
-                    checked={autoSpeak}
-                    onChange={(e) => setAutoSpeak(e.target.checked)}
-                    className="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                  />
-                <span className="text-sm text-gray-600">Auto-speak responses</span>
+            <div className="flex flex-wrap items-center justify-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl border border-gray-200 shadow-lg">
+              <label className="flex items-center space-x-3 cursor-pointer bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300">
+                <input
+                  type="checkbox"
+                  checked={autoSpeak}
+                  onChange={(e) => setAutoSpeak(e.target.checked)}
+                  className="w-5 h-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                />
+                <span className="text-base font-medium text-gray-700">Auto-speak responses</span>
               </label>
               
               <button
                 onClick={() => setVoiceEnabled(!voiceEnabled)}
-                className={`p-2 rounded-lg transition-colors ${
-                  voiceEnabled ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                className={`px-6 py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                  voiceEnabled 
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700' 
+                    : 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700'
                 }`}
                 title={voiceEnabled ? 'Voice Enabled' : 'Voice Disabled'}
               >
-                {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                <div className="flex items-center space-x-2">
+                  {voiceEnabled ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
+                  <span className="font-semibold">{voiceEnabled ? 'Voice ON' : 'Voice OFF'}</span>
+                </div>
               </button>
 
               {/* Language Toggle Button */}
               <button
                 onClick={toggleLanguage}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`px-6 py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
                   speechLanguage === 'hi-IN' 
-                    ? 'bg-orange-100 text-orange-700 border border-orange-300' 
-                    : 'bg-blue-100 text-blue-700 border border-blue-300'
+                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700' 
+                    : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700'
                 }`}
                 title={speechLanguage === 'hi-IN' ? 'Switch to English' : 'Switch to Hindi'}
               >
-                <span className="text-sm font-medium">
-                  {speechLanguage === 'hi-IN' ? 'हिंदी' : 'EN'}
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-bold">🌐</span>
+                  <span className="text-lg font-bold">
+                    {speechLanguage === 'hi-IN' ? 'हिंदी' : 'EN'}
+                  </span>
+                </div>
               </button>
 
               {/* Auto-Listen After Speak Toggle */}
-              <label className="flex items-center space-x-2 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300">
                 <input
                   type="checkbox"
                   checked={autoListenAfterSpeak}
                   onChange={(e) => setAutoListenAfterSpeak(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="w-5 h-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <span className="text-sm text-gray-600">Auto-listen after speak</span>
+                <span className="text-base font-medium text-gray-700">Auto-listen after speak</span>
               </label>
 
               {/* Continuous Mode Toggle */}
               <button
                 onClick={toggleContinuousMode}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`px-6 py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
                   continuousMode 
-                    ? 'bg-purple-100 text-purple-700 border border-purple-300' 
-                    : 'bg-gray-100 text-gray-700 border border-gray-300'
+                    ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-purple-600 hover:to-purple-700' 
+                    : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white hover:from-gray-600 hover:to-gray-700'
                 }`}
                 title={continuousMode ? 'Disable Continuous Mode' : 'Enable Continuous Mode'}
               >
-                <span className="text-sm font-medium">
-                  {continuousMode ? '🔄 Continuous' : '⏹️ Single'}
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-bold">
+                    {continuousMode ? '🔄' : '⏹️'}
+                  </span>
+                  <span className="text-lg font-bold">
+                    {continuousMode ? 'Continuous' : 'Single'}
+                  </span>
+                </div>
               </button>
 
               {/* Welcome Message Button */}
@@ -784,10 +805,13 @@ Remember: You are here to help users navigate the complex world of government jo
                   }
                 }}
                 disabled={isSpeaking || isListening || isProcessing || hasWelcomed}
-                className="px-3 py-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white rounded-lg font-semibold transition-all duration-300 disabled:opacity-50"
+                className="px-6 py-4 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 hover:from-green-600 hover:via-blue-600 hover:to-purple-600 text-white rounded-xl font-bold transition-all duration-300 disabled:opacity-50 shadow-md hover:shadow-lg transform hover:scale-105"
                 title="Play Welcome Message"
               >
-                <span className="text-sm font-medium">🎤 Welcome</span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xl">🎤</span>
+                  <span className="text-lg font-bold">Welcome</span>
+                </div>
               </button>
             </div>
 

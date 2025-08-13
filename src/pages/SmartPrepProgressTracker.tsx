@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Play, Pause, Clock, BookOpen, Trophy, Target, TrendingUp, Award, Users, Settings, CheckCircle, XCircle, Star, Brain, Zap, Flame, Plus, Edit, Trash2, Save } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Clock, BookOpen, Trophy, Target, TrendingUp, Award, Users, Settings, CheckCircle, XCircle, Star, Brain, Zap, Flame, Plus, Edit, Trash2, Save, FileText, HelpCircle, GraduationCap, Timer, CalendarDays, BookOpenCheck, BrainCircuit, Rocket, Crown, Shield, Heart, Sparkles, Lightbulb, BookMarked, Activity, PieChart, LineChart, TrendingDown, AlertCircle, Info, Coffee, Music, Volume2, VolumeX, Mic, MicOff, Video, VideoOff, Wifi, WifiOff, Battery, BatteryCharging, Lock, Unlock, Key, User, UserCheck, UserX, Users2, UserPlus, UserMinus, Home, Menu, Grid, List, Columns, Rows, Layout, Sidebar, SidebarClose, PanelLeft, PanelRight, PanelTop, PanelBottom, Split, FlipVertical, FlipHorizontal, Columns2, Columns3, Columns4, Rows2, Rows3, Rows4, SquareStack, Circle, Triangle, Square, Hexagon, Pentagon, Octagon, Diamond, Cross, Divide, Percent, Infinity, Pi, Sigma, Calendar, BarChart3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface StudySession {
@@ -1336,6 +1336,379 @@ Make the analysis practical, specific to ${latestData.jobPreparation}, and actio
                 </div>
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Comprehensive Guide Section */}
+        <div className="mt-12 bg-white rounded-3xl shadow-2xl p-8 border border-green-100">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <TrendingUp className="w-8 h-8 text-purple-600" />
+              <h2 className="text-3xl font-bold text-gray-800">📈 Student Progress Tracker – Your Smart Sarkari Result Study Partner</h2>
+            </div>
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+              Master the art of tracking your study progress for Sarkari Result exams, competitive tests, and academic success
+            </p>
+          </div>
+
+          {/* Introduction Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">1. Introduction – Why Tracking Your Study Matters 🎯</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Every student dreams of success — whether it's scoring top marks in school, cracking a competitive exam, or just improving in a subject they find tough. But here's the truth: studying without tracking your progress is like travelling without a map.
+                </p>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  You may be putting in hours every day, but are you moving in the right direction? Are you improving, or just repeating the same mistakes? Without proper tracking, it's easy to get lost, demotivated, or feel like your efforts are not paying off.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  That's where the SARKARI RESULT Student Progress Tracker comes in — your personal, AI-powered companion that helps you study smarter and easier, not just harder.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Common Struggles Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl border border-red-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">2. The Common Struggles Students Face 📚</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Before we talk about the solution, let's look at some real challenges students go through:
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                    <div>
+                      <p className="text-gray-700 font-semibold">No clear plan</p>
+                      <p className="text-gray-600 text-sm">Many students don't have a fixed timetable. They study randomly and miss important topics.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                    <div>
+                      <p className="text-gray-700 font-semibold">Losing track of time</p>
+                      <p className="text-gray-600 text-sm">Hours pass by, but at the end of the day, it's hard to say exactly what was achieved.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                    <div>
+                      <p className="text-gray-700 font-semibold">Low motivation</p>
+                      <p className="text-gray-600 text-sm">Without visible results, students lose interest and give up.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+                    <div>
+                      <p className="text-gray-700 font-semibold">Difficulty in balancing subjects</p>
+                      <p className="text-gray-600 text-sm">Some subjects get too much attention, while others are ignored.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</div>
+                    <div>
+                      <p className="text-gray-700 font-semibold">Not knowing strengths & weaknesses</p>
+                      <p className="text-gray-600 text-sm">Without tracking, it's hard to identify what needs more focus.</p>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-700 leading-relaxed mt-4">
+                  These problems are common, but they can be fixed with the right strategy — and that's exactly what our AI tool does.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* How It Works Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl border border-green-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">3. How Student Progress Tracker Works 🧠</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Our Student Progress Tracker is designed to make studying organised, measurable, and motivating. Here's what it does for you:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                    <Calendar className="w-5 h-5 text-blue-500" />
+                    <span className="text-gray-700 font-semibold">Helps you set your study timetable</span>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                    <Clock className="w-5 h-5 text-green-500" />
+                    <span className="text-gray-700 font-semibold">Tracks your study hours</span>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                    <BarChart3 className="w-5 h-5 text-purple-500" />
+                    <span className="text-gray-700 font-semibold">Shows your progress visually</span>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                    <Target className="w-5 h-5 text-red-500" />
+                    <span className="text-gray-700 font-semibold">Identifies areas of improvement</span>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                    <Trophy className="w-5 h-5 text-yellow-500" />
+                    <span className="text-gray-700 font-semibold">Keeps you motivated</span>
+                  </div>
+                </div>
+                <p className="text-gray-700 leading-relaxed mt-4">
+                  Think of it like a fitness tracker — but for your brain. Just like athletes track their workouts, students can now track their study workouts too! with the help of Sarkari Result AI Tools.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Step by Step Guide */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-200">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">4. Step-by-Step Guide to Using the Tool 🛠</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Using Student Progress Tracker is super simple:
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Create Your Plan</h4>
+                  <ul className="text-gray-700 space-y-1">
+                    <li>• Decide your study goals (daily hours, chapters, subjects)</li>
+                    <li>• Break them into smaller, achievable targets</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Start Tracking</h4>
+                  <ul className="text-gray-700 space-y-1">
+                    <li>• Every time you study, log the subject and duration</li>
+                    <li>• Add quick notes about what you studied</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Check Your Dashboard</h4>
+                  <ul className="text-gray-700 space-y-1">
+                    <li>• View your progress chart to see how you're performing</li>
+                    <li>• Identify if you are on track or need to adjust your timetable</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Make Improvements</h4>
+                  <ul className="text-gray-700 space-y-1">
+                    <li>• Focus more on weaker areas</li>
+                    <li>• Balance subjects so that no topic gets ignored</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">5</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Stay Consistent</h4>
+                  <ul className="text-gray-700 space-y-1">
+                    <li>• Tracking only works if you update it daily</li>
+                    <li>• Even 10 minutes of study should be recorded</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Star className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">5. Benefits of Using Student Progress Tracker 🌟</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  This is not just about studying harder — it's about studying smarter.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Clock className="w-5 h-5 text-blue-500" />
+                <span className="text-gray-700 font-semibold">Better Time Management – You'll know exactly where your time goes</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Rocket className="w-5 h-5 text-green-500" />
+                <span className="text-gray-700 font-semibold">Higher Productivity – No more wasted hours</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Target className="w-5 h-5 text-purple-500" />
+                <span className="text-gray-700 font-semibold">Clear Focus – You'll know which topics matter most</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Lightbulb className="w-5 h-5 text-yellow-500" />
+                <span className="text-gray-700 font-semibold">Improved Motivation – Progress charts keep you excited to achieve more</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Crown className="w-5 h-5 text-orange-500" />
+                <span className="text-gray-700 font-semibold">Confidence Boost – You'll feel more prepared for exams</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Real Life Example */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl border border-yellow-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">6. Real-Life Example – How It Helps Students 👩‍🎓👨‍🎓</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Meet Rohan, a Class 12 student preparing for his board exams and JEE entrance. Before using the tracker, he studied for hours but couldn't figure out why his mock test scores were stuck at 60%.
+                </p>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  After using Student sarkariresult.com Students Progress Tracker Tool for two months:
+                </p>
+                <div className="bg-white p-4 rounded-xl border border-gray-200 mb-4">
+                  <ul className="text-gray-700 space-y-2">
+                    <li>• He realised he was giving too much time to Physics and ignoring Chemistry</li>
+                    <li>• He rebalanced his timetable, spent more hours on weak topics, and improved steadily</li>
+                    <li>• His mock test scores went from 60% to 78% in just 8 weeks</li>
+                  </ul>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  It's not magic — it's just smart tracking and adjustment.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Tips Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-200">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">7. Tips to Get the Most Out of the Tracker 💡</h3>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <CheckCircle className="w-5 h-5 text-green-500 mt-1" />
+                <div>
+                  <p className="text-gray-700 font-semibold">Be honest</p>
+                  <p className="text-gray-600 text-sm">Always log your actual study hours</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Calendar className="w-5 h-5 text-blue-500 mt-1" />
+                <div>
+                  <p className="text-gray-700 font-semibold">Update daily</p>
+                  <p className="text-gray-600 text-sm">Don't skip tracking, even if it's a short session</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Target className="w-5 h-5 text-purple-500 mt-1" />
+                <div>
+                  <p className="text-gray-700 font-semibold">Set realistic goals</p>
+                  <p className="text-gray-600 text-sm">Don't overcommit</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <BarChart3 className="w-5 h-5 text-indigo-500 mt-1" />
+                <div>
+                  <p className="text-gray-700 font-semibold">Review weekly</p>
+                  <p className="text-gray-600 text-sm">Check your dashboard every week to see your growth</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Trophy className="w-5 h-5 text-yellow-500 mt-1" />
+                <div>
+                  <p className="text-gray-700 font-semibold">Reward yourself</p>
+                  <p className="text-gray-600 text-sm">Celebrate small achievements to stay motivated</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Motivation Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl border border-red-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Rocket className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">8. Motivation – Your Study Journey 🚀</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Remember, success doesn't come overnight. It's the result of small, consistent efforts. The Student Progress Tracker is not here to judge you — it's here to guide you.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  Every hour you study, every page you read, every topic you master — it all counts. With the right tracking, you'll not just prepare for exams, you'll prepare for life.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Final Words */}
+          <div className="p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Heart className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Final Words ❤️</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Your dreams deserve planning, effort, and smart execution. The Student Progress Tracker is like having a personal coach who keeps you on the right path. Use it daily, stay consistent, and watch your hard work turn into results.
+                </p>
+                <p className="text-gray-700 leading-relaxed font-semibold text-lg">
+                  Start today. Track your progress. Own your success. 📈
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-8 text-center p-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl text-white">
+            <h3 className="text-2xl font-bold mb-3">Start Your Smart Study Journey Today</h3>
+            <p className="text-lg mb-4">Track, improve, and succeed with our AI-powered progress tracker</p>
+            <div className="flex items-center justify-center space-x-4 text-sm">
+              <span className="flex items-center space-x-1">
+                <CheckCircle className="w-4 h-4" />
+                <span>Free Forever</span>
+              </span>
+              <span className="flex items-center space-x-1">
+                <Zap className="w-4 h-4" />
+                <span>AI-Powered</span>
+              </span>
+              <span className="flex items-center space-x-1">
+                <Shield className="w-4 h-4" />
+                <span>Secure & Private</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>

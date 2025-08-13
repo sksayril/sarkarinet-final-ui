@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ArrowLeft, Upload, Download, RotateCw, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft, Upload, Download, RotateCw, Image as ImageIcon, FileText, CheckCircle, Clock, Smartphone, Monitor, Zap, Target, Users, Award, BookOpen, Shield, HelpCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PhotoResizer: React.FC = () => {
@@ -530,6 +530,311 @@ const PhotoResizer: React.FC = () => {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Comprehensive Guide Section */}
+        <div className="mt-12 bg-white rounded-3xl shadow-2xl p-8 border border-green-100">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <BookOpen className="w-8 h-8 text-purple-600" />
+              <h2 className="text-3xl font-bold text-gray-800">Complete Guide: Image Resizer for Government Forms</h2>
+            </div>
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+              Master the art of resizing photos and signatures for Sarkari Result exams, job applications, and government forms
+            </p>
+          </div>
+
+          {/* Introduction Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Why Image Resizing is Essential for Government Forms</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  In today's digital age, we all fill online forms—whether it's for Sarkari Result exams, job applications, or identity card registrations. And one thing almost every form demands? Perfectly sized photos and signatures.
+                </p>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  If you've ever faced that frustrating moment when your form says "Image size must be 100KB" or "Signature should be 140×60 pixels", you know the struggle. That's exactly why an Image Resizer Tool can feel like a life-saver.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  In this guide, I'm going to walk you through how to use an online image resizer (like the one we've created), and why it's essential for things like government exam forms and Sarkari Result applications—all in simple, human language. Let's make your form-filling stress disappear.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Why Important Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl border border-red-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Why Image Resizing is So Important for Government Forms</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Government websites like sarkariresult.com list hundreds of recruitment exams every year—SSC, UPSC, Railway, Banking, State Police, and more. Almost every single one of them asks you to upload your photo and signature in a specific size, for example:
+                </p>
+                <div className="bg-white p-4 rounded-xl border border-gray-200 mb-4">
+                  <p className="text-gray-700 font-semibold">
+                    📸 Photo: 200×230 pixels, 20–50KB<br/>
+                    ✍️ Signature: 140×60 pixels, 10–20KB
+                  </p>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  If you upload an image that's too big, the form won't accept it. If it's too small or unclear, your application might even get rejected. The worst part? These forms usually have a strict deadline, so you can't afford to waste time figuring out Photoshop or complicated editing software.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* What is Tool Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl border border-green-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <HelpCircle className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">What is an Image Resizer Tool?</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  An Image Resizer Tool is a free online service that helps you change the dimensions and size of a photo without losing quality. Think of it as a smart assistant that adjusts your photo so it fits exactly what the government form requires.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  The resizer I've built is mobile-friendly, works instantly, and supports multiple formats like JPG, PNG, and JPEG. It's designed especially for people filling out Sarkari Result exam forms, passport applications, and any government service.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Step by Step Guide */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-200">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">Step-by-Step: How to Use the Image Resizer</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Let's walk through the process, step-by-step, so even if you're using this for the first time, you'll feel confident.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {/* Step 1 */}
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Open the Tool</h4>
+                  <p className="text-gray-700">Visit our Image Resizer Tool on your phone or computer browser. No app download, no login—just open and start.</p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Upload Your Photo</h4>
+                  <p className="text-gray-700 mb-2">Click on the "Upload Image" button. Select the photo you want to resize—whether it's a passport-size picture, a scanned signature, or a document.</p>
+                  <p className="text-gray-600 italic">💡 Tip: For government forms, use a clear, front-facing photo with a plain background.</p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Choose Your Size</h4>
+                  <p className="text-gray-700 mb-2">Here's where the magic happens. Most government exams mention the required size in pixels or KBs. Example:</p>
+                  <div className="bg-white p-3 rounded-lg border border-gray-200 mb-2">
+                    <p className="text-gray-700 text-sm">
+                      🎯 SSC CGL: Photo 200×230 px, 20–50KB<br/>
+                      🚂 Railway RRB: Signature 140×60 px, 10–20KB
+                    </p>
+                  </div>
+                  <p className="text-gray-700">Enter the exact dimensions in the tool, or use our preset sizes for popular exams (yes, I've already added those to make your life easier!).</p>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Adjust and Preview</h4>
+                  <p className="text-gray-700">Before downloading, you can crop, zoom, and adjust the image to ensure your face or signature is centered.</p>
+                </div>
+              </div>
+
+              {/* Step 5 */}
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">5</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2">Download Your Resized Image</h4>
+                  <p className="text-gray-700">Once you're happy, click Download. Your perfectly resized photo will be ready to upload on the government form.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Why Our Tool Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Award className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">Why Our Image Resizer is Perfect for Sarkari Result Applicants</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  I created this tool because I've seen friends and students struggle every year with form rejections due to wrong photo sizes. Here's why this tool is different:
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <CheckCircle className="w-5 h-5 text-green-500" />
+                <span className="text-gray-700 font-semibold">One-click resize – No need to learn Photoshop</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Clock className="w-5 h-5 text-blue-500" />
+                <span className="text-gray-700 font-semibold">Preset exam sizes – Save time searching requirements</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Smartphone className="w-5 h-5 text-purple-500" />
+                <span className="text-gray-700 font-semibold">Works on mobile & PC – Fill forms from anywhere</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Shield className="w-5 h-5 text-green-500" />
+                <span className="text-gray-700 font-semibold">Free forever – Because something this important should be accessible</span>
+              </div>
+              <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                <Monitor className="w-5 h-5 text-blue-500" />
+                <span className="text-gray-700 font-semibold">Maintains clarity – Your photo stays sharp and professional</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Real Life Example */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl border border-yellow-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Real-Life Example: How an Image Resizer Saved the Day</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Last year, my cousin was filling out a UP Police Recruitment form. The website needed a 20KB signature, but his scanned signature was 2MB—way too big. He spent hours trying random "resize" apps that either made the signature blurry or added a watermark.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  In the end, we used this Image Resizer tool—it took less than 2 minutes, and the form was accepted instantly. That's when I realized—resizing images isn't just a "tech skill", it's a life skill for anyone applying to government jobs.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Common Exams Section */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-200">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">Common Government Exam Forms That Need Image Resizing</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  If you've ever checked Sarkari Result 2025 updates, you know the variety of forms out there. Here are some popular ones where our Image Resizer can help:
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">📚 SSC Exams</h4>
+                <p className="text-gray-600 text-sm">CHSL, CGL, MTS, GD Constable</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">🏛️ UPSC</h4>
+                <p className="text-gray-600 text-sm">Civil Services, CDS, NDA</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">🚂 Railway Recruitment Board (RRB)</h4>
+                <p className="text-gray-600 text-sm">Various railway positions</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">🏦 Banking Exams</h4>
+                <p className="text-gray-600 text-sm">SBI PO, IBPS Clerk, RBI Grade B</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">👮 State Police Recruitment</h4>
+                <p className="text-gray-600 text-sm">Various state police forces</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">📖 Teacher Eligibility Tests (TET)</h4>
+                <p className="text-gray-600 text-sm">Teaching positions</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-800 mb-2">🛂 Passport & PAN Card Applications</h4>
+                <p className="text-gray-600 text-sm">Identity documents</p>
+              </div>
+            </div>
+            <p className="text-gray-700 mt-4 font-semibold">In each of these, a correctly sized photo and signature are non-negotiable.</p>
+          </div>
+
+          {/* SEO Pro Tip */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border border-indigo-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">SEO Pro Tip: Why Image Resizing Matters for Online Document Uploads</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  If you run a government result website or blog like sarkariresult.com, you can add an image resizer link to help your visitors. This not only boosts your website's SEO (because people search for "photo resize for SSC form", "online signature resizer", etc.), but also improves user trust.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Final Words */}
+          <div className="p-6 bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl border border-red-200">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <Award className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Final Words – Don't Let Photo Size Stop Your Dreams</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Imagine working hard for months to prepare for an exam, only to get rejected because your photo was 5KB too big. It sounds small, but for lakhs of students, this small detail makes the difference between applying on time and missing the deadline.
+                </p>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  With our Online Image Resizer, you don't have to worry about that ever again. Just upload, resize, and apply—without stress.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  Whether it's Sarkari Result forms, passport applications, or ID card registrations, this tool is here to make your journey smoother. Because your dreams deserve more than getting stuck at "Upload Photo" errors.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-8 text-center p-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl text-white">
+            <h3 className="text-2xl font-bold mb-3">Try the Image Resizer Tool Now</h3>
+            <p className="text-lg mb-4">It's free, fast, and made for you.</p>
+            <div className="flex items-center justify-center space-x-4 text-sm">
+              <span className="flex items-center space-x-1">
+                <CheckCircle className="w-4 h-4" />
+                <span>Free Forever</span>
+              </span>
+              <span className="flex items-center space-x-1">
+                <Zap className="w-4 h-4" />
+                <span>Instant Results</span>
+              </span>
+              <span className="flex items-center space-x-1">
+                <Shield className="w-4 h-4" />
+                <span>Secure & Private</span>
+              </span>
             </div>
           </div>
         </div>
