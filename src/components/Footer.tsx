@@ -95,9 +95,9 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-8">
 
-              <Link to="/privacy-policy" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">About us</Link>
+              <Link to="/privacy-policy" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Privacy Policy</Link>
               <Link to="/contact-us" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Contact us</Link>
-              <Link to="/about-us" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Privacy Policy</Link>
+              <Link to="/about-us" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">About us</Link>
               <Link to="/terms-conditions" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Terms of Service</Link>
               <Link to="/disclaimer" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Disclaimer</Link>
             </div>
