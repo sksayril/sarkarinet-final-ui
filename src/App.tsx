@@ -16,6 +16,8 @@ import CategoryPage from './pages/CategoryPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 import Disclaimer from './pages/Disclaimer';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 import DailyQuiz from './pages/DailyQuiz';
 import PhotoResizer from './pages/PhotoResizer';
 import AIVoice from './pages/AIVoice';
@@ -52,6 +54,8 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
           
           {/* Dynamic subcategory route - handles URLs like /results/aryan-testing */}
           <Route path="/:mainCategory/:subcategorySlug" element={<RecruitmentDetail />} />

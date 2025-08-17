@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-black text-white">
       <div className="w-full min-w-[1200px] px-4 py-10">
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-red-500 mb-4">Sarkari Result</h3>
@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="https://www.youtube.com/channel/UCVT29pLEmQMg2PSWnIaKKdw" 
+                href="https://youtube.com/@saarkariresult?si=YT_rU7HguxmFx_uO" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
@@ -57,6 +57,18 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
+          {/* About & Contact */}
+          <div className="space-y-4">
+            <h4 className="text-xl font-semibold text-white mb-4">About & Contact</h4>
+            <ul className="space-y-3">
+              <li><Link to="/about-us" className="text-gray-300 hover:text-red-500 transition-colors text-base font-medium">About Us</Link></li>
+              <li><Link to="/contact-us" className="text-gray-300 hover:text-red-500 transition-colors text-base font-medium">Contact Us</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-red-500 transition-colors text-base font-medium">Privacy Policy</Link></li>
+              <li><Link to="/terms-conditions" className="text-gray-300 hover:text-red-500 transition-colors text-base font-medium">Terms & Conditions</Link></li>
+              <li><Link to="/disclaimer" className="text-gray-300 hover:text-red-500 transition-colors text-base font-medium">Disclaimer</Link></li>
+            </ul>
+          </div>
+
           {/* Government Exams */}
           <div className="space-y-4">
             <h4 className="text-xl font-semibold text-white mb-4">Government Exams</h4>
@@ -72,7 +84,7 @@ const Footer: React.FC = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-xl font-semibold text-white mb-4">Contact Us</h4>
+            <h4 className="text-xl font-semibold text-white mb-4">Quick Contact</h4>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Mail className="w-6 h-6 text-red-500" />
@@ -80,9 +92,9 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="mt-6">
-              <p className="text-gray-400 text-sm leading-relaxed">
-              SaarkariResult.com for Sarkari Result, Sarkari Result jobs, Sarkari Result admit cards & Sarkari Result online forms. Sarkari Result 2025 live updates.
-              </p>
+              <Link to="/contact-us" className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors">
+                Get in Touch
+              </Link>
             </div>
           </div>
         </div>
@@ -94,9 +106,8 @@ const Footer: React.FC = () => {
               © 2025 Sarkari Result. All rights reserved.
             </p>
             <div className="flex space-x-8">
-              <Link to="/privacy-policy" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Privacy Policy</Link>
-              <Link to="/terms-conditions" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Terms of Service</Link>
-              <Link to="/disclaimer" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Disclaimer</Link>
+              <Link to="/about-us" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">About Us</Link>
+              <Link to="/contact-us" className="text-gray-400 hover:text-red-500 transition-colors text-base font-medium">Contact Us</Link>
             </div>
           </div>
         </div>

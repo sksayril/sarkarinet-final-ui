@@ -24,7 +24,7 @@ const Header: React.FC = () => {
   const [channelLinks, setChannelLinks] = useState({
     whatsapp: 'https://whatsapp.com/channel/0029Vb64LpHKbYMM6c72230S',
     telegram: 'https://t.me/saarkariresult',
-    youtube: 'https://www.youtube.com/channel/UCVT29pLEmQMg2PSWnIaKKdw'
+    youtube: 'https://youtube.com/@saarkariresult?si=YT_rU7HguxmFx_uO'
   });
   const [googleCloudStatus, setGoogleCloudStatus] = useState<'loading' | 'connected' | 'error'>('loading');
 
