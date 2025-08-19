@@ -77,7 +77,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="w-30 h-30 bg-white rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
             <img 
-              src="/PhotoRoom-20250716_202655.png" 
+              src="/PhotoRoom-20250716_202655.webp" 
               alt="Sarkari Result Logo" 
               className="w-40 h-40 object-contain"
             />

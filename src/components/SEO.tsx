@@ -19,7 +19,7 @@ const SEO: React.FC<SEOProps> = ({
   title = 'SaarkariResult.com : Sarkari Result 2025, Sarkari Results, saarkariresult.com 2025 , sarkariresult 2025',
   description = 'SaarkariResult.com for Sarkari Result, Sarkari Result jobs, Sarkari Result admit cards & Sarkari Result online forms. Sarkari Result 2025 live updates',
   keywords = 'saarkari result, government jobs, saarkari naukri, government exam results, admit card, online form, saarkari job vacancy',
-  image = '/PhotoRoom-20250716_202655.png',
+  image = '/PhotoRoom-20250716_202655.webp',
   url = 'https://saarkariresult.com',
   type = 'website',
   publishedTime,
@@ -93,7 +93,7 @@ const SEO: React.FC<SEOProps> = ({
             "name": "Sarkari Result",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://saarkariresult.com/PhotoRoom-20250716_202655.png"
+              "url": "https://saarkariresult.com/PhotoRoom-20250716_202655.webp"
             }
           },
           ...(type === 'article' && {
