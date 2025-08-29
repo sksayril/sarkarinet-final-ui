@@ -33,5 +33,16 @@ export const isMobileViewport = (): boolean => {
   if (!viewport) return false;
   
   const content = viewport.getAttribute('content');
-  return content && content.includes('width=device-width');
+  return content !== null && content.includes('width=device-width');
+};
+
+// Get optimal ad size for current device
+export const getOptimalAdSize = (): { width: string; height: string } => {
+  if (isMobile()) {
+    return { width: '100%', height: 'auto' };
+  }
+  if (window.innerWidth <= 1024) {
+    return { width: '728px', height: '90px' };
+  }
+  return { width: '300px', height: '250px' };
 };
