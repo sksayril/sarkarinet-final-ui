@@ -4,7 +4,6 @@ import ActionButtons from '../components/ActionButtons';
 import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
 import NotesSection from '../components/NotesSection';
-import LargeAdSection from '../components/LargeAdSection';
 import RecruitmentCards from '../components/RecruitmentCards';
 import MainCategoryCards from '../components/MainCategoryCards';
 import ContentSections from '../components/ContentSections';

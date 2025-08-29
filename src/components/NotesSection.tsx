@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { isMobile as checkMobile, getOptimalAdSize } from '../utils/mobileDetection';
+import React, { useEffect } from 'react';
 
 // Declare adsbygoogle for TypeScript
 declare global {
@@ -9,79 +8,31 @@ declare global {
 }
 
 const NotesSection: React.FC = () => {
-  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   useEffect(() => {
-    // Check if device is mobile
-    const updateMobileStatus = () => {
-      const mobile = checkMobile();
-      setIsMobileDevice(mobile);
-    };
-
-    updateMobileStatus();
-    window.addEventListener('resize', updateMobileStatus);
-
-    return () => window.removeEventListener('resize', updateMobileStatus);
-  }, []);
-
-  useEffect(() => {
-    // Initialize Google Ads with mobile-responsive configuration
-    const initializeAds = () => {
-      try {
-        if (window.adsbygoogle) {
-          // Check if ad is already initialized
-          const adElement = document.querySelector('.adsbygoogle[data-ad-slot="3305790696"]');
-          if (adElement && !adElement.hasAttribute('data-ad-status')) {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-            console.log(`Ads initialized for ${isMobileDevice ? 'mobile' : 'desktop'} device`);
-          }
-        } else {
-          // Wait for adsbygoogle to load
-          setTimeout(initializeAds, 100);
-        }
-      } catch (error) {
-        console.error('Error initializing Google Ads:', error);
-      }
-    };
-
-    initializeAds();
-  }, [isMobileDevice]);
-
-  // Get responsive styles based on device
-  const getAdStyles = () => {
-    if (isMobileDevice) {
-      return {
-        display: 'block',
-        width: '100%',
-        height: 'auto',
-        minHeight: '250px',
-        maxWidth: '100%',
-        margin: '8px auto',
-        borderRadius: '8px',
-        overflow: 'hidden'
-      };
+    // Initialize Google Ads with the exact configuration
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      console.log('Home Page ADS initialized successfully');
+    } catch (error) {
+      console.error('Error initializing Google Ads:', error);
     }
-    
-    return {
-      display: 'inline-block',
-      width: '900px',
-      height: '250px',
-      margin: '8px auto',
-      borderRadius: '4px',
-      overflow: 'hidden'
-    };
-  };
+  }, []);
 
   return (
     <div className="w-full px-2 sm:px-4 py-4">
       <div className="flex items-center justify-center">
         <div className="w-full max-w-6xl">
-          {/* Large Ad Slot - Test (900x250) */}
+          {/* Home Page Ads - Banner */}
           <ins 
             className="adsbygoogle"
-            style={getAdStyles()}
+            style={{
+              display: 'inline-block',
+              width: '728px',
+              height: '90px'
+            }}
             data-ad-client="ca-pub-8453458415715594"
-            data-ad-slot="3305790696"
+            data-ad-slot="2504114412"
           />
         </div>
       </div>
