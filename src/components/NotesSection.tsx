@@ -23,7 +23,7 @@ const NotesSection: React.FC = () => {
     <div className="w-full px-2 sm:px-4 py-4">
       <div className="flex items-center justify-center">
         <div className="w-full max-w-6xl">
-          {/* Home Page ADS - Responsive */}
+          {/* Ad Slot 11 - Responsive */}
           <ins 
             className="adsbygoogle"
             style={{
@@ -32,7 +32,7 @@ const NotesSection: React.FC = () => {
               height: '250px'
             }}
             data-ad-client="ca-pub-8453458415715594"
-            data-ad-slot="6506881139"
+            data-ad-slot="4570770906"
           />
         </div>
       </div>
