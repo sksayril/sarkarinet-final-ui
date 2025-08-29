@@ -1,38 +1,38 @@
 import React, { useEffect } from 'react';
-
-// Declare adsbygoogle for TypeScript
-declare global {
-  interface Window {
-    adsbygoogle: any[];
-  }
-}
+import { waitForGoogleAds, getOptimizedAdConfig } from '../utils/adsHelper';
 
 const NotesSection: React.FC = () => {
 
   useEffect(() => {
-    // Initialize Google Ads with the exact configuration
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-      console.log('Home Page ADS initialized successfully');
-    } catch (error) {
-      console.error('Error initializing Google Ads:', error);
-    }
+    // Wait for Google Ads to load and initialize
+    waitForGoogleAds(() => {
+      try {
+        const adConfig = getOptimizedAdConfig();
+        (window.adsbygoogle = window.adsbygoogle || []).push(adConfig);
+      } catch (error) {
+        console.error('Error initializing Google Ads:', error);
+      }
+    });
   }, []);
 
   return (
     <div className="w-full px-2 sm:px-4 py-4">
       <div className="flex items-center justify-center">
         <div className="w-full max-w-6xl">
-          {/* Home Page Ads - Banner */}
+          {/* Google Ads Container - Mobile Responsive */}
           <ins 
             className="adsbygoogle"
-            style={{
-              display: 'inline-block',
-              width: '728px',
-              height: '90px'
+            style={{ 
+              display: 'block',
+              textAlign: 'center',
+              minHeight: '90px',
+              width: '100%'
             }}
             data-ad-client="ca-pub-8453458415715594"
-            data-ad-slot="2504114412"
+            data-ad-slot="6506881139"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+            data-adtest="off"
           />
         </div>
       </div>
