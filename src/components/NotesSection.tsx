@@ -29,8 +29,12 @@ const NotesSection: React.FC = () => {
     const initializeAds = () => {
       try {
         if (window.adsbygoogle) {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-          console.log(`Ads initialized for ${isMobileDevice ? 'mobile' : 'desktop'} device`);
+          // Check if ad is already initialized
+          const adElement = document.querySelector('.adsbygoogle[data-ad-slot="3305790696"]');
+          if (adElement && !adElement.hasAttribute('data-ad-status')) {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            console.log(`Ads initialized for ${isMobileDevice ? 'mobile' : 'desktop'} device`);
+          }
         } else {
           // Wait for adsbygoogle to load
           setTimeout(initializeAds, 100);
@@ -60,7 +64,7 @@ const NotesSection: React.FC = () => {
     
     return {
       display: 'inline-block',
-      width: '300px',
+      width: '900px',
       height: '250px',
       margin: '8px auto',
       borderRadius: '4px',
@@ -72,14 +76,12 @@ const NotesSection: React.FC = () => {
     <div className="w-full px-2 sm:px-4 py-4">
       <div className="flex items-center justify-center">
         <div className="w-full max-w-6xl">
-          {/* Responsive Ad Slot 11 - Desktop & Mobile */}
+          {/* Large Ad Slot - Test (900x250) */}
           <ins 
             className="adsbygoogle"
             style={getAdStyles()}
             data-ad-client="ca-pub-8453458415715594"
             data-ad-slot="3305790696"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
           />
         </div>
       </div>
