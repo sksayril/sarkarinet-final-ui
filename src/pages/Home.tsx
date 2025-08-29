@@ -4,6 +4,7 @@ import ActionButtons from '../components/ActionButtons';
 import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
 import NotesSection from '../components/NotesSection';
+import MobileAdSection from '../components/MobileAdSection';
 import RecruitmentCards from '../components/RecruitmentCards';
 import MainCategoryCards from '../components/MainCategoryCards';
 import ContentSections from '../components/ContentSections';
@@ -31,6 +32,7 @@ const Home: React.FC = () => {
       {(!isSearching || !searchQuery) && (
         <>
           <NotesSection />
+          <MobileAdSection />
           <RecruitmentCards />
           {/* <MainCategoryCards /> */}
           <ContentSections />

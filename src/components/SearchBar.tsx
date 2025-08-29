@@ -70,10 +70,7 @@ const SearchBar: React.FC = () => {
             </button>
           </div>
           <button 
-            onClick={() => {
-              console.log('🤖 SearchBar AI Assistant button clicked! Navigating to /aivoice');
-              navigate('/aivoice');
-            }}
+            onClick={() => navigate('/aivoice')}
             className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-full flex items-center space-x-3 hover:from-purple-700 hover:to-purple-800 whitespace-nowrap shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-2 border-purple-500"
           >
             <span className="text-2xl">🎤</span>
