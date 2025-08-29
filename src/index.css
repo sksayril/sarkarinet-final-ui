@@ -103,21 +103,34 @@
 /* Mobile-specific ad styles */
 @media (max-width: 768px) {
   .adsbygoogle {
-    min-height: 100px !important;
     width: 100% !important;
     max-width: 100% !important;
+    height: auto !important;
+    min-height: 250px !important;
     display: block !important;
     text-align: center !important;
+    margin: 8px 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+  
+  /* Ensure ad content fits mobile screen */
+  .adsbygoogle iframe {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
   }
 }
 
 /* Ensure ads are responsive on all devices */
 .adsbygoogle {
-  display: block;
+  display: inline-block;
   text-align: center;
-  min-height: 90px;
-  width: 100%;
-  max-width: 100%;
+  width: 300px;
+  height: 250px;
+  margin: 8px auto;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 /* Custom wave animations for AI Voice */
