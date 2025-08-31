@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Youtube, Send, MessageCircle, Linkedin, Cloud, Bot } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Youtube, Send, MessageCircle } from 'lucide-react';
 import { getGoogleCloudConfig } from '../utils/googleCloud';
 
 interface HomeContentData {
@@ -26,7 +25,6 @@ const Header: React.FC = () => {
     telegram: 'https://t.me/saarkariresult',
     youtube: 'https://youtube.com/@saarkariresult?si=YT_rU7HguxmFx_uO'
   });
-  const [googleCloudStatus, setGoogleCloudStatus] = useState<'loading' | 'connected' | 'error'>('loading');
 
   useEffect(() => {
     const fetchChannelLinks = async () => {
@@ -54,10 +52,8 @@ const Header: React.FC = () => {
     const checkGoogleCloud = () => {
       const config = getGoogleCloudConfig();
       if (config) {
-        setGoogleCloudStatus('connected');
         console.log('Google Cloud configuration loaded:', config.projectId);
       } else {
-        setGoogleCloudStatus('error');
         console.warn('Google Cloud configuration not found');
       }
     };
@@ -72,98 +68,70 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-red-700 text-white">
-      <div className="w-full min-w-[1200px] px-4 py-3">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="w-30 h-30 bg-white rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+      <div className="w-full min-w-[320px] px-4 py-3">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          {/* Logo - Optimized for LCP */}
+          <div className="w-24 h-24 md:w-30 md:h-30 bg-white rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
             <img 
               src="/PhotoRoom-20250716_202655.webp" 
               alt="Sarkari Result Logo" 
-              className="w-40 h-40 object-contain"
+              className="w-20 h-20 md:w-40 md:h-40 object-contain"
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
           
-          {/* Centered Title */}
-          <div className="flex-1 text-center">
-            <h1 className="text-7xl font-bold tracking-wider whitespace-nowrap">SARKARI RESULT</h1>
+          {/* Centered Title - Optimized for LCP */}
+          <div className="flex-1 text-center min-w-0">
+            <h1 
+              className="text-2xl font-bold tracking-wider whitespace-nowrap md:text-4xl lg:text-5xl"
+              style={{
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                fontWeight: '700',
+                letterSpacing: '0.05em',
+                fontSize: 'clamp(1.5rem, 4vw, 3rem)'
+              }}
+            >
+              SARKARI RESULT
+            </h1>
             
-
-            <p className="text-4xl mt-2">WWW.SAARKARIRESULT.COM</p>
-
+            <p 
+              className="text-lg mt-2 md:text-2xl lg:text-4xl"
+              style={{
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                fontSize: 'clamp(1.125rem, 3vw, 2.25rem)'
+              }}
+            >
+              WWW.SAARKARIRESULT.COM
+            </p>
           </div>
           
           {/* Social Media Icons */}
-          <div className="flex items-center space-x-4 flex-shrink-0">
-            <div 
-              className="w-12 h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center cursor-pointer hover:from-red-700 hover:to-red-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
+          <div className="flex items-center space-x-2 md:space-x-4 flex-shrink-0">
+            <button
+              className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center hover:from-red-700 hover:to-red-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
               onClick={() => handleLinkClick(channelLinks.youtube)}
               title="YouTube Channel"
+              aria-label="Visit our YouTube channel"
             >
-              <Youtube className="w-6 h-6 text-white" />
-            </div>
-            <div 
-              className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center cursor-pointer hover:from-blue-700 hover:to-blue-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
+              <Youtube className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
+            <button
+              className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center hover:from-blue-700 hover:to-blue-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
               onClick={() => handleLinkClick(channelLinks.telegram)}
               title="Telegram Channel"
+              aria-label="Visit our Telegram channel"
             >
-              <Send className="w-6 h-6 text-white" />
-            </div>
-            <div 
-              className="w-12 h-12 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center cursor-pointer hover:from-green-700 hover:to-green-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
+              <Send className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
+            <button
+              className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center hover:from-green-700 hover:to-green-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
               onClick={() => handleLinkClick(channelLinks.whatsapp)}
               title="WhatsApp Channel"
+              aria-label="Visit our WhatsApp channel"
             >
-              <MessageCircle className="w-6 h-6 text-white" />
-            </div>
-            {/* <Link to="/aivoice">
-              <div 
-                className="w-12 h-12 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center cursor-pointer hover:from-purple-700 hover:to-purple-800 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 border-2 border-white shadow-black/50"
-                title="AI Assistant"
-                onClick={() => console.log('🤖 Header AI Assistant button clicked!')}
-              >
-                <Bot className="w-6 h-6 text-white" />
-              </div>
-            </Link> */}
-            
-            {/* Test Thumbnail Popup Button */}
-            {/* <button
-              onClick={() => {
-                if ((window as any).showThumbnailPopup) {
-                  (window as any).showThumbnailPopup();
-                } else {
-                  console.log('Thumbnail popup not ready yet');
-                }
-              }}
-              className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center cursor-pointer hover:from-yellow-600 hover:to-orange-600 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border border-white"
-              title="Test Thumbnail Popup"
-            >
-              <span className="text-white text-xs font-bold">T</span>
+              <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </button>
-             */}
-            {/* Thumbnail Status Indicator */}
-            {/* <div className="text-white text-xs opacity-75">
-              {localStorage.getItem('thumbnailPopupLastShown') ? (
-                <span title={`Last shown: ${new Date(localStorage.getItem('thumbnailPopupLastShown')!).toLocaleString()}`}>
-                  📸
-                </span>
-              ) : (
-                <span title="Never shown">⏰</span>
-              )}
-            </div> */}
-            
-            {/* Google Cloud Status Indicator */}
-            {/* <div 
-              className={`w-12 h-12 rounded-full flex items-center justify-center border-2 border-white shadow-2xl ${
-                googleCloudStatus === 'connected' 
-                  ? 'bg-gradient-to-r from-green-600 to-green-700' 
-                  : googleCloudStatus === 'error'
-                  ? 'bg-gradient-to-r from-red-600 to-red-700'
-                  : 'bg-gradient-to-r from-yellow-600 to-yellow-700'
-              }`}
-              title={`Google Cloud: ${googleCloudStatus === 'connected' ? 'Connected' : googleCloudStatus === 'error' ? 'Error' : 'Loading'}`}
-            >
-              <Cloud className="w-6 h-6 text-white" />
-            </div> */}
           </div>
         </div>
       </div>
