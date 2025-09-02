@@ -227,31 +227,15 @@ const RecruitmentDetail: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Left Sidebar Ad */}
-          <div className="lg:w-40 flex-shrink-0">
-            <div className="sidebar-ad">
-              <div className="ad-label">Advertisement</div>
-              <ins 
-                className="adsbygoogle"
-                style={{ display: 'block', width: '160px', height: '600px' }}
-                data-ad-client="ca-pub-8453458415715594"
-                data-ad-slot="3159282588"
-              />
-              <script>
-                {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-              </script>
-            </div>
-          </div>
-
+    <div className="min-h-screen bg-gray-50 py-4">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="flex flex-col gap-4">
           {/* Main Content */}
           <div className="flex-1">
             {/* Top Ad Section */}
-            <div className="mb-6">
+            <div className="mb-4">
               <div className="ad-container">
-                <div className="ad-label">Advertisement</div>
+                {/* <div className="ad-label">Advertisement</div> */}
                 <ins 
                   className="adsbygoogle"
                   style={{ display: 'block', width: '100%', height: '90px' }}
@@ -267,64 +251,32 @@ const RecruitmentDetail: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               {/* Header with green and blue gradient */}
               <div 
-                className="p-8"
+                className="p-6"
                 style={{ 
                   background: 'linear-gradient(90deg, #9333ea 0%, #3b82f6 100%)',
                   color: 'white'
                 }}
               >
-                <h1 className="text-3xl font-bold mb-2 text-white">{contentData.contentTitle}</h1>
-                <p className="text-lg opacity-90 text-white">{contentData.metaDescription}</p>
+                <h1 className="text-2xl font-bold mb-2 text-white">{contentData.contentTitle}</h1>
+                <p className="text-base opacity-90 text-white">{contentData.metaDescription}</p>
                 {contentData.mainCategory && (
                   <p className="text-sm opacity-75 mt-2 text-white">Category: {contentData.mainCategory.title}</p>
                 )}
               </div>
               
               {/* Content */}
-              <div className="p-8">
+              <div className="p-6">
                 <div 
                   ref={contentRef}
                   dangerouslySetInnerHTML={{ __html: contentData.contentDescription }}
-                  className="prose prose-lg max-w-none recruitment-content"
+                  className="prose prose-base max-w-none recruitment-content"
                   style={{
                     fontFamily: 'Arial, sans-serif',
-                    lineHeight: '1.6',
+                    lineHeight: '1.5',
                     color: '#333'
                   }}
                 />
-                
-                {/* Mobile Ad Section */}
-                <div className="mt-8 lg:hidden">
-                  <div className="ad-container">
-                    <div className="ad-label">Advertisement</div>
-                    <ins 
-                      className="adsbygoogle"
-                      style={{ display: 'block', width: '100%', height: '250px' }}
-                      data-ad-client="ca-pub-8453458415715594"
-                      data-ad-slot="3159282588"
-                    />
-                    <script>
-                      {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-                    </script>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Sidebar Ad */}
-          <div className="lg:w-40 flex-shrink-0">
-            <div className="sidebar-ad">
-              <div className="ad-label">Advertisement</div>
-              <ins 
-                className="adsbygoogle"
-                style={{ display: 'block', width: '160px', height: '600px' }}
-                data-ad-client="ca-pub-8453458415715594"
-                data-ad-slot="3159282588"
-              />
-              <script>
-                {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-              </script>
             </div>
           </div>
         </div>
