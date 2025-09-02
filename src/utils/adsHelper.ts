@@ -43,7 +43,7 @@ export const getMobileAdConfig = () => {
     google_ad_client: "ca-pub-8453458415715594",
     google_ad_slot: "6506881139",
     google_ad_format: "auto",
-    google_full_width_responsive: "true",
+    google_full_width_responsive: "false",
     google_adtest: "off",
     device_type: deviceType
   };
