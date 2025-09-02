@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { slugify } from '../utils/slugify';
 import { useSearch } from '../contexts/SearchContext';
 import { scrollToTop } from '../utils/scrollToTop';
+import { waitForGoogleAds, getOptimizedAdConfig } from '../utils/adsHelper';
 
 interface SubCategory {
   _id: string;
@@ -36,6 +37,21 @@ const ContentSections: React.FC = () => {
 
   // Define the specific category sequence
   const categorySequence = ['Results', 'Admit Card', 'Latest Jobs', 'Answer Key', 'Syllabus', 'Admission'];
+
+  // Color schemes for top category bars
+  const topBarColors = ['bg-red-700', 'bg-blue-700', 'bg-green-700', 'bg-purple-700', 'bg-orange-700', 'bg-teal-700'];
+
+  // Initialize ads when component mounts
+  useEffect(() => {
+    waitForGoogleAds(() => {
+      try {
+        const adConfig = getOptimizedAdConfig();
+        (window.adsbygoogle = window.adsbygoogle || []).push(adConfig);
+      } catch (error) {
+        console.error('Error initializing Google Ads:', error);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const fetchSubCategories = async () => {
@@ -153,6 +169,21 @@ const ContentSections: React.FC = () => {
   if (loading) {
     return (
       <div className="w-full min-w-[1200px] px-4 py-6">
+        {/* Top Section Loading */}
+        <div className="mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 mb-8">
+            {[...Array(6)].map((_, index) => (
+              <div key={index} className="bg-gray-300 h-16 rounded-lg animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+        
+        {/* White Gap Section Loading */}
+        <div className="bg-white rounded-lg p-4 md:p-8 mb-8 animate-pulse">
+          <div className="h-32 bg-gray-300 rounded"></div>
+        </div>
+
+        {/* Content Sections Loading */}
         <div className="grid grid-cols-3 gap-6" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
           {[...Array(6)].map((_, index) => (
             <div key={index} className="bg-white border-4 border-red-600 rounded-lg overflow-hidden animate-pulse shadow-lg" style={{ minWidth: '380px' }}>
@@ -201,6 +232,62 @@ const ContentSections: React.FC = () => {
 
   return (
     <div className="w-full min-w-[1200px] px-4 py-6 overflow-x-auto">
+      {/* Top Section - Colored Category Bars */}
+      {/* <div className="mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+          {categorySequence.map((category, index) => (
+            <div
+              key={index}
+              className={`${topBarColors[index % topBarColors.length]} text-white p-3 md:p-4 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-center min-h-[60px] md:min-h-[80px] flex items-center justify-center`}
+              onClick={() => {
+                const routeMap: { [key: string]: string } = {
+                  'Latest Jobs': '/latest-jobs',
+                  'Results': '/results',
+                  'Admit Card': '/admit-card',
+                  'Answer Key': '/answer-key',
+                  'Syllabus': '/syllabus',
+                  'Admission': '/admission',
+                };
+                const route = routeMap[category] || '/';
+                scrollToTop();
+                navigate(route);
+              }}
+            >
+              <h3 className="text-sm md:text-lg font-bold tracking-wide leading-tight">{category}</h3>
+            </div>
+          ))}
+        </div>
+      </div> */}
+
+      {/* White Gap Section with Ads */}
+      <div className="bg-white rounded-lg p-4 md:p-8 mb-8 ">
+        <div className="text-center mb-4 md:mb-6">
+          {/* <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Featured Content</h2>
+          <p className="text-sm md:text-base text-gray-600">Discover the latest updates and opportunities</p> */}
+        </div>
+        
+        {/* Google Ads Container */}
+        <div className="flex items-center justify-center">
+          <div className="w-full max-w-4xl">
+            <ins 
+              className="adsbygoogle"
+              style={{ 
+                display: 'block',
+                textAlign: 'center',
+                minHeight: '120px',
+                width: '100%',
+                maxWidth: '100%'
+              }}
+              data-ad-client="ca-pub-8453458415715594"
+              data-ad-slot="6506881139"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+              data-adtest="off"
+            />
+          </div>
+        </div>
+      </div>
+
       {isSearching && filteredSections.length > 0 && (
         <div className="mb-4 text-center">
           <p className="text-lg text-gray-700">
