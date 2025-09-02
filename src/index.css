@@ -100,24 +100,61 @@
   user-modify: read-only !important;
 }
 
-/* Mobile-specific ad styles */
-@media (max-width: 768px) {
+/* Google AdSense Styles */
+.adsbygoogle {
+  display: block !important;
+  margin: 0 auto;
+}
+
+/* Responsive ad container */
+.ad-container {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.ad-label {
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sidebar ad styles */
+.sidebar-ad {
+  position: sticky;
+  top: 32px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Mobile responsive ads */
+@media (max-width: 1024px) {
+  .sidebar-ad {
+    position: static;
+    margin: 16px 0;
+  }
+  
   .adsbygoogle {
-    min-height: 100px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    display: block !important;
-    text-align: center !important;
+    max-width: 100%;
+    height: auto;
   }
 }
 
-/* Ensure ads are responsive on all devices */
-.adsbygoogle {
-  display: block;
-  text-align: center;
-  min-height: 90px;
-  width: 100%;
-  max-width: 100%;
+/* Ensure ads don't overflow on small screens */
+@media (max-width: 768px) {
+  .adsbygoogle {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 250px;
+  }
 }
 
 /* Custom wave animations for AI Voice */
