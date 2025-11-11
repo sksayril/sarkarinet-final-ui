@@ -46,7 +46,7 @@ const InfoSections: React.FC = () => {
                 key={`sarkari-jobs-${index}-${token.index}`}
                 href="https://sarkarijob.com"
                 target="_blank"
-                rel="noopener noreferrer nofollow"
+                rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 underline font-semibold cursor-pointer"
                 style={{ textDecoration: 'underline' }}
                 onClick={(e) => {
