@@ -16,7 +16,7 @@ const NotesSection: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full px-2 sm:px-4 py-4">
+    <div className="w-full px-2 sm:px-4 pt-0 pb-4" style={{ marginTop: '0', paddingTop: '0', marginBottom: '0' }}>
       <div className="flex items-center justify-center">
         <div className="w-full max-w-6xl">
           {/* Google Ads Container - Mobile Responsive */}

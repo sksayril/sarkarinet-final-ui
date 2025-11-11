@@ -7,8 +7,14 @@ const InfoSections: React.FC = () => {
     const paragraphs = content.split('\n\n').filter(p => p.trim());
     
     return paragraphs.map((paragraph, index) => {
-      // Convert .com links to clickable elements
-      const formattedParagraph = paragraph.replace(
+      // First, convert "Sarkari Jobs" to clickable link
+      let formattedParagraph = paragraph.replace(
+        /\bSarkari Jobs\b/gi,
+        '<a href="https://sarkarijob.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline font-semibold">Sarkari Jobs</a>'
+      );
+      
+      // Then, convert .com links to clickable elements
+      formattedParagraph = formattedParagraph.replace(
         /(\b(?:https?:\/\/)?[a-zA-Z0-9-]+\.com\b)/g,
         (match) => {
           const url = match.startsWith('http') ? match : `https://${match}`;

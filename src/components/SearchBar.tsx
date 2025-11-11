@@ -34,7 +34,7 @@ const SearchBar: React.FC = () => {
 
   return (
     <>
-      <div className="w-full min-w-[1200px] px-4 py-4">
+      <div className="w-full min-w-[1200px] px-4 pt-4 pb-0">
         <div className="flex items-center justify-center space-x-4">
           <div className="w-1/2 relative">
             <input

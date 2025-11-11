@@ -118,6 +118,27 @@
   min-height: 90px;
   width: 100%;
   max-width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Remove extra padding from ad containers */
+.ad-container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Remove all spacing from SocialMediaAdSection */
+div[class*="SocialMediaAdSection"],
+div[class*="social-media-ad"] {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+}
+
+/* Ensure no white space around ads */
+.adsbygoogle + * {
+  margin-top: 0 !important;
 }
 
 /* Custom wave animations for AI Voice */
