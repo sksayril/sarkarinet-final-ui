@@ -7,24 +7,88 @@ const InfoSections: React.FC = () => {
     const paragraphs = content.split('\n\n').filter(p => p.trim());
     
     return paragraphs.map((paragraph, index) => {
-      // First, convert "Sarkari Jobs" to clickable link
-      let formattedParagraph = paragraph.replace(
-        /\bSarkari Jobs\b/gi,
-        '<a href="https://sarkarijob.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline font-semibold">Sarkari Jobs</a>'
-      );
-      
-      // Then, convert .com links to clickable elements
-      formattedParagraph = formattedParagraph.replace(
-        /(\b(?:https?:\/\/)?[a-zA-Z0-9-]+\.com\b)/g,
-        (match) => {
-          const url = match.startsWith('http') ? match : `https://${match}`;
-          return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${match}</a>`;
+      // Process paragraph to create React elements with links
+      const processText = (text: string): (string | JSX.Element)[] => {
+        const parts: (string | JSX.Element)[] = [];
+        const tokens: Array<{ type: 'text' | 'sarkari-jobs' | 'url'; value: string; index: number }> = [];
+        
+        // Find all "Sarkari Jobs" matches
+        const sarkariJobsRegex = /\bSarkari Jobs\b/gi;
+        let match;
+        while ((match = sarkariJobsRegex.exec(text)) !== null) {
+          tokens.push({ type: 'sarkari-jobs', value: match[0], index: match.index });
         }
-      );
+        
+        // Find all URL matches
+        const urlRegex = /(\b(?:https?:\/\/)?[a-zA-Z0-9-]+\.com\b)/g;
+        while ((match = urlRegex.exec(text)) !== null) {
+          tokens.push({ type: 'url', value: match[0], index: match.index });
+        }
+        
+        // Sort tokens by index
+        tokens.sort((a, b) => a.index - b.index);
+        
+        // Build parts array
+        let lastIndex = 0;
+        tokens.forEach((token) => {
+          // Add text before token
+          if (token.index > lastIndex) {
+            parts.push(text.substring(lastIndex, token.index));
+          }
+          
+          // Add token as link
+          if (token.type === 'sarkari-jobs') {
+            parts.push(
+              <a
+                key={`sarkari-jobs-${index}-${token.index}`}
+                href="https://sarkarijob.com"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                className="text-blue-600 hover:text-blue-800 underline font-semibold cursor-pointer"
+                style={{ textDecoration: 'underline' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open('https://sarkarijob.com', '_blank', 'noopener,noreferrer');
+                }}
+              >
+                {token.value}
+              </a>
+            );
+          } else if (token.type === 'url') {
+            const url = token.value.startsWith('http') ? token.value : `https://${token.value}`;
+            parts.push(
+              <a
+                key={`url-${index}-${token.index}`}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(url, '_blank', 'noopener,noreferrer');
+                }}
+              >
+                {token.value}
+              </a>
+            );
+          }
+          
+          lastIndex = token.index + token.value.length;
+        });
+        
+        // Add remaining text
+        if (lastIndex < text.length) {
+          parts.push(text.substring(lastIndex));
+        }
+        
+        return parts.length > 0 ? parts : [text];
+      };
+      
+      const processedParts = processText(paragraph);
       
       return (
         <p key={index} className="text-base text-gray-800 leading-relaxed text-justify mb-4" style={{ fontFamily: 'Arial, sans-serif' }}>
-          <span dangerouslySetInnerHTML={{ __html: formattedParagraph }} />
+          {processedParts}
         </p>
       );
     });

@@ -141,6 +141,62 @@ div[class*="social-media-ad"] {
   margin-top: 0 !important;
 }
 
+/* Glowing effect for social media buttons */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+.social-button-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.social-button-glow-red {
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.4), 0 0 30px rgba(220, 38, 38, 0.2);
+  animation: glow-red 2s ease-in-out infinite;
+}
+
+.social-button-glow-blue {
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6), 0 0 20px rgba(37, 99, 235, 0.4), 0 0 30px rgba(37, 99, 235, 0.2);
+  animation: glow-blue 2s ease-in-out infinite;
+}
+
+.social-button-glow-green {
+  box-shadow: 0 0 10px rgba(22, 163, 74, 0.6), 0 0 20px rgba(22, 163, 74, 0.4), 0 0 30px rgba(22, 163, 74, 0.2);
+  animation: glow-green 2s ease-in-out infinite;
+}
+
+@keyframes glow-red {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.4), 0 0 30px rgba(220, 38, 38, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.8), 0 0 30px rgba(220, 38, 38, 0.6), 0 0 45px rgba(220, 38, 38, 0.4);
+  }
+}
+
+@keyframes glow-blue {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.6), 0 0 20px rgba(37, 99, 235, 0.4), 0 0 30px rgba(37, 99, 235, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.8), 0 0 30px rgba(37, 99, 235, 0.6), 0 0 45px rgba(37, 99, 235, 0.4);
+  }
+}
+
+@keyframes glow-green {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(22, 163, 74, 0.6), 0 0 20px rgba(22, 163, 74, 0.4), 0 0 30px rgba(22, 163, 74, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(22, 163, 74, 0.8), 0 0 30px rgba(22, 163, 74, 0.6), 0 0 45px rgba(22, 163, 74, 0.4);
+  }
+}
+
 /* Custom wave animations for AI Voice */
 @keyframes wave-animation {
   0%, 100% {
