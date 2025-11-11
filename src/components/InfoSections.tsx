@@ -2,7 +2,7 @@ import React from 'react';
 
 const InfoSections: React.FC = () => {
   // Function to convert text content to properly formatted paragraphs with clickable links
-  const formatContent = (content: string) => {
+  const formatContent = (content: string, sectionIndex: number) => {
     // Split content into paragraphs
     const paragraphs = content.split('\n\n').filter(p => p.trim());
     
@@ -12,15 +12,18 @@ const InfoSections: React.FC = () => {
         const parts: (string | JSX.Element)[] = [];
         const tokens: Array<{ type: 'text' | 'sarkari-jobs' | 'url'; value: string; index: number }> = [];
         
-        // Find all "Sarkari Jobs" matches
-        const sarkariJobsRegex = /\bSarkari Jobs\b/gi;
-        let match;
-        while ((match = sarkariJobsRegex.exec(text)) !== null) {
-          tokens.push({ type: 'sarkari-jobs', value: match[0], index: match.index });
+        // Only find "Sarkari Jobs" matches for the first section (index 0)
+        if (sectionIndex === 0) {
+          const sarkariJobsRegex = /\bSarkari Jobs\b/gi;
+          let match;
+          while ((match = sarkariJobsRegex.exec(text)) !== null) {
+            tokens.push({ type: 'sarkari-jobs', value: match[0], index: match.index });
+          }
         }
         
         // Find all URL matches
         const urlRegex = /(\b(?:https?:\/\/)?[a-zA-Z0-9-]+\.com\b)/g;
+        let match;
         while ((match = urlRegex.exec(text)) !== null) {
           tokens.push({ type: 'url', value: match[0], index: match.index });
         }
@@ -231,7 +234,7 @@ Review your form, click Final Submit, and take a printout or save the PDF copy o
     {
       title: 'Eligibility Criteria for Sarkari Exams',
       color: 'bg-red-700',
-      content: `For those eyeing Sarkari jobs, through Sarkari Exam, meeting eligibility criteria is pivotal. Academic qualifications, age limits, and specific requirements vary across roles and categories. A comprehensive understanding of the prerequisites ensures candidates can align themselves with the desired positions.
+      content: `For those eyeing sarkari Jobs, through Sarkari Exam, meeting eligibility criteria is pivotal. Academic qualifications, age limits, and specific requirements vary across roles and categories. A comprehensive understanding of the prerequisites ensures candidates can align themselves with the desired positions.
 
 Educational Qualifications: One of the primary aspects of eligibility involves academic qualifications. Different positions demand varying levels of educational attainment. While some roles require a basic educational background, others necessitate advanced degrees or specialized certifications. For instance, positions in administrative services often mandate a graduate degree, while technical roles might require engineering or other specialized qualifications.
 Age Limits: Age limitations constitute another crucial facet of eligibility criteria. Government jobs often define specific age ranges within which candidates are eligible to apply. These age restrictions are designed to ensure that candidates possess the requisite vigor and vitality to fulfill the responsibilities of the position. 
@@ -287,7 +290,7 @@ At Sarkari Alert, we boast a dedicated team of seven individuals: saarkariresult
               <h3 className="text-2xl font-bold tracking-wide">{section.title}</h3>
             </div>
             <div className="p-6">
-              {formatContent(section.content)}
+              {formatContent(section.content, index)}
             </div>
           </div>
         ))}
