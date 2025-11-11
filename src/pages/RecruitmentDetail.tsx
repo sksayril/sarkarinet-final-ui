@@ -232,22 +232,6 @@ const RecruitmentDetail: React.FC = () => {
         <div className="flex flex-col gap-4">
           {/* Main Content */}
           <div className="flex-1">
-            {/* Top Ad Section */}
-            <div className="mb-4">
-              <div className="ad-container">
-                {/* <div className="ad-label">Advertisement</div> */}
-                <ins 
-                  className="adsbygoogle"
-                  style={{ display: 'block', width: '100%', height: '90px' }}
-                  data-ad-client="ca-pub-8453458415715594"
-                  data-ad-slot="3159282588"
-                />
-                <script>
-                  {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-                </script>
-              </div>
-            </div>
-
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               {/* Header with green and blue gradient */}
               <div 
