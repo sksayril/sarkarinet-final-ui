@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { slugify } from '../utils/slugify';
 import { useSearch } from '../contexts/SearchContext';
 import { scrollToTop } from '../utils/scrollToTop';
-import { waitForGoogleAds, getOptimizedAdConfig } from '../utils/adsHelper';
 
 interface SubCategory {
   _id: string;
@@ -32,7 +31,6 @@ const ContentSections: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
-  const [adsLoaded, setAdsLoaded] = useState(false);
   const navigate = useNavigate();
   const { searchQuery, isSearching } = useSearch();
 
@@ -42,44 +40,6 @@ const ContentSections: React.FC = () => {
   // Color schemes for top category bars
   const topBarColors = ['bg-red-700', 'bg-blue-700', 'bg-green-700', 'bg-purple-700', 'bg-orange-700', 'bg-teal-700'];
 
-  // Initialize ads when component mounts
-  useEffect(() => {
-    const initializeAds = () => {
-      try {
-        // Wait for Google Ads to be available
-        if (window.adsbygoogle) {
-          const adConfig = getOptimizedAdConfig();
-          (window.adsbygoogle = window.adsbygoogle || []).push(adConfig);
-          console.log('Google Ads initialized successfully');
-          setAdsLoaded(true);
-        } else {
-          // If adsbygoogle is not available, try again after a delay
-          console.log('Google Ads not ready, retrying...');
-          setTimeout(initializeAds, 1000);
-        }
-      } catch (error) {
-        console.error('Error initializing Google Ads:', error);
-        // Retry after 2 seconds
-        setTimeout(initializeAds, 2000);
-      }
-    };
-
-    // Start initialization
-    initializeAds();
-  }, []);
-
-  // Manual ads refresh function
-  const refreshAds = () => {
-    try {
-      if (window.adsbygoogle) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        console.log('Ads refreshed manually');
-        setAdsLoaded(true);
-      }
-    } catch (error) {
-      console.error('Error refreshing ads:', error);
-    }
-  };
 
   useEffect(() => {
     const fetchSubCategories = async () => {
@@ -287,59 +247,6 @@ const ContentSections: React.FC = () => {
         </div>
       </div> */}
 
-      {/* White Gap Section with Ads */}
-      <div className="bg-white rounded-lg p-4 md:p-8 mb-8">
-        <div className="text-center mb-4 md:mb-6">
-          {/* <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Advertisement</h2>
-          <p className="text-sm md:text-base text-gray-600">Sponsored content and offers</p> */}
-        </div>
-        
-        {/* Google Ads Container */}
-        <div className="flex items-center justify-center">
-          <div className="w-full max-w-2xl">
-            <ins 
-              className="adsbygoogle"
-              style={{ 
-                display: 'block',
-                textAlign: 'center',
-                minHeight: '90px',
-                width: '100%'
-              }}
-              data-ad-client="ca-pub-8453458415715594"
-            data-ad-slot="6506881139"
-            data-ad-format="auto"
-            data-full-width-responsive="false"
-            data-adtest="off"
-            />
-            
-            {/* Ads Status and Refresh Button */}
-            {/* <div className="flex items-center justify-between mt-4 mb-2">
-              <div className="text-sm text-gray-500">
-                {adsLoaded ? (
-                  <span className="text-green-600">✓ Ads loaded successfully</span>
-                ) : (
-                  <span className="text-yellow-600">⏳ Loading advertisements...</span>
-                )}
-              </div>
-              <button
-                onClick={refreshAds}
-                className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Refresh Ads
-              </button>
-            </div> */}
-            
-            {/* Fallback content if ads don't load */}
-            {/* <div className="text-center py-8 text-gray-500 text-sm bg-gray-50 rounded-lg border border-dashed border-gray-300 mt-4">
-              <p className="font-medium text-gray-600 mb-2">Advertisement Space</p>
-              <p className="text-gray-500">Loading sponsored content...</p>
-              <div className="mt-3">
-                <div className="inline-block w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-              </div>
-            </div> */}
-          </div>
-        </div>
-      </div>
 
       {isSearching && filteredSections.length > 0 && (
         <div className="mb-4 text-center">
